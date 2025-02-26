@@ -15,16 +15,19 @@
 	<form class="form-signup" method="post" action="/signup" th:object="${signupForm}">
 		<h1 class="text-content text-center" th:text="新規登録"></h1>
 		<div class="mb-3">
-			<label class="form-label" th:text="ユーザーID"></label>
-			<input type="text" class="form-control" th:field="*{userId}">
+			<label class="form-label" th:text="#{userId}"></label>
+			<input type="text" class="form-control" th:field="*{userId}" th:errorclass="is-invalid">
+			<div class="invalid-feedback" th:errors="*{userId}"></div>
 		</div>
 		<div class="mb-3">
-			<label class="form-label" th:text="パスワード"></label>
-			<input type="text" class="form-control" th:field="*{password}">
+			<label class="form-label" th:text="#{password}"></label>
+			<input type="text" class="form-control" th:field="*{password}" th:errorclass="is-invalid">
+			<div class="invalid-feedback" th:errors="*{password}"></div>
 		</div>
 		<div class="mb-3">
-			<label class="form-label" th:text="ユーザー名"></label>
-			<input type="text" class="form-control" th:field="*{userName}">
+			<label class="form-label" th:text="#{userName}"></label>
+			<input type="text" class="form-control" th:field="*{userName}" th:errorclass="is-invalid">
+			<div class="invalid-feedback" th:errors="*{userName}"></div>
 		</div>
 		<input type="submit" th:value="登録" class="btn btn-primary w-100 mt-3">
 	</form>
