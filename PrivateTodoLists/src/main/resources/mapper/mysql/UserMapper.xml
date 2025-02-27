@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+	
+<!-- Mapperとxmlのマッピング -->
+<mapper namespace="com.example.repository.UserMapper">
+
+	<!-- ユーザー1件登録 -->
+	<insert id="insertOneUser" useGeneratedKeys="true" keyProperty="id">
+		insert into users (
+			user_id,
+			password,
+			user_name
+		) values (
+			#{userId},
+			#{password},
+			#{userName}
+		)
+	</insert>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</mapper>
