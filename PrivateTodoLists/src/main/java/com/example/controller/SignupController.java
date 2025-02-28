@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
-import com.example.domain.todo.service.TodoService;
 import com.example.domain.user.model.MUser;
 import com.example.domain.user.service.UserService;
 import com.example.form.SignupForm;
@@ -25,8 +24,8 @@ public class SignupController {
 	@Autowired
 	private UserService userService;
 	
-	@Autowired
-	private TodoService todoService;
+//	@Autowired
+//	private TodoService todoService;
 	
 	@Autowired
 	private ModelMapper modelMapper;
@@ -52,11 +51,11 @@ public class SignupController {
 		
 		log.info(user.toString());
 		
-		userService.signup(user);
+		userService.signupUserAndCreateOwnTable(user);
 		
 		log.info(user.toString());
 		
-		todoService.makeUserOwnTable(user.getId());
+		
 		
 		return "signup/signup";
 	}
