@@ -22,4 +22,16 @@
 		PRIMARY KEY (id)
 		)
 	</update>
+	
+	<!-- 作成された固有テーブルの存在を確認 -->
+	<select id="countUserOwnTable" resultType="Integer">
+		select
+		  count(*)
+		from
+		  information_schema.TABLES
+		where
+		  table_schema = 'private_todo' and
+		  table_name = concat('todo_items_user_', #{userId})	
+	</select>
+	
 </mapper>

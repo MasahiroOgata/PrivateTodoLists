@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html  xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -11,7 +11,7 @@
 	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" defer></script>
 	<title>新規登録</title>
 </head>
-<body  class="bg-light">
+<body class="bg-light">
 	<form class="form-signup" method="post" action="/signup" th:object="${signupForm}">
 		<h1 class="text-content text-center" th:text="新規登録"></h1>
 		<div class="mb-3">

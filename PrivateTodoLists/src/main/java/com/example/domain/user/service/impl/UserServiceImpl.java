@@ -18,22 +18,15 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private TodoService todoService;
 	
-	
-	/** ユーザー登録 */
-	@Transactional//(propagation = Propagation.REQUIRES_NEW)
-	@Override	
-	public void signup(MUser user) {
-		userMapper.insertOneUser(user);
-	}
-	
-	/** ユーザー登録および固有のTODOテーブルを作成 */
+	/** ユーザー登録、および固有のTODOテーブルの作成・確認 */
 	@Transactional
 	@Override	
-	public void signupUserAndCreateOwnTable(MUser user) {
+	public void signupUserAndCreateOwnTable(MUser user) {		
 		userMapper.insertOneUser(user);
 		todoService.makeUserOwnTable(user.getId());
-		//throw new RuntimeException();
-		//int i = 1 / 0;
+		if (!todoService.existsUserOwnTable(user.getId())) {
+			throw new RuntimeException();
+		}
 	}
 
 }

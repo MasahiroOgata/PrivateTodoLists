@@ -24,9 +24,6 @@ public class SignupController {
 	@Autowired
 	private UserService userService;
 	
-//	@Autowired
-//	private TodoService todoService;
-	
 	@Autowired
 	private ModelMapper modelMapper;
 	
@@ -49,15 +46,11 @@ public class SignupController {
 		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 		MUser user = modelMapper.map(form, MUser.class);
 		
-		log.info(user.toString());
-		
 		userService.signupUserAndCreateOwnTable(user);
 		
 		log.info(user.toString());
 		
-		
-		
-		return "signup/signup";
+		return "redirect:/login";
 	}
 
 }

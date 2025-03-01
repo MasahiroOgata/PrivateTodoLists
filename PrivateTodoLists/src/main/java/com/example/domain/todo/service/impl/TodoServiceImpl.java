@@ -14,24 +14,18 @@ public class TodoServiceImpl implements TodoService {
 	@Autowired
 	private TodoMapper todoMapper;
 	
-//	@Autowired
-//	private UserService userService;
-	
 	/** ユーザー固有のTODOテーブルを作成 */
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	@Override
 	public void makeUserOwnTable(int userId) {
 		todoMapper.createUserOwnTable(userId);
-		//throw new RuntimeException();
 	}
 	
-//	/** ユーザー登録および固有のTODOテーブルを作成 */
-//	@Override
-//	@Transactional(propagation = Propagation.REQUIRES_NEW)
-//	public void signupUserAndCreateOwnTable2(MUser user) {
-//		userService.signup(user);
-//		todoMapper.createUserOwnTable(user.getId());
-//		throw new RuntimeException();
-//	}
+	/** 作成された固有テーブルの存在を確認 */
+	public boolean existsUserOwnTable(int userId) {
+		return todoMapper.countUserOwnTable(userId) == 1;
+	}
+	
+
 
 }
