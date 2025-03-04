@@ -17,21 +17,15 @@
 			#{userName}
 		)
 	</insert>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	
+	<!-- ログインユーザー情報取得 -->
+	<select id="findLoginUser" resultType="MUser">
+		select
+			*
+		from
+			users
+		where
+			user_id = #{userId}
+	</select>
 
 </mapper>

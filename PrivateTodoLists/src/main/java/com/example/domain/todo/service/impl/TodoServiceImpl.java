@@ -22,6 +22,7 @@ public class TodoServiceImpl implements TodoService {
 	}
 	
 	/** 作成された固有テーブルの存在を確認 */
+	@Override
 	public boolean existsUserOwnTable(int userId) {
 		return todoMapper.countUserOwnTable(userId) == 1;
 	}

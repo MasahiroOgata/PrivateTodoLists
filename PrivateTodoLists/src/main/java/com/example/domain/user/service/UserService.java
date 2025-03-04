@@ -6,5 +6,8 @@ public interface UserService {
 	
 	/** ユーザー登録、および固有のTODOテーブルの作成・確認 */
 	public void signupUserAndCreateOwnTable(MUser user);
+	
+	/** ログインユーザー情報取得 */
+	public MUser getLoginUser(String userId);
 
 }
