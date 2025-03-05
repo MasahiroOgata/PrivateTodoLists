@@ -1,5 +1,7 @@
 package com.example.domain.user.service.impl;
 
+import java.util.Objects;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -35,10 +37,16 @@ public class UserServiceImpl implements UserService {
 		}
 	}
 	
+	/** ユーザーID重複確認 */
+	@Override
+	public boolean isRegisterdUserId(String userId) {
+		return Objects.nonNull(userMapper.findUserByUserId(userId));
+	}
+	
 	/** ログインユーザー情報取得 */
 	@Override
 	public MUser getLoginUser(String userId) {
-		return userMapper.findLoginUser(userId);
+		return userMapper.findUserByUserId(userId);
 	}
 
 }

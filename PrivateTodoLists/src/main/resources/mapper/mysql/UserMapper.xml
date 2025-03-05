@@ -18,8 +18,8 @@
 		)
 	</insert>
 	
-	<!-- ログインユーザー情報取得 -->
-	<select id="findLoginUser" resultType="MUser">
+	<!-- ログインユーザー情報取得、およびユーザーID重複確認 -->
+	<select id="findUserByUserId" resultType="MUser">
 		select
 			*
 		from
