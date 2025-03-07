@@ -27,15 +27,15 @@
 					<td>
 						<input type="date" class="form-control" th:field="*{expireDate}" placeholder="yyyy-MM-dd" th:errorclass="is-invalid">
 					</td>
-				</tr>			
-				<tr>
-					<th></th>					
-					<td>
-						<input type="checkbox" class="form-check-input">
-						<label class="form-check-label" th:text="完了"></label>
-					</td>					
 				</tr>
-			</table>		
+				<tr>
+					<th></th>
+					<td>
+						<input type="checkbox" class="form-check-input" th:value="${#dates.format(#dates.createNow(), 'yyyy-MM-dd')}" th:field="*{finishedDate}">
+						<label class="form-check-label" th:text="完了"></label>
+					</td>
+				</tr>
+			</table>
 			<div class="text-center">
 				<a class="btn btn-secondary" th:href="@{/todo/list}">戻る</a>
 				<input type="submit" value="登録" class="btn btn-primary">

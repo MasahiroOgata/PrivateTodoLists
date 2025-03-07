@@ -34,4 +34,43 @@
 		  table_name = concat('todo_items_user_', #{userId})	
 	</select>
 	
+	<!-- Todo複数件取得 -->
+	<select id="findManyTodo" resultType="MTodo">
+		select
+			*
+		from
+			todo_items_user_${loginUserId}
+		where
+			is_deleted = 0
+		order
+			by expire_date
+	</select>
+	
+	<!-- Todo1件取得 -->
+	<select id="findOneTodo" resultType="MTodo">
+		select
+			*
+		from
+			todo_items_user_${loginUserId}
+		where
+			id = #{id}
+	</select>
+	
+	<!-- Todo1件登録 -->
+	<insert id="insertOneTodo">
+		insert into
+			todo_items_user_${loginUserId}
+		(
+			item_name,
+			registration_date,
+			expire_date,
+			finished_date
+		) values (
+			#{todo.itemName},
+			#{todo.registrationDate},
+			#{todo.expireDate},
+			#{todo.finishedDate}
+		)
+	</insert>
+	
 </mapper>
