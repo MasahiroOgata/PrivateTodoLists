@@ -20,5 +20,8 @@ public interface TodoService {
 	
 	/** Todo1件登録 */
 	public void createOneTodo(MTodo todo);
+	
+	/** Todo1件更新 */
+	public void editOneTodo(MTodo todo);
 
 }

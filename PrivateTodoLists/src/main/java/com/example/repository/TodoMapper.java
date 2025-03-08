@@ -23,5 +23,8 @@ public interface TodoMapper {
 	
 	/** Todo1件登録 */
 	public int insertOneTodo(MTodo todo, int loginUserId);
+	
+	/** Todo1件更新 */
+	public int updateOneTodo(MTodo todo, int loginUserId);
 
 }

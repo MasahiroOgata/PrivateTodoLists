@@ -73,4 +73,16 @@
 		)
 	</insert>
 	
+	<!-- Todo1件更新 -->
+	<update id="updateOneTodo">
+		update
+			todo_items_user_${loginUserId}
+		set
+			item_name = #{todo.itemName},
+			expire_date = #{todo.expireDate},
+			finished_date = #{todo.finishedDate}
+		where
+			id = #{todo.id}
+	</update>
+	
 </mapper>

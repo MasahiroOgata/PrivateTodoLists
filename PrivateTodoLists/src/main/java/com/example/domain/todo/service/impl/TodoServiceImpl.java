@@ -56,6 +56,12 @@ public class TodoServiceImpl implements TodoService {
 	public void createOneTodo(MTodo todo) {
 		todoMapper.insertOneTodo(todo, getLoginUserId());
 	}
+	
+	/** Todo1件更新 */
+	@Override
+	public void editOneTodo(MTodo todo) {
+		todoMapper.updateOneTodo(todo, getLoginUserId());
+	}
 
 
 }
