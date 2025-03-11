@@ -7,10 +7,10 @@ import com.example.domain.todo.model.MTodo;
 public interface TodoService {
 	
 	/** ユーザー固有のTODOテーブルを作成 */
-	public void makeUserOwnTable(int userId);
+	public void makeUserOwnTable(String signupUserId);
 
 	/** 作成された固有テーブルの存在を確認 */
-	public boolean existsUserOwnTable(int userId);
+	public boolean existsUserOwnTable(String signupUserId);
 	
 	/** Todoリスト取得 */
 	public List<MTodo> getTodoItems();

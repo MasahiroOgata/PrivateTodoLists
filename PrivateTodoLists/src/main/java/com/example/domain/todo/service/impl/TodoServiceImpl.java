@@ -29,14 +29,14 @@ public class TodoServiceImpl implements TodoService {
 	/** ユーザー固有のTODOテーブルを作成 */
 	@Transactional(propagation = Propagation.REQUIRES_NEW)
 	@Override
-	public void makeUserOwnTable(int userId) {
-		todoMapper.createUserOwnTable(userId);
+	public void makeUserOwnTable(String signupUserId) {
+		todoMapper.createUserOwnTable(signupUserId);
 	}
 	
 	/** 作成された固有テーブルの存在を確認 */
 	@Override
-	public boolean existsUserOwnTable(int userId) {
-		return todoMapper.countUserOwnTable(userId) == 1;
+	public boolean existsUserOwnTable(String signupUserId) {
+		return todoMapper.countUserOwnTable(signupUserId) == 1;
 	}
 	
 	/** Todoリスト取得 */

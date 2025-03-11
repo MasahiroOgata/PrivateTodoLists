@@ -6,6 +6,10 @@
 <title>TODO詳細</title>
 <!-- 個別CSS読込 -->
 <link rel="stylesheet" th:href="@{/css/todo/detail.css}">
+<!-- TODOアイテム(フォームの初期値)をJSに渡す -->
+<script th:inline="javascript">
+	const todoForm = /*[[${todoForm}]]*/"todoForm";	
+</script>
 <!-- 個別JS読込 -->
 <script th:src="@{/js/todo/detail.js}"></script>
 </head>
@@ -22,18 +26,22 @@
 					<tr>
 						<th th:text="#{itemName}"></th>
 						<td>
-							<input type="text" class="form-control" th:field="*{itemName}"  th:errorclass="is-invalid">
+							<input type="text" class="form-control" th:field="*{itemName}" oninput="enableEdit()" th:errorclass="is-invalid">
 						</td>
 					</tr>
 					<tr>
 						<th th:text="#{expireDate}"></th>
 						<td>
-							<input type="date" class="form-control" th:field="*{expireDate}" placeholder="yyyy-MM-dd"  th:errorclass="is-invalid">
+							<input type="date" class="form-control" th:field="*{expireDate}" placeholder="yyyy-MM-dd" oninput="enableEdit()" th:errorclass="is-invalid">
 						</td>
 					</tr>
 					<tr>
 						<th></th>
-						<div th:if="${todoForm.finishedDate == null}">
+						<td >
+							<input type="checkbox" class="form-check-input" id="finishedCheck" checked onchange="doCheck()">
+							<label class="form-check-label" th:text="完了" ></label>	
+						</td>
+				<!--		<div th:if="${todoForm.finishedDate == null}">
 							<td >
 								<input type="checkbox" class="form-check-input" id="finishedCheck" onchange="doChange()">
 								<label class="form-check-label" th:text="完了" ></label>	
@@ -45,11 +53,12 @@
 								<label class="form-check-label" th:text="完了" ></label>	
 							</td>
 						</div>
+				-->
 					</tr>
 					<tr>
 						<th th:text="#{finishedDate}"></th>
 						<td>
-							<input type="date" class="form-control" th:field="*{finishedDate}" placeholder="yyyy-MM-dd" disabled>
+							<input type="date" class="form-control" th:field="*{finishedDate}" placeholder="yyyy-MM-dd" oninput="enableEdit()" disabled>
 						</td>
 					</tr>
 					<tr>
@@ -59,7 +68,7 @@
 				</table>
 				<div class="text-center">
 					<a class="btn btn-secondary" th:href="@{/todo/list}">戻る</a>
-					<input type="submit" value="登録" class="btn btn-primary">
+					<input type="submit" value="修正" class="btn btn-primary" id="editButton" disabled>
 				</div>
 			</form>
 		

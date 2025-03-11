@@ -31,8 +31,9 @@ public class UserServiceImpl implements UserService {
 		String rawPassword = user.getPassword();
 		user.setPassword(passwordEncoder.encode(rawPassword));
 		userMapper.insertOneUser(user);
-		todoService.makeUserOwnTable(user.getId());
-		if (!todoService.existsUserOwnTable(user.getId())) {
+		String signupUserId = String.valueOf(user.getId());
+		todoService.makeUserOwnTable(signupUserId);
+		if (!todoService.existsUserOwnTable(signupUserId)) {
 			throw new RuntimeException();
 		}
 	}

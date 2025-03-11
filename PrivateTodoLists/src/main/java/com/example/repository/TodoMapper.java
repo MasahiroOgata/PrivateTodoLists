@@ -10,10 +10,10 @@ import com.example.domain.todo.model.MTodo;
 public interface TodoMapper {
 	
 	/** ユーザー固有のTODOテーブルを作成 */
-	public int createUserOwnTable(int userId);
+	public int createUserOwnTable(String signupUserId);
 	
 	/** 作成された固有テーブルの存在を確認 */
-	public int countUserOwnTable(int userId);
+	public int countUserOwnTable(String signupUserId);
 	
 	/** Todoリスト取得 */
 	public List<MTodo> findManyTodo(int loginUserId);
