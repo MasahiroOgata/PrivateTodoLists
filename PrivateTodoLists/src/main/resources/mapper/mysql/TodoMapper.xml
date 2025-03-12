@@ -85,4 +85,14 @@
 			id = #{todo.id}
 	</update>
 	
+	<!-- Todo1件削除 -->
+	<update id="setOneTodoDeleted">
+		update
+			todo_items_user_${loginUserId}
+		set
+			is_deleted = 1
+		where
+			id = #{id}
+	</update>
+	
 </mapper>

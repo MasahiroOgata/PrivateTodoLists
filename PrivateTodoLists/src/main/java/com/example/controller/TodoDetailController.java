@@ -28,11 +28,13 @@ public class TodoDetailController {
 	@GetMapping("{id}")
 	public String showTodoDetail(Model model, @ModelAttribute TodoForm form) {
 		
-		if(form.getRegistrationDate() == null) {
-			MTodo todo = todoService.getOneTodo(form.getId());
+		MTodo todo = todoService.getOneTodo(form.getId());
+		
+		if(form.getRegistrationDate() == null) {			
 			form = modelMapper.map(todo, TodoForm.class);
 		}
 		
+		model.addAttribute("previousTodo", todo);
 		model.addAttribute("todoForm", form);
 		
 		return "todo/detail";

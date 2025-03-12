@@ -32,10 +32,10 @@ function enableEdit() {
 	const inputExpireDate = document.getElementById('expireDate').value;
 	const inputFinishedDate = document.getElementById('finishedDate').value;
 	
-	if (inputItemName == todoForm.itemName 
-		&& inputExpireDate == todoForm.expireDate
-		&& (inputFinishedDate == todoForm.finishedDate
-			|| (!inputFinishedDate && !todoForm.finishedDate))
+	if (inputItemName == previousTodo.itemName 
+		&& inputExpireDate == previousTodo.expireDate
+		&& (inputFinishedDate == previousTodo.finishedDate
+			|| (!inputFinishedDate && !previousTodo.finishedDate))
 		) {
 		document.getElementById('editButton').disabled = true;
 	} else {

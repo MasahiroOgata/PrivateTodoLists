@@ -26,5 +26,8 @@ public interface TodoMapper {
 	
 	/** Todo1件更新 */
 	public int updateOneTodo(MTodo todo, int loginUserId);
+	
+	/** Todo1件削除 */
+	public int setOneTodoDeleted(int id, int loginUserId);
 
 }

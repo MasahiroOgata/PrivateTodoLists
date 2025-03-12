@@ -23,5 +23,8 @@ public interface TodoService {
 	
 	/** Todo1件更新 */
 	public void editOneTodo(MTodo todo);
+	
+	/** Todo1件削除 */
+	public void deleteOneTodo(int id);
 
 }

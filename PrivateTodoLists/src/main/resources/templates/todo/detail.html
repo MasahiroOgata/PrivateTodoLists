@@ -8,7 +8,7 @@
 <link rel="stylesheet" th:href="@{/css/todo/detail.css}">
 <!-- TODOアイテム(フォームの初期値)をJSに渡す -->
 <script th:inline="javascript">
-	const todoForm = /*[[${todoForm}]]*/"todoForm";	
+	const previousTodo = /*[[${previousTodo}]]*/"previousTodo";	
 </script>
 <!-- 個別JS読込 -->
 <script th:src="@{/js/todo/detail.js}"></script>
@@ -41,19 +41,6 @@
 							<input type="checkbox" class="form-check-input" id="finishedCheck" checked onchange="doCheck()">
 							<label class="form-check-label" th:text="完了" ></label>	
 						</td>
-				<!--		<div th:if="${todoForm.finishedDate == null}">
-							<td >
-								<input type="checkbox" class="form-check-input" id="finishedCheck" onchange="doChange()">
-								<label class="form-check-label" th:text="完了" ></label>	
-							</td>
-						</div>
-						<div th:if="${todoForm.finishedDate != null}">
-							<td >
-								<input type="checkbox" checked class="form-check-input" id="finishedCheck" onchange="doChange()">
-								<label class="form-check-label" th:text="完了" ></label>	
-							</td>
-						</div>
-				-->
 					</tr>
 					<tr>
 						<th th:text="#{finishedDate}"></th>
@@ -66,9 +53,14 @@
 						<td th:text="${#dates.format(todoForm.registrationDate,'YYYY-MM-dd')}"></td>
 					</tr>				
 				</table>
-				<div class="text-center">
-					<a class="btn btn-secondary" th:href="@{/todo/list}">戻る</a>
-					<input type="submit" value="修正" class="btn btn-primary" id="editButton" disabled>
+				<div class="row justify-content-md-end">
+					<div class="col-6 text-center">
+						<a class="btn btn-secondary" th:href="@{/todo/list}">戻る</a>
+						<input type="submit" value="修正" class="btn btn-primary" id="editButton" disabled>
+					</div>
+					<div class="col-2 text-right">
+						<a class="btn btn-danger">削除</a>
+					</div>
 				</div>
 			</form>
 		
