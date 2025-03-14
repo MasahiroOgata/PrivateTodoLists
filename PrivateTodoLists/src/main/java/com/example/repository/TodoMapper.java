@@ -16,18 +16,18 @@ public interface TodoMapper {
 	public int countUserOwnTable(String signupUserId);
 	
 	/** Todoリスト取得 */
-	public List<MTodo> findManyTodo(int loginUserId);
+	public List<MTodo> findManyTodo(String loginUserId);
 	
 	/** Todo1件取得 */
-	public MTodo findOneTodo(int id, int loginUserId);
+	public MTodo findOneTodo(int id, String loginUserId);
 	
 	/** Todo1件登録 */
-	public int insertOneTodo(MTodo todo, int loginUserId);
+	public int insertOneTodo(MTodo todo, String loginUserId);
 	
 	/** Todo1件更新 */
-	public int updateOneTodo(MTodo todo, int loginUserId);
+	public int updateOneTodo(MTodo todo, String loginUserId);
 	
 	/** Todo1件削除 */
-	public int setOneTodoDeleted(int id, int loginUserId);
+	public int setOneTodoDeleted(int id, String loginUserId);
 
 }

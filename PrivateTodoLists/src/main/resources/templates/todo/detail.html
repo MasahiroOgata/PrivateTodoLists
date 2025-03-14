@@ -11,10 +11,29 @@
 	const previousTodo = /*[[${previousTodo}]]*/"previousTodo";	
 </script>
 <!-- 個別JS読込 -->
-<script th:src="@{/js/todo/detail.js}"></script>
+<script th:src="@{/js/todo/detail.js}" defer></script>
 </head>
 <body>
 	<div layout:fragment="content">
+		
+		<div class="modal-wrapper" id="deleteConfirmModal">
+			<div class="modal container-fluid">
+				<div class="modal-header">
+					<button type="button" class="btn-close"></button>
+				</div>
+				<div class="modal-body">
+				<p class="text-center" th:text="この項目を削除しますか？"></p>
+				</div>				
+				<form method="post" th:action="@{'/todo/delete/' + ${todoForm.id}}">
+					<div class="row justify-content-center">
+						<button type="button" class="btn btn-primary rounded-pill col-4 mx-2" id="closeModal">戻る</button>
+						<!--<a class="btn btn-danger rounded-pill col-4 mx-2" th:href="@{'/todo/delete/' + ${todoForm.id}}">削除</a> -->
+						<input type="submit" value="削除" class="btn btn-danger rounded-pill col-4 mx-2">
+					</div>
+				</form>				
+			</div>
+		</div>
+		
 		<div class="header border-bottom">
 			<h1 class="h2">TODO詳細・修正</h1>
 		</div>
@@ -53,13 +72,14 @@
 						<td th:text="${#dates.format(todoForm.registrationDate,'YYYY-MM-dd')}"></td>
 					</tr>				
 				</table>
-				<div class="row justify-content-md-end">
-					<div class="col-6 text-center">
+				<div class="row">
+					<div class="col-4"></div>
+					<div class="col-4 text-center">
 						<a class="btn btn-secondary" th:href="@{/todo/list}">戻る</a>
 						<input type="submit" value="修正" class="btn btn-primary" id="editButton" disabled>
 					</div>
-					<div class="col-2 text-right">
-						<a class="btn btn-danger">削除</a>
+					<div class="col-4 text-end">
+						<a class="btn btn-danger" id="openModal">削除</a>
 					</div>
 				</div>
 			</form>

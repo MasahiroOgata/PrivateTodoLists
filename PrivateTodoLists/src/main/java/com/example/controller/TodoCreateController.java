@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.domain.todo.model.MTodo;
 import com.example.domain.todo.service.TodoService;
@@ -41,7 +42,8 @@ public class TodoCreateController {
 	}
 	
 	@PostMapping("")
-	public String createTodo(Model model, @ModelAttribute @Validated TodoForm form, BindingResult bindingResult) {
+	public String createTodo(Model model, @ModelAttribute @Validated TodoForm form, 
+			BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 		
 		if (bindingResult.hasErrors()) {
 			return createTodo(model,form);
@@ -53,6 +55,8 @@ public class TodoCreateController {
 		MTodo todo = modelMapper.map(form, MTodo.class);
 		
 		todoService.createOneTodo(todo);
+		
+		redirectAttributes.addFlashAttribute("flashMsg", "作業を登録しました");
 		
 		return "redirect:/todo/list";
 	}

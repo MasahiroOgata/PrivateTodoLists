@@ -4,11 +4,32 @@
 	layout:decorate="~{layout/layout}">
 <head>
 <title>作業一覧</title>
+<!-- 個別JS読込 -->
+<script th:src="@{/js/todo/list.js}" defer></script>
 <!-- 個別CSS読込 -->
 <link rel="stylesheet" th:href="@{/css/todo/list.css}">
+<!-- flashMsgをJSに渡す -->
+<script th:inline="javascript">
+	var flashMsg = /*[[${flashMsg}]]*/"flashMsg"
+</script>
 </head>
 <body>
 	<div layout:fragment="content">
+		
+		<div class="modal-wrapper" id="msgModal">
+			<div class="modal container-fluid">
+				<div class="modal-header">
+					<button type="button" class="btn-close"></button>
+				</div>
+				<div class="modal-body">
+				<p class="text-center" th:text="${flashMsg}"></p>
+				</div>
+				<div class="row justify-content-center">
+					<button type="button" class="btn btn-primary rounded-pill col-4" id="closeModal">OK</button>
+				</div>
+			</div>
+		</div>
+		
 		<div class="header border-bottom row justify-content-between mx-1">
 			<h1 class="h2">作業一覧</h1>
 		</div>
@@ -32,13 +53,15 @@
 						<td th:text="${item.finishedDate == null}? '未' : ${#dates.format(item.finishedDate,'YYYY-MM-dd')}"></td>
 						<td class="btn-wrapper row">							
 							<a class="btn btn-sm rounded-pill col-5 mx-1" th:href="@{'/todo/finish/' + ${item.id}}"
-							th:text="${item.finishedDate == null}? '完了する' : '未完了にする'" th:classappend="${item.finishedDate == null}? 'btn-outline-primary' : 'btn-outline-danger' "></a>
-							<a class="btn btn-info btn-sm rounded-pill col-5 mx-1" th:href="@{'/todo/detail/' + ${item.id}}">詳細</a>
+							th:text="${item.finishedDate == null}? '完了する' : '未完了にする'" 
+							th:classappend="${item.finishedDate == null}? 'btn-outline-primary' : 'btn-outline-danger' "></a>
+							<a class="btn btn-outline-success btn-sm rounded-pill col-5 mx-1" th:href="@{'/todo/detail/' + ${item.id}}">詳細</a>
 						</td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
+		
 	</div>	
 </body>
 </html>

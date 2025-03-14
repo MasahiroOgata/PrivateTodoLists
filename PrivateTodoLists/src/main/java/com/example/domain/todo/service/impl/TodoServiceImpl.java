@@ -20,10 +20,10 @@ public class TodoServiceImpl implements TodoService {
 	@Autowired
 	private TodoMapper todoMapper;
 	
-	private int getLoginUserId() {
+	private String getLoginUserId() {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		UserWithNameAndId userWithNameAndId = (UserWithNameAndId) authentication.getPrincipal();
-		return userWithNameAndId.getId();
+		return String.valueOf(userWithNameAndId.getId());
 	}
 	
 	/** ユーザー固有のTODOテーブルを作成 */

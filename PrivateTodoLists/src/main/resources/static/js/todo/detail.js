@@ -20,7 +20,7 @@ function doCheck() {
 			$('#finishedDate').val(finishedDateValue);
 		}
 	} else {
-		finishedDateValue = document.getElementById('finishedDate').value;
+		finishedDateValue = $('#finishedDate').val();
 		$('#finishedDate').val(null);
 		document.getElementById('finishedDate').disabled = true;
 	}
@@ -28,9 +28,9 @@ function doCheck() {
 }
 
 function enableEdit() {	
-	const inputItemName = document.getElementById('itemName').value;
-	const inputExpireDate = document.getElementById('expireDate').value;
-	const inputFinishedDate = document.getElementById('finishedDate').value;
+	const inputItemName = $('#itemName').val();
+	const inputExpireDate = $('#expireDate').val();
+	const inputFinishedDate = $('#finishedDate').val();
 	
 	if (inputItemName == previousTodo.itemName 
 		&& inputExpireDate == previousTodo.expireDate
@@ -42,3 +42,12 @@ function enableEdit() {
 		document.getElementById('editButton').disabled = false;
 	}
 }
+
+$("#openModal").click(function(){
+	$("#deleteConfirmModal").fadeIn(200);
+	$(".modal").fadeIn(200);
+});
+
+$("#closeModal, .btn-close").click(function() {
+	$("#deleteConfirmModal").hide();
+});
