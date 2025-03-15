@@ -41,45 +41,47 @@
 				<input type="hidden" th:field="*{registrationDate}">
 				<p th:if="${#fields.hasErrors('itemName')}" th:errors="*{itemName}" class="text-center text-danger"></p>
 				<p th:if="${#fields.hasErrors('expireDate')}" th:errors="*{expireDate}" class="text-center text-danger"></p>
-				<table class="table table-striped table-bordered table-hover">
-					<tr>
-						<th th:text="#{itemName}"></th>
-						<td>
-							<input type="text" class="form-control" th:field="*{itemName}" oninput="enableEdit()" th:errorclass="is-invalid">
-						</td>
-					</tr>
-					<tr>
-						<th th:text="#{expireDate}"></th>
-						<td>
-							<input type="date" class="form-control" th:field="*{expireDate}" placeholder="yyyy-MM-dd" oninput="enableEdit()" th:errorclass="is-invalid">
-						</td>
-					</tr>
-					<tr>
-						<th></th>
-						<td >
-							<input type="checkbox" class="form-check-input" id="finishedCheck" checked onchange="doCheck()">
-							<label class="form-check-label" th:text="完了" ></label>	
-						</td>
-					</tr>
-					<tr>
-						<th th:text="#{finishedDate}"></th>
-						<td>
-							<input type="date" class="form-control" th:field="*{finishedDate}" placeholder="yyyy-MM-dd" oninput="enableEdit()" disabled>
-						</td>
-					</tr>
-					<tr>
-						<th th:text="#{registrationDate}"></th>
-						<td th:text="${#dates.format(todoForm.registrationDate,'YYYY-MM-dd')}"></td>
-					</tr>				
-				</table>
-				<div class="row">
-					<div class="col-4"></div>
-					<div class="col-4 text-center">
-						<a class="btn btn-secondary" th:href="@{/todo/list}">戻る</a>
-						<input type="submit" value="修正" class="btn btn-primary" id="editButton" disabled>
-					</div>
-					<div class="col-4 text-end">
-						<a class="btn btn-danger" id="openModal">削除</a>
+				<div class="table-conatiner">
+					<table class="table table-striped table-bordered table-hover">
+						<tr>
+							<th th:text="#{itemName}"></th>
+							<td>
+								<input type="text" class="form-control" th:field="*{itemName}" oninput="enableEdit()" th:errorclass="is-invalid">
+							</td>
+						</tr>
+						<tr>
+							<th th:text="#{expireDate}"></th>
+							<td>
+								<input type="date" class="form-control" th:field="*{expireDate}" placeholder="yyyy-MM-dd" oninput="enableEdit()" th:errorclass="is-invalid">
+							</td>
+						</tr>
+						<tr>
+							<th></th>
+							<td >
+								<input type="checkbox" class="form-check-input" id="finishedCheck" checked onchange="doCheck()">
+								<label class="form-check-label" th:text="完了" ></label>	
+							</td>
+						</tr>
+						<tr>
+							<th th:text="#{finishedDate}"></th>
+							<td>
+								<input type="date" class="form-control" th:field="*{finishedDate}" placeholder="yyyy-MM-dd" oninput="enableEdit()" disabled>
+							</td>
+						</tr>
+						<tr>
+							<th th:text="#{registrationDate}"></th>
+							<td th:text="${#dates.format(todoForm.registrationDate,'YYYY-MM-dd')}"></td>
+						</tr>				
+					</table>
+					<div class="row justify-content-between">
+						<div class="col-3"></div>
+						<div class="col-6 row justify-content-center">
+							<a class="btn btn-secondary rounded-pill col-4 mx-1" th:href="@{/todo/list}">戻る</a>
+							<input type="submit" value="修正" class="btn btn-primary rounded-pill col-4 mx-1" id="editButton" disabled>
+						</div>
+						<div class="col-3 row justify-content-end"> 
+							<a class="btn btn-danger rounded-pill col-9 mx-3" id="openModal">削除</a>
+						</div>
 					</div>
 				</div>
 			</form>

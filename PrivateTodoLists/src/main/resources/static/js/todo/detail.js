@@ -36,7 +36,7 @@ function enableEdit() {
 		&& inputExpireDate == previousTodo.expireDate
 		&& (inputFinishedDate == previousTodo.finishedDate
 			|| (!inputFinishedDate && !previousTodo.finishedDate))
-		) {
+			) {
 		document.getElementById('editButton').disabled = true;
 	} else {
 		document.getElementById('editButton').disabled = false;
@@ -50,4 +50,13 @@ $("#openModal").click(function(){
 
 $("#closeModal, .btn-close").click(function() {
 	$("#deleteConfirmModal").hide();
+});
+
+$(function() {
+	$(".modal-wrapper").click(function () {	    
+	        $(".modal-wrapper").hide();	    
+	});
+	$(".modal").click(function(e){
+		e.stopPropagation();
+	});
 });

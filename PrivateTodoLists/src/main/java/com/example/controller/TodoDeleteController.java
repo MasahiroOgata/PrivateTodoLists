@@ -2,7 +2,6 @@ package com.example.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,14 +15,6 @@ public class TodoDeleteController {
 	
 	@Autowired
 	TodoService todoService;
-	
-	@GetMapping("{id}")
-	public String getDeleteTodo(RedirectAttributes redirectAttributes) {
-		
-		redirectAttributes.addFlashAttribute("flashMsg", "項目を削除しました");
-		
-		return "redirect:/todo/list";
-	}
 	
 	@PostMapping("{id}")
 	public String deleteTodo(@PathVariable("id") int id, RedirectAttributes redirectAttributes) {
