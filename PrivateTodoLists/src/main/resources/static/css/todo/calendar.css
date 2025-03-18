@@ -30,12 +30,12 @@
     width: 100%;
     background-color: rgba(0, 0, 0, 0.6);
     z-index: 100;
-    display: block;
+    display: none;
 }
 
 .modal {
     position: absolute;
-    background-color: aliceblue;
+    background-color:white;
     width: 50%;
     height: 50%;
     border-radius: 10px;    
@@ -47,5 +47,21 @@
     left:  0; 
     right:  0; 
     margin: auto;
-     display: block;
+     display: none;
+}
+
+.fc-toolbar-chunk p {
+	display: inline;
+}
+
+.fc-toolbar-chunk p span:nth-child(1) {
+    color:#0d95f0;
+}
+
+.fc-toolbar-chunk p span:nth-child(2) {
+    color:#fd7e14;
+}
+
+.fc-toolbar-chunk p span:nth-child(3) {
+    color:#dc3545;
 }

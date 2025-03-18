@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.domain.todo.model.MTodo;
@@ -32,8 +33,18 @@ public class TodoCreateController {
 	private ModelMapper modelMapper;
 	
 	@GetMapping("")
-	public String createTodo(Model model, @ModelAttribute TodoForm form) {
-		
+	public String createTodo(@RequestParam(required = false) String expireDate,
+			Model model, @ModelAttribute TodoForm form) {
+		if (expireDate != null) {
+//			 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-");
+//			try  {
+//				Date newExpireDate = sdf.parse(expireDate);
+//				form.setExpireDate(newExpireDate);
+//			} catch (ParseException e) {
+//				
+//			}
+			form.setExpireDate(java.sql.Date.valueOf(expireDate));			
+		}
 		if (form.getExpireDate() == null) {
 			form.setExpireDate(new Date());
 		}
@@ -42,11 +53,12 @@ public class TodoCreateController {
 	}
 	
 	@PostMapping("")
-	public String createTodo(Model model, @ModelAttribute @Validated TodoForm form, 
+	public String createTodo(@RequestParam(required = false) String expireDate, 
+			Model model, @ModelAttribute @Validated TodoForm form, 
 			BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 		
 		if (bindingResult.hasErrors()) {
-			return createTodo(model,form);
+			return createTodo(expireDate, model, form);
 		}
 		
 		log.info(form.toString());

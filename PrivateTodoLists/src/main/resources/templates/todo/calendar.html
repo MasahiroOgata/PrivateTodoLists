@@ -19,16 +19,21 @@
 	<div layout:fragment="content">
 		
 		<div class="modal-wrapper" id="event-modal">
-			<div class="modal container-fluid">
+			<div class="modal d-flex flex-column container-fluid">
 				<div class="modal-header">
-					<p id="event-date"></p>
+					<h3 id="event-date"></h3>
 					<button type="button" class="btn-close"></button>
 				</div>
 				<div class="modal-body">
+					<h4 id="no-todo-msg" class="fw-normal"></h4>
 					<table id="event-table" class="table table-striped table-hover">
 						<tbody id="event-content"></tbody>
 			    	</table>
-				</div>
+			    	
+				</div>			
+				<div class="text-cener text-center mt-auto">
+			    	<a id="todo-create-btn" class="btn btn-primary rounded-pill mb-3">作業登録</a>
+			    </div>
 			</div>
 		</div>
 		
