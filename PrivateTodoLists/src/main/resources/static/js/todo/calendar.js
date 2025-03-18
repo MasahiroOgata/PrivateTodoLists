@@ -51,7 +51,7 @@ window.onload = function() {
 			}
             
             $("#event-content").html("");
-            $("#NoTodoMsg").text('');
+            $("#no-todo-msg").text('');
             $(".modal").css("overflow-y", "");
             var todaysEvents = todoEvents.filter((event) =>{
 				return event.start == clickedDate
