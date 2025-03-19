@@ -27,7 +27,6 @@
 				<form method="post" th:action="@{'/todo/delete/' + ${todoForm.id}}">
 					<div class="row justify-content-center">
 						<button type="button" class="btn btn-primary rounded-pill col-4 mx-2" id="closeModal">戻る</button>
-						<!--<a class="btn btn-danger rounded-pill col-4 mx-2" th:href="@{'/todo/delete/' + ${todoForm.id}}">削除</a> -->
 						<input type="submit" value="削除" class="btn btn-danger rounded-pill col-4 mx-2">
 					</div>
 				</form>				
@@ -85,15 +84,8 @@
 					</div>
 				</div>
 			</form>
-		
-		
-		
 	</div>
-	
-	
 
 </body>
-
-
 
 </html>
