@@ -44,12 +44,12 @@ function enableEdit() {
 }
 
 $("#openModal").click(function(){
-	$("#deleteConfirmModal").fadeIn(200);
+	$("#delete-confirm-modal").fadeIn(200);
 	$(".modal").fadeIn(200);
 });
 
 $("#closeModal, .btn-close").click(function() {
-	$("#deleteConfirmModal").hide();
+	$("#delete-confirm-modal").hide();
 });
 
 $(function() {

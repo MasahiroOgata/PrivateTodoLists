@@ -4,8 +4,8 @@
 	
 <!-- Mapperとxmlのマッピング -->
 <mapper namespace="com.example.repository.TodoMapper">
-	
-	<!-- ユーザー固有のTODOテーブルを作成 -->
+	  
+	<!-- ユーザー固有のTODOテーブルを作成
 	<update id="createUserOwnTable">
 		create table if not exists
 			todo_items_user_${signupUserId}
@@ -23,7 +23,7 @@
 		)
 	</update>
 	
-	<!-- 作成された固有テーブルの存在を確認 -->
+	 作成された固有テーブルの存在を確認 
 	<select id="countUserOwnTable" resultType="Integer">
 		select
 		  count(*)
@@ -33,15 +33,17 @@
 		  table_schema = 'private_todo' and
 		  table_name = concat('todo_items_user_', #{signupUserId})	
 	</select>
+	 -->
 	
 	<!-- Todo複数件取得 -->
 	<select id="findManyTodo" resultType="MTodo">
 		select
 			*
 		from
-			todo_items_user_${loginUserId}
+			todo_items
 		where
-			is_deleted = 0
+			user_id = #{userId}
+			and is_deleted = 0
 		order
 			by expire_date
 	</select>
@@ -51,48 +53,54 @@
 		select
 			*
 		from
-			todo_items_user_${loginUserId}
+			todo_items
 		where
 			id = #{id}
+			and user_id = #{userId}
+			and is_deleted = 0
 	</select>
 	
 	<!-- Todo1件登録 -->
 	<insert id="insertOneTodo">
 		insert into
-			todo_items_user_${loginUserId}
+			todo_items
 		(
 			item_name,
+			user_id,
 			registration_date,
 			expire_date,
 			finished_date
 		) values (
-			#{todo.itemName},
-			#{todo.registrationDate},
-			#{todo.expireDate},
-			#{todo.finishedDate}
+			#{itemName},
+			#{userId},
+			#{registrationDate},
+			#{expireDate},
+			#{finishedDate}
 		)
 	</insert>
 	
 	<!-- Todo1件更新 -->
 	<update id="updateOneTodo">
 		update
-			todo_items_user_${loginUserId}
+			todo_items
 		set
-			item_name = #{todo.itemName},
-			expire_date = #{todo.expireDate},
-			finished_date = #{todo.finishedDate}
+			item_name = #{itemName},
+			expire_date = #{expireDate},
+			finished_date = #{finishedDate}
 		where
-			id = #{todo.id}
+			id = #{id}
+			and user_id = #{userId}
 	</update>
 	
 	<!-- Todo1件削除 -->
 	<update id="setOneTodoDeleted">
 		update
-			todo_items_user_${loginUserId}
+			todo_items
 		set
 			is_deleted = 1
 		where
 			id = #{id}
+			and user_id = #{userId}
 	</update>
 	
 </mapper>

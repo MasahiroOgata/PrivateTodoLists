@@ -12,11 +12,13 @@
 <script th:inline="javascript">
 	var flashMsg = /*[[${flashMsg}]]*/"flashMsg"
 </script>
+<!--	var isShowingFinishedTodo = /*[[${isShowingFinishedTodo}]]*/"isShowingFinishedTodo"
+-->
 </head>
 <body>
 	<div layout:fragment="content">
 		
-		<div class="modal-wrapper" id="msgModal">
+		<div class="modal-wrapper" id="msg-modal">
 			<div class="modal container-fluid">
 				<div class="modal-header">
 					<button type="button" class="btn-close"></button>
@@ -25,18 +27,54 @@
 				<p class="text-center" th:text="${flashMsg}"></p>
 				</div>
 				<div class="row justify-content-center">
-					<button type="button" class="btn btn-primary rounded-pill col-4" id="closeModal">OK</button>
+					<button type="button" class="btn btn-primary rounded-pill col-4" id="close-modal">OK</button>
 				</div>
 			</div>
 		</div>
 		
 		<div class="header border-bottom row justify-content-between mx-1">
-			<h1 class="h2">作業一覧</h1>
+			<div class="d-inline-flex col">
+				<h1 class="h2">作業一覧</h1>
+				<div th:if="not ${#lists.isEmpty(todoList)}">
+					<div class="form-check form-switch mx-3 mt-3">
+						<input class="form-check-input" type="checkbox" role="switch" 
+						th:checked="${session.isShowingFinishedTodo}"
+						id ="finishedCheck" 
+						onchange="toggleShowFinishedTodo()">
+						<label class="form-check-label">完了タスクを表示</label>
+					</div>
+				</div>
+			</div>
 		</div>
 		<div th:if="${#lists.isEmpty(todoList)}">
 			<h3 class="text-info text-center">“作業登録”からタスクを登録してください</h3>
+		</div >
+		<div id="todo-table-all"th:if="not ${#lists.isEmpty(todoList)}">
+			<table class="table table-striped table-hover">
+				<thead class="thead-light">
+					<tr>
+						<th>項目</th>
+						<th>期限日</th>
+						<th>完了日</th>
+						<th>操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="item: ${todoList}">					
+						<td th:text="${item.itemName}"></td>
+						<td th:text="${#dates.format(item.expireDate,'YYYY-MM-dd')}"></td>
+						<td th:text="${item.finishedDate == null}? '未' : ${#dates.format(item.finishedDate,'YYYY-MM-dd')}"></td>
+						<td class="btn-wrapper row">							
+							<a class="btn btn-sm rounded-pill col-5 mx-1" th:href="@{'/todo/finish/' + ${item.id}}"
+							th:text="${item.finishedDate == null}? '完了する' : '未完了にする'" 
+							th:classappend="${item.finishedDate == null}? 'btn-outline-primary' : 'btn-outline-danger' "></a>
+							<a class="btn btn-outline-success btn-sm rounded-pill col-5 mx-1" th:href="@{'/todo/detail/' + ${item.id}}">詳細</a>
+						</td>					
+					</tr>
+				</tbody>
+			</table>
 		</div>
-		<div th:if="not ${#lists.isEmpty(todoList)}">
+		<div id="todo-table-finished"th:if="not ${#lists.isEmpty(todoList)}">
 			<table class="table table-striped table-hover">
 				<thead class="thead-light">
 					<tr>
@@ -48,15 +86,17 @@
 				</thead>
 				<tbody>
 					<tr th:each="item: ${todoList}">
-						<td th:text="${item.itemName}"></td>
-						<td th:text="${#dates.format(item.expireDate,'YYYY-MM-dd')}"></td>
-						<td th:text="${item.finishedDate == null}? '未' : ${#dates.format(item.finishedDate,'YYYY-MM-dd')}"></td>
-						<td class="btn-wrapper row">							
-							<a class="btn btn-sm rounded-pill col-5 mx-1" th:href="@{'/todo/finish/' + ${item.id}}"
-							th:text="${item.finishedDate == null}? '完了する' : '未完了にする'" 
-							th:classappend="${item.finishedDate == null}? 'btn-outline-primary' : 'btn-outline-danger' "></a>
-							<a class="btn btn-outline-success btn-sm rounded-pill col-5 mx-1" th:href="@{'/todo/detail/' + ${item.id}}">詳細</a>
-						</td>
+						<div th:if="${item.finishedDate == null}">
+							<td th:text="${item.itemName}"></td>
+							<td th:text="${#dates.format(item.expireDate,'YYYY-MM-dd')}"></td>
+							<td th:text="${item.finishedDate == null}? '未' : ${#dates.format(item.finishedDate,'YYYY-MM-dd')}"></td>
+							<td class="btn-wrapper row">							
+								<a class="btn btn-sm rounded-pill col-5 mx-1" th:href="@{'/todo/finish/' + ${item.id}}"
+								th:text="${item.finishedDate == null}? '完了する' : '未完了にする'" 
+								th:classappend="${item.finishedDate == null}? 'btn-outline-primary' : 'btn-outline-danger' "></a>
+								<a class="btn btn-outline-success btn-sm rounded-pill col-5 mx-1" th:href="@{'/todo/detail/' + ${item.id}}">詳細</a>
+							</td>
+						</div>
 					</tr>
 				</tbody>
 			</table>

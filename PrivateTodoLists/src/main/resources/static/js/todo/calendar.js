@@ -35,30 +35,28 @@ window.onload = function() {
         
         eventClick: function(e) {
 			$("#event-modal").fadeIn(200);
-            $(".modal").fadeIn(200); 
-            $("#event-date").text("");            
+            $(".modal").fadeIn(200);                        
             $("#event-content").html("");
-            $("#no-todo-msg").text('');
+            $("#no-todo-msg").text("");
             $(".modal").css("overflow-y", "");     
             
-            $(".modal").css({'height': '200px','width': '50%'});
+            $(".modal").css({'height': '250px','width': '50%', 'max-width': '750px', 'min-width': '400px'});
             
             var clickedEvent = todoList.find((todo) =>{
 				return todo.id == e.event.id;
 			});			
-            var finishedDateMsg;
+            var finishedDateTxt;
             if (clickedEvent.finishedDate != null) {
-				finishedDateMsg = clickedEvent.finishedDate + "完了";
+				finishedDateTxt = clickedEvent.finishedDate + "完了";
 			} else {
-				finishedDateMsg = "未完了"
+				finishedDateTxt = "未完了"
 			}
-
+			
+			$("#event-date").text(e.event.title); 
             $("#event-content").append('<tr><td>'
-                         + e.event.title
-                         + '</td><td>'
                          + e.event.startStr + "まで"
                          + '</td><td>'
-                         + finishedDateMsg
+                         + finishedDateTxt
                          + '</td></tr>'
                          ); 
             
@@ -79,17 +77,18 @@ window.onload = function() {
             					+ clickedDate.substr(8, 2) + "日");
             
             $("#event-content").html("");
-            $("#no-todo-msg").text('');
+            $("#no-todo-msg").text("");
             $(".modal").css("overflow-y", "");
+            
             var todaysEvents = todoEvents.filter((event) =>{
 				return event.start == info.dateStr
 			});
 			console.log(todaysEvents);
 			if (todaysEvents.length == 0) {
 				$(".modal").css({'height': '250px','width': '400px'});
-				$("#no-todo-msg").text('期限が設定された作業はありません');
+				$("#no-todo-msg").text("期限が設定された作業はありません");
 			} else {
-				$(".modal").css({'height': '400px','width': '50%'});
+				$(".modal").css({'height': '400px', 'width':'50%', 'max-width': '750px', 'min-width': '400px'});
 			}
 
 			todaysEvents.forEach((event) => {

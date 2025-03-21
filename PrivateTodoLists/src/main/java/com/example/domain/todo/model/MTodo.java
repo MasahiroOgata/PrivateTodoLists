@@ -7,6 +7,7 @@ import lombok.Data;
 @Data
 public class MTodo {
 	private Integer id;
+	private Integer userId;
 	private String itemName;
 	private Date registrationDate;
 	private Date expireDate;

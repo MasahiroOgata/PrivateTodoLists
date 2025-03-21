@@ -46,7 +46,7 @@ public class SignupController {
 		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 		MUser user = modelMapper.map(form, MUser.class);
 		
-		userService.signupUserAndCreateOwnTable(user);
+		userService.signupUser(user);
 		
 		log.info(user.toString());
 		

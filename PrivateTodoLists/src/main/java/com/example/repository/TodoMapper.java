@@ -9,25 +9,25 @@ import com.example.domain.todo.model.MTodo;
 @Mapper
 public interface TodoMapper {
 	
-	/** ユーザー固有のTODOテーブルを作成 */
-	public int createUserOwnTable(String signupUserId);
-	
-	/** 作成された固有テーブルの存在を確認 */
-	public int countUserOwnTable(String signupUserId);
+//	/** ユーザー固有のTODOテーブルを作成 */
+//	public int createUserOwnTable(String signupUserId);
+//	
+//	/** 作成された固有テーブルの存在を確認 */
+//	public int countUserOwnTable(String signupUserId);
 	
 	/** Todoリスト取得 */
-	public List<MTodo> findManyTodo(String loginUserId);
+	public List<MTodo> findManyTodo(int userId);
 	
 	/** Todo1件取得 */
-	public MTodo findOneTodo(int id, String loginUserId);
+	public MTodo findOneTodo(int id, int userId);
 	
 	/** Todo1件登録 */
-	public int insertOneTodo(MTodo todo, String loginUserId);
+	public int insertOneTodo(MTodo todo);
 	
 	/** Todo1件更新 */
-	public int updateOneTodo(MTodo todo, String loginUserId);
+	public int updateOneTodo(MTodo todo);
 	
 	/** Todo1件削除 */
-	public int setOneTodoDeleted(int id, String loginUserId);
+	public int setOneTodoDeleted(int id, int userId);
 
 }

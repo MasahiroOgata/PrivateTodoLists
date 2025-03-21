@@ -5,7 +5,6 @@ import java.util.Objects;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.example.domain.todo.service.TodoService;
 import com.example.domain.user.model.MUser;
@@ -24,18 +23,18 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
-	/** ユーザー登録、および固有のTODOテーブルの作成・確認 */
-	@Transactional
+	/** ユーザー登録 */
+//	@Transactional
 	@Override	
-	public void signupUserAndCreateOwnTable(MUser user) {
+	public void signupUser(MUser user) {
 		String rawPassword = user.getPassword();
 		user.setPassword(passwordEncoder.encode(rawPassword));
 		userMapper.insertOneUser(user);
-		String signupUserId = String.valueOf(user.getId());
-		todoService.makeUserOwnTable(signupUserId);
-		if (!todoService.existsUserOwnTable(signupUserId)) {
-			throw new RuntimeException();
-		}
+//		String signupUserId = String.valueOf(user.getId());
+//		todoService.makeUserOwnTable(signupUserId);
+//		if (!todoService.existsUserOwnTable(signupUserId)) {
+//			throw new RuntimeException();
+//		}
 	}
 	
 	/** ユーザーID重複確認 */

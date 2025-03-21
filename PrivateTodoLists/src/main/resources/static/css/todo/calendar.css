@@ -74,7 +74,9 @@
     cursor: pointer;
 }
 
-
+#modal-close, #todo-transition-btn {
+	width: 150px;
+}
 
 
 
