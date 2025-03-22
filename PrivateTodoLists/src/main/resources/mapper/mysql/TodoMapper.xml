@@ -61,7 +61,7 @@
 	</select>
 	
 	<!-- Todo1件登録 -->
-	<insert id="insertOneTodo">
+	<insert id="insertOneTodo" useGeneratedKeys="true" keyProperty="id">
 		insert into
 			todo_items
 		(

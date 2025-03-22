@@ -69,6 +69,7 @@ public class TodoCreateController {
 		todoService.createOneTodo(todo);
 		
 		redirectAttributes.addFlashAttribute("flashMsg", "作業を登録しました");
+		redirectAttributes.addFlashAttribute("newTodoId", todo.getId());
 		
 		return "redirect:/todo/list";
 	}
