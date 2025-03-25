@@ -92,13 +92,17 @@ window.onload = function() {
 			}
 
 			todaysEvents.forEach((event) => {
-				$("#event-content").append('<tr><td>'
-                         + event.title
-                         + '</td><td class="text-center">'
+				
+				$("#event-content").append('<tr><td class="title">' 
+			           
+             	         +'</td><td class="text-center" style="width: 25%">'
                          + '<a class="btn btn-outline-success btn-sm rounded-pill col-6" href="/todo/detail/'
                          + event.id
                          + '">詳細</a></td></tr>'
-                         ); 
+                         );
+                         $("#event-content tr:last-child td:first-child").text(event.title);
+//                         $(".title").text(event.title);
+//                         $("td").removeClass("title"); 
  			});
  			$("#todo-transition-btn").text("作業登録").removeClass("btn-outline-success").addClass("btn-primary");
  			$("#todo-transition-btn").attr("href","/todo/create?expireDate=" + info.dateStr);		
