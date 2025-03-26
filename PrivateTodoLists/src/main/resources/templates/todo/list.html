@@ -33,9 +33,9 @@
 			</div>
 		</div>
 		
-		<div class="header border-bottom row justify-content-between mx-1">
+		<div class="header border-bottom justify-content-between row">
 			<div class="d-inline-flex col">
-				<h1 class="h2">作業一覧</h1>
+				<h1 class="h2 mx-2 text-white">作業一覧</h1>
 				<div th:if="not ${#lists.isEmpty(todoList)}">
 					<div class="form-check form-switch mx-3 mt-3">
 						<label class="form-check-label">完了済みタスクを非表示にする</label>
@@ -46,49 +46,83 @@
 					</div>
 				</div>
 			</div>
+			<div class="d-inline-flex col justify-content-end">
+				<form method="get" th:action="@{/todo/list}" class="row">
+					<div class="col" style="width: 300px">
+						<input type="text" class="form-control" name="search" th:value="${search}">
+					</div>
+					<div class="col">
+						<button type="submit" class="btn btn-primary rounded-pill mx-3">検索</button>
+					</div>
+				</form>
+			</div>
 		</div>
 		
-		<h3 class="text-info text-center" id="no-task-msg"></h3>
+		<h3 class="text-info text-center bg-white" id="no-task-msg"></h3>
 		
-		<div id="todo-table-all"th:if="not ${#lists.isEmpty(todoList)}">
-			<table class="table table-striped table-hover table-responsive">
-				<thead class="thead-light">
-					<tr>
-						<th style="width: 5%"></th>
-						<th style="width: 40%">項目</th>
-						<th style="width: 15%">期限日</th>
-						<th style="width: 15%">完了日</th>
-						<th style="width: 25%">操作</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr th:each="item: ${todoList}">
-						<td>
-							<th:block th:if="${item.id == newTodoId}">
-								<span class="fs-6 fst-italic text-primary">new</span>
-							</th:block>	
-							<th:block th:if="${item.finishedDate == null && item.expireDate lt today}">
-								<span class="fs-6 text-danger">期限切れ</span>
-							</th:block>
-							<th:block th:if="${item.finishedDate == null && item.expireDate eq today}">
-								<span class="fs-6 text-warning">本日まで</span>
-							</th:block>
-						</td>				
-						<td th:text="${item.itemName}"></td>
-						<td th:text="${#dates.format(item.expireDate,'YYYY-MM-dd')}"></td>
-						<td th:text="${item.finishedDate == null}? '未' : ${#dates.format(item.finishedDate,'YYYY-MM-dd')}"></td>
-						<td>
-							<div class="row">							
-							<a class="btn btn-sm rounded-pill col-5 mx-1" th:href="@{'/todo/finish/' + ${item.id}}"
-							th:text="${item.finishedDate == null}? '完了する' : '未完了にする'" 
-							th:classappend="${item.finishedDate == null}? 'btn-outline-primary' : 'btn-outline-danger' "></a>
-							<a class="btn btn-outline-success btn-sm rounded-pill col-5" th:href="@{'/todo/detail/' + ${item.id}}">詳細</a>
-							</div>
-						</td>					
-					</tr>
-				</tbody>
-			</table>
-		</div>
+		<th:block th:each="i : ${#numbers.sequence(0,1)}">
+		
+			<div th:id="${i == 0}? 'todo-table-all': 'todo-table-finished'">
+				<table class="table table-striped table-hover table-responsive">
+					<thead class="thead-light">
+						<tr>
+							<th style="width: 5%"></th>
+							<th style="width: 40%">項目</th>
+							<th style="width: 15%">期限日</th>
+							<th style="width: 15%">完了日</th>
+							<th style="width: 25%">操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						<div th:each="item: ${todoList}">
+							<tr th:if="${item.finishedDate == null || i == 0}">
+								<td>
+									<th:block th:if="${item.id == newTodoId}">
+										<span class="fs-6 fst-italic text-primary">new</span>
+									</th:block>	
+<!--									<th:block th:if="${item.finishedDate == null && item.expireDate lt today}">-->
+<!--										<span class="fs-6 text-danger">期限切れ</span>-->
+<!--									</th:block>-->
+<!--									<th:block th:if="${item.finishedDate == null && item.expireDate eq today}">-->
+<!--										<span class="fs-6 text-warning">本日まで</span>-->
+<!--									</th:block>-->
+<!--									<th:block th:if="${item.finishedDate == null && item.expireDate gt today}">										-->
+<!--										<span class="fs-6 text-secondary"th:text="|残り${(item.expireDate.getTime() - today.getTime()) / 84000000}日|"></span>-->
+<!--									</th:block>-->
+								</td>				
+								<td th:text="${item.itemName}"></td>
+								<td th:text="${#dates.format(item.expireDate,'YYYY-MM-dd')}"></td>
+								<td>
+									<th:block th:if="${item.finishedDate != null}">
+										<span th:text="${#dates.format(item.finishedDate,'YYYY-MM-dd')}"></span>
+									</th:block>
+									<th:block th:if="${item.finishedDate == null && item.expireDate lt today}">
+										<span class="text-danger">期限切れ</span>
+									</th:block>
+									<th:block th:if="${item.finishedDate == null && item.expireDate eq today}">
+										<span class="text-warning">本日まで</span>
+									</th:block>
+									<th:block th:if="${item.finishedDate == null && item.expireDate gt today}">										
+										<span class="text-primary"th:text="|残り${(item.expireDate.getTime() - today.getTime()) / 84000000}日|"></span>
+									</th:block>
+								</td>
+								<td>
+									<div class="row">							
+									<a class="btn btn-sm rounded-pill col-5 mx-1" th:href="@{'/todo/finish/' + ${item.id}}"
+									th:text="${item.finishedDate == null}? '完了する' : '未完了にする'" 
+									th:classappend="${item.finishedDate == null}? 'btn-outline-primary' : 'btn-outline-danger' "></a>
+									<a class="btn btn-outline-success btn-sm rounded-pill col-5" th:href="@{'/todo/detail/' + ${item.id}}">詳細</a>
+									</div>
+								</td>					
+							</tr>
+						</div>
+					</tbody>
+				</table>
+			</div>
+		
+		</th:block>
+		
+		<!--
 		<div id="todo-table-finished"th:if="not ${#lists.isEmpty(todoList)}">
 			<table class="table table-striped table-hover">
 				<thead class="thead-light">
@@ -128,6 +162,7 @@
 				</tbody>
 			</table>
 		</div>
+		-->
 		
 	</div>	
 </body>

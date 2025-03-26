@@ -1,5 +1,7 @@
 package com.example.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.modelmapper.ModelMapper;
@@ -36,14 +38,14 @@ public class TodoCreateController {
 	public String createTodo(@RequestParam(required = false) String expireDate,
 			Model model, @ModelAttribute TodoForm form) {
 		if (expireDate != null) {
-//			 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-");
-//			try  {
-//				Date newExpireDate = sdf.parse(expireDate);
-//				form.setExpireDate(newExpireDate);
-//			} catch (ParseException e) {
-//				
-//			}
-			form.setExpireDate(java.sql.Date.valueOf(expireDate));			
+			 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-");
+			try  {
+				Date newExpireDate = sdf.parse(expireDate);
+				form.setExpireDate(newExpireDate);
+			} catch (ParseException e) {
+				
+			}
+			//form.setExpireDate(java.sql.Date.valueOf(expireDate));			
 		}
 		if (form.getExpireDate() == null) {
 			form.setExpireDate(new Date());

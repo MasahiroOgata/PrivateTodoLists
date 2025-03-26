@@ -30,22 +30,23 @@ public class TodoListController {
 	HttpSession session;
 	
 	@GetMapping("")
-	public String showTodoList(Model model) {
+	public String showTodoList(Model model, @RequestParam(required = false) String search) {
 		
 		if (Objects.isNull(session.getAttribute("isShowingFinishedTodo"))) {
 			session.setAttribute("isShowingFinishedTodo", 0);
 		}
+		
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); 
 		Date today = new Date();
 		try {
 			today= sdf.parse(sdf.format(today));
 		} catch(ParseException e){
-		}
-		
+		}		
 		model.addAttribute("today", today);
 		
 		List<MTodo> todoList = todoService.getTodoItems();
+		model.addAttribute("search", search);
 		model.addAttribute("todoList", todoList);
 		
 		return "todo/list";

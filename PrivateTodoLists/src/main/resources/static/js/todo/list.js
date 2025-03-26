@@ -4,6 +4,8 @@ window.onload = function() {
 		  $(".modal").fadeIn(200);
 	}
 	if (todoList.length == 0) {
+		$("#todo-table-all").hide();
+		$("#todo-table-finished").hide();
 		$("#no-task-msg").text("“作業登録”からタスクを登録してください");
 		$("#no-task-msg").show();
 	} else {
