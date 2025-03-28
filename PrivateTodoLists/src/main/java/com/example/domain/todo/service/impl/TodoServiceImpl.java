@@ -39,8 +39,8 @@ public class TodoServiceImpl implements TodoService {
 	
 	/** Todoリスト取得 */
 	@Override
-	public List<MTodo> getTodoItems() {
-		return todoMapper.findManyTodo(getLoginUserId());
+	public List<MTodo> getTodoItems(String search) {
+		return todoMapper.findManyTodo(search, getLoginUserId());
 	}
 	
 	/** Todo1件取得 */

@@ -3,6 +3,7 @@ package com.example.repository;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.example.domain.todo.model.MTodo;
 
@@ -16,7 +17,7 @@ public interface TodoMapper {
 //	public int countUserOwnTable(String signupUserId);
 	
 	/** Todoリスト取得 */
-	public List<MTodo> findManyTodo(int userId);
+	public List<MTodo> findManyTodo(@Param("search") String search, int userId);
 	
 	/** Todo1件取得 */
 	public MTodo findOneTodo(int id, int userId);

@@ -32,8 +32,8 @@ public class TodoListController {
 	@GetMapping("")
 	public String showTodoList(Model model, @RequestParam(required = false) String search) {
 		
-		if (Objects.isNull(session.getAttribute("isShowingFinishedTodo"))) {
-			session.setAttribute("isShowingFinishedTodo", 0);
+		if (Objects.isNull(session.getAttribute("isHidingFinishedTodo"))) {
+			session.setAttribute("isHidingFinishedTodo", 0);
 		}
 		
 		
@@ -45,7 +45,7 @@ public class TodoListController {
 		}		
 		model.addAttribute("today", today);
 		
-		List<MTodo> todoList = todoService.getTodoItems();
+		List<MTodo> todoList = todoService.getTodoItems(search);
 		model.addAttribute("search", search);
 		model.addAttribute("todoList", todoList);
 		
@@ -56,8 +56,8 @@ public class TodoListController {
 //	public @ResponseBody String toggleShowFinishedTodo(Model model, @RequestParam boolean state) {
 	public void toggleShowFinishedTodo(Model model, @RequestParam boolean state) {
 			
-		int nowShowingState = (int) session.getAttribute("isShowingFinishedTodo");
-		session.setAttribute("isShowingFinishedTodo", Math.abs(nowShowingState - 1));
+		int nowShowingState = (int) session.getAttribute("isHidingFinishedTodo");
+		session.setAttribute("isHidingFinishedTodo", Math.abs(nowShowingState - 1));
 		
 //		List<MTodo> todoList = todoService.getTodoItems();
 //		model.addAttribute("todoList", todoList);

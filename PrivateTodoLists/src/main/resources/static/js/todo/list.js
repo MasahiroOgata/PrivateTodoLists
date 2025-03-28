@@ -5,13 +5,14 @@ window.onload = function() {
 	}
 	if (todoList.length == 0) {
 		$("#todo-table-all").hide();
-		$("#todo-table-finished").hide();
+		$("#todo-table-unfinished").hide();
 		$("#no-task-msg").text("“作業登録”からタスクを登録してください");
 		$("#no-task-msg").show();
 	} else {
 		$("#no-task-msg").hide();
 		selectShowingTable($("#finishedCheck").prop("checked"));
 	}
+	$(".badge").text($("#todo-table-unfinished tbody tr").length);
 	
 }
             
@@ -46,18 +47,18 @@ function toggleShowFinishedTodo() {
 function selectShowingTable(state) {
 	if(state) {
 		$("#todo-table-all").hide();		
-		if ($("#todo-table-finished tbody td").length == 0) {
+		if ($("#todo-table-unfinished tbody td").length == 0) {
 			$("#no-task-msg").text("未完了のタスクはありません")
 			$("#no-task-msg").show();
-			$("#todo-table-finished").hide();
+			$("#todo-table-unfinished").hide();
 		} else {
 			$("#no-task-msg").hide();
-			$("#todo-table-finished").show();
+			$("#todo-table-unfinished").show();
 		} 
 	} else {
 		$("#no-task-msg").hide();
 		$("#todo-table-all").show();
-		$("#todo-table-finished").hide();
+		$("#todo-table-unfinished").hide();
 	}
 	
 }

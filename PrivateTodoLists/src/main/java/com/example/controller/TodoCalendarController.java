@@ -21,7 +21,7 @@ public class TodoCalendarController {
 	@GetMapping("")
 	public String showCalendar(Model model) {
 		
-		List<MTodo> todoList = todoService.getTodoItems();
+		List<MTodo> todoList = todoService.getTodoItems(null);
 		
 		model.addAttribute("todoList", todoList);
 		

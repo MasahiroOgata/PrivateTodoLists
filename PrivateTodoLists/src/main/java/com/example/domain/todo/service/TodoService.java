@@ -13,7 +13,7 @@ public interface TodoService {
 //	public boolean existsUserOwnTable(String signupUserId);
 	
 	/** Todoリスト取得 */
-	public List<MTodo> getTodoItems();
+	public List<MTodo> getTodoItems(String search);
 	
 	/** Todo1件取得 */
 	public MTodo getOneTodo(int id);

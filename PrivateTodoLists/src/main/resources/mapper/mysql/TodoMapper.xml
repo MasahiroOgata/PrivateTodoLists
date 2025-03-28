@@ -44,6 +44,9 @@
 		where
 			user_id = #{userId}
 			and is_deleted = 0
+			<if test="search != null">
+				and item_name like concat('%', #{search}, '%')
+			</if>
 		order
 			by expire_date
 	</select>
