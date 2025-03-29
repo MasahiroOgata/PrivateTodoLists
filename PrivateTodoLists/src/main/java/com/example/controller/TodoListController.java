@@ -3,7 +3,9 @@ package com.example.controller;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,28 +16,35 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.domain.setting.model.MSetting;
+import com.example.domain.setting.service.SettingService;
 import com.example.domain.todo.model.MTodo;
 import com.example.domain.todo.service.TodoService;
 
 import jakarta.servlet.http.HttpSession;
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @RequestMapping("/todo/list")
+@Slf4j
 public class TodoListController {
 	
 	@Autowired
 	TodoService todoService;
 	
 	@Autowired
+	SettingService settingService;
+	
+	@Autowired
 	HttpSession session;
 	
 	@GetMapping("")
+	
 	public String showTodoList(Model model, @RequestParam(required = false) String search) {
 		
 		if (Objects.isNull(session.getAttribute("isHidingFinishedTodo"))) {
 			session.setAttribute("isHidingFinishedTodo", 0);
-		}
-		
+		}		
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); 
 		Date today = new Date();
@@ -48,6 +57,14 @@ public class TodoListController {
 		List<MTodo> todoList = todoService.getTodoItems(search);
 		model.addAttribute("search", search);
 		model.addAttribute("todoList", todoList);
+		
+		/* 画面設定サンプルコード */
+		List<MSetting> settingList = settingService.getSettingList();
+		log.info(settingList.toString());
+		Map<String, String> settingMap = new HashMap<>();
+		settingList.forEach(s -> settingMap.put(s.getCustomizeKey(), s.getCustomizeValue()));
+		log.info(settingMap.toString());
+		model.addAttribute("settingMap", settingMap);
 		
 		return "todo/list";
 	}

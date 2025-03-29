@@ -10,7 +10,7 @@
 	<link rel="stylesheet" th:href="@{/css/todo/calendar.css}">
 	<!-- TODOリストをJSに渡す -->
 	<script th:inline="javascript">
-		const todoList = /*[[${todoList}]]*/"todoList";
+		var todoList = /*[[${todoList}]]*/"todoList";
 	</script>
 	<!-- 個別JS読込 -->
 	<script th:src="@{/js/todo/calendar.js}" defer></script>

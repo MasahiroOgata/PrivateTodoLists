@@ -3,18 +3,20 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout/layout}">
 <head>
-<title>作業一覧</title>
-<!-- 個別JS読込 -->
-<script th:src="@{/js/todo/list.js}" defer></script>
-<!-- 個別CSS読込 -->
-<link rel="stylesheet" th:href="@{/css/todo/list.css}">
-<!-- flashMsg,todoListをJSに渡す -->
-<script th:inline="javascript">
-	var flashMsg = /*[[${flashMsg}]]*/"flashMsg"
-	var todoList = /*[[${todoList}]]*/"todoList"
-</script>
-<!--	var isShowingFinishedTodo = /*[[${isShowingFinishedTodo}]]*/"isShowingFinishedTodo"
--->
+	<title>作業一覧</title>
+	<!-- 個別JS読込 -->
+	<script th:src="@{/js/todo/list.js}" defer></script>
+	<!--<script th:src="@{/js/layout/layout.js}" defer></script>-->
+	<!-- 個別CSS読込 -->
+	<link rel="stylesheet" th:href="@{/css/todo/list.css}">
+	<!-- flashMsg,todoListをJSに渡す -->
+	<script th:inline="javascript">
+		var flashMsg = /*[[${flashMsg}]]*/"flashMsg"
+		var todoList = /*[[${todoList}]]*/"todoList"
+	</script>
+	<!--	var isShowingFinishedTodo = /*[[${isShowingFinishedTodo}]]*/"isShowingFinishedTodo"
+			var settingMap = /*[[${settingMap}]]*/"settingMap"
+	-->
 </head>
 <body>
 	<div layout:fragment="content">

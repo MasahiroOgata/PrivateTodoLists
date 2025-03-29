@@ -14,6 +14,13 @@ window.onload = function() {
 	}
 	$(".badge").text($("#todo-table-unfinished tbody tr").length);
 	
+//	layoutSetting();
+	
+//	$(".navbar").css({'cssText': 'background-color:' + settingMap.headerBgColor + '!important;'});
+//	$(".navbar-brand").css({'cssText': 'color:' + settingMap.headerFontColor + '!important;'});
+	
+	
+	
 }
             
 $("#close-modal, .btn-close").click(function () {
