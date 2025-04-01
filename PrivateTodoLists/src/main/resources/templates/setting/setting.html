@@ -15,20 +15,24 @@
 			<h1 class="h2 mx-2 text-white">設定変更</h1>
 		</div>
 		
-		<form class="form-setting">
+		<form class="form-setting" method="post" th:action="@{/setting}" th:object="${settingForm}">
 			<table class="table table-striped table-bordered table-hover">
 				<tr>
 					<th>ヘッダーの背景色</th>
 					<td>
-						<input id="header-bg-color" type="color" class="form-control form-control-color"
-						oninput="changeHeaderBgColor()">
+						<input type="color" class="form-control form-control-color"
+						th:field="*{headerBgColor}" oninput="changeHeaderBgColor()">
+					</td>
+				
+					<th>ヘッダーの文字色</th>
+					<td>
+						<input type="color" class="form-control form-control-color"
+						th:field="*{headerFontColor}" oninput="changeHeaderTextColor()">
 					</td>
 				</tr>
 				<tr>
-					<th>ヘッダーの文字色</th>
-					<td>
-						<input id="header-text-color" type="color" class="form-control form-control-color"
-						oninput="changeHeaderTextColor()">
+					<td colspan="4" class="text-center">
+						<input type="submit" value="決定" class="btn btn-primary rounded-pill col-3">
 					</td>
 				</tr>
 								

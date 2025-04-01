@@ -3,9 +3,7 @@ package com.example.controller;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.example.domain.setting.model.MSetting;
 import com.example.domain.setting.service.SettingService;
 import com.example.domain.todo.model.MTodo;
 import com.example.domain.todo.service.TodoService;
@@ -58,13 +55,13 @@ public class TodoListController {
 		model.addAttribute("search", search);
 		model.addAttribute("todoList", todoList);
 		
-		/* 画面設定サンプルコード */
-		List<MSetting> settingList = settingService.getSettingList();
-		log.info(settingList.toString());
-		Map<String, String> settingMap = new HashMap<>();
-		settingList.forEach(s -> settingMap.put(s.getCustomizeKey(), s.getCustomizeValue()));
-		log.info(settingMap.toString());
-		model.addAttribute("settingMap", settingMap);
+//		/* 画面設定サンプルコード */
+//		List<MSetting> settingList = settingService.getSettingList();
+//		log.info(settingList.toString());
+//		Map<String, String> settingMap = new HashMap<>();
+//		settingList.forEach(s -> settingMap.put(s.getCustomizeKey(), s.getCustomizeValue()));
+//		log.info(settingMap.toString());
+//		model.addAttribute("settingMap", settingMap);
 		
 		return "todo/list";
 	}

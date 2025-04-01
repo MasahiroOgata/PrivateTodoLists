@@ -1,24 +1,58 @@
 package com.example.aspect;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 
-import lombok.extern.slf4j.Slf4j;
+import com.example.domain.setting.model.MSetting;
+import com.example.domain.setting.service.SettingService;
 
 @Aspect
 @Component
-@Slf4j
 public class SettingAspect {
 	
-	@Before("bean(Todo*Controller)")
-	public void applySetting () {
-		
-		//if(SecurityContextHolder.getContext().getAuthentication() != null){ 
-			log.info(SecurityContextHolder.getContext().getAuthentication().toString());
-			log.info("メソッド開始");
-		//}
+	@Autowired
+	SettingService settingService;
+	
+	@Before("bean(*Controller) && !bean(loginController) && !bean(signupController)")			
+	public void applySetting (JoinPoint joinPoint) {
+	
+		MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+        if(signature.getMethod().isAnnotationPresent(GetMapping.class)) {
+        	
+        	Object[] args = joinPoint.getArgs();
+			for (Object arg : args) {
+				if (arg instanceof Model) {
+					Model model = (Model) arg;
+					
+					List<MSetting> settingList = settingService.getSettingList();
+					
+					Map<String, String> settingMap = new HashMap<>();
+					settingList.forEach(s -> settingMap.put(s.getCustomizeKey(), s.getCustomizeValue()));
+					
+					model.addAttribute("settingMap", settingMap);
+				}
+			}
+        	
+        }
+			
+			/* 画面設定サンプルコード */
+//			List<MSetting> settingList = settingService.getSettingList();
+//			
+//			Map<String, String> settingMap = new HashMap<>();
+//			settingList.forEach(s -> settingMap.put(s.getCustomizeKey(), s.getCustomizeValue()));
+//			
+//			model.addAttribute("settingMap", settingMap);
+			
 	}
 
 }
