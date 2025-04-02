@@ -14,7 +14,32 @@
 		where
 			user_id = ${userId}
 	</select>
-
+	
+	<!-- Setting項目登録(1件毎) -->
+	<insert id="insertOneSetting" >
+		insert into
+			settings
+		(
+			user_id,
+			customize_key,
+			customize_value
+		) values (
+			#{userId},
+			#{customizeKey},
+			#{customizeValue}
+		)
+	</insert>
+		
+	<!-- Setting項目更新(1件毎) -->
+	<update id="updateOneSetting">
+		update
+			settings
+		set
+			customize_value = #{customizeValue}
+		where
+			user_id = #{userId}
+			and customize_key = #{customizeKey}	
+	</update>
 
 
 

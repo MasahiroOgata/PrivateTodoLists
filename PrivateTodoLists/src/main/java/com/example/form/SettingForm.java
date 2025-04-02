@@ -9,6 +9,8 @@ public class SettingForm {
 	
 	private String headerFontColor;
 	
+	private String backgroundImg;
+	
 	
 	SettingForm() {
 		this.headerBgColor = "#ffffff";

@@ -9,7 +9,7 @@ window.onload = function() {
 	if(settingMap.headerFontColor) {
 		$("#headerFontColor").val(settingMap.headerFontColor);
 	} else {
-		$("#headerBgColor").val('#000000')
+		$("#headerFontColor").val('#ffffff')
 	}
 
 
@@ -25,6 +25,14 @@ function changeHeaderBgColor() {
 
 function changeHeaderTextColor() {
 	
-	//$(".navbar").css({'cssText': 'background-color:' + $("#header-bg-color").val() + '!important;'});
 	$(".navbar-brand").css({'cssText': 'color:' + $("#headerFontColor").val() + '!important;'});
+}
+
+function changeBackgroundImg() {
+	
+	if($("#backgroundImg").val()) {	
+		$(".main").css({'cssText': 'background-image: url("/img/' + $("#backgroundImg").val() + '") !important;'});
+	} else {
+		$(".main").css('background-image', 'none');
+	}
 }

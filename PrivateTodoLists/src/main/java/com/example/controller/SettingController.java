@@ -1,7 +1,9 @@
 package com.example.controller;
 
-import java.lang.reflect.Field;
+import java.io.File;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -9,7 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.example.domain.setting.model.MSetting;
+import com.example.domain.setting.service.SettingService;
 import com.example.form.SettingForm;
 
 import lombok.extern.slf4j.Slf4j;
@@ -19,8 +21,22 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("setting")
 public class SettingController {
 	
+	@Autowired
+	SettingService settingService;
+	
+	@Autowired
+	ResourceLoader resourceLoader;
+	
 	@GetMapping("")
 	public String customizeSettings(Model model, @ModelAttribute SettingForm form) {
+		
+		File dir = new File("src/main/resources/static/img");
+		String[] imgList = dir.list();
+		
+		//resourceLoader.getResource("classpath:" +"/static/img/");
+		
+		model.addAttribute("imgList", imgList);
+		
 		return "setting/setting";
 	}
 	
@@ -29,15 +45,11 @@ public class SettingController {
 		
 		log.info(form.toString());
 		
-		Class<?> clazz = form.getClass();
-		for (Field field : clazz.getDeclaredFields()) {
-			field.setAccessible(true);
-			MSetting setting = new MSetting();
-			setting.setCustomizeKey(field.getName());
-			setting.setCustomizeValue(field.get(form).toString());
-			
-			log.info(setting.toString());
-		}
+		settingService.setAllSettings(form);
+		
+
+		
+
 		
 		return "redirect:/setting";
 	}

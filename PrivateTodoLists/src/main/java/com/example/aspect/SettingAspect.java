@@ -1,7 +1,5 @@
 package com.example.aspect;
 
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 import org.aspectj.lang.JoinPoint;
@@ -13,7 +11,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
-import com.example.domain.setting.model.MSetting;
 import com.example.domain.setting.service.SettingService;
 
 @Aspect
@@ -34,10 +31,11 @@ public class SettingAspect {
 				if (arg instanceof Model) {
 					Model model = (Model) arg;
 					
-					List<MSetting> settingList = settingService.getSettingList();
+//					List<MSetting> settingList = settingService.getSettingList();					
+//					Map<String, String> settingMap = new HashMap<>();
+//					settingList.forEach(s -> settingMap.put(s.getCustomizeKey(), s.getCustomizeValue()));
 					
-					Map<String, String> settingMap = new HashMap<>();
-					settingList.forEach(s -> settingMap.put(s.getCustomizeKey(), s.getCustomizeValue()));
+					Map<String, String> settingMap = settingService.getSettingMap();
 					
 					model.addAttribute("settingMap", settingMap);
 				}
