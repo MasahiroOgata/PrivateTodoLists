@@ -1,5 +1,7 @@
 package com.example.controller;
 
+import java.util.Map;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.example.domain.setting.service.SettingService;
 import com.example.domain.todo.model.MTodo;
 import com.example.domain.todo.service.TodoService;
 import com.example.form.TodoForm;
@@ -21,6 +24,9 @@ public class TodoDetailController {
 	
 	@Autowired
 	private TodoService todoService;
+	
+	@Autowired
+	private SettingService settingService;
 	
 	@Autowired
 	private ModelMapper modelMapper;
@@ -44,7 +50,9 @@ public class TodoDetailController {
 	public String editOneTodo(Model model, @ModelAttribute @Validated TodoForm form, BindingResult bindingResult) {
 		 
 		if (bindingResult.hasErrors()) {
-			 return showTodoDetail(model, form);
+			Map<String, String> settingMap = settingService.getSettingMap();			
+			model.addAttribute("settingMap", settingMap);
+			return showTodoDetail(model, form);
 		 }
 		
 		MTodo todo = modelMapper.map(form, MTodo.class);

@@ -5,7 +5,7 @@
 <!-- Mapperとxmlのマッピング -->
 <mapper namespace="com.example.repository.SettingMapper">
 
-	<!-- Setting設定項目全件取得 -->
+	<!-- Setting項目全件取得 -->
 	<select id="findAllSettings" resultType="MSetting">
 		select
 			*
@@ -40,9 +40,5 @@
 			user_id = #{userId}
 			and customize_key = #{customizeKey}	
 	</update>
-
-
-
-
 
 </mapper>

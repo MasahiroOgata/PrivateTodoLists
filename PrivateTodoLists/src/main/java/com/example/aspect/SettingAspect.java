@@ -25,32 +25,19 @@ public class SettingAspect {
 	
 		MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         if(signature.getMethod().isAnnotationPresent(GetMapping.class)) {
-        	
         	Object[] args = joinPoint.getArgs();
 			for (Object arg : args) {
+//				if (arg instanceof HttpServletRequest) {
+//				HttpServletRequest request = (HttpServletRequest) arg;
+//				request.setAttribute("settingMap", settingMap);
 				if (arg instanceof Model) {
 					Model model = (Model) arg;
 					
-//					List<MSetting> settingList = settingService.getSettingList();					
-//					Map<String, String> settingMap = new HashMap<>();
-//					settingList.forEach(s -> settingMap.put(s.getCustomizeKey(), s.getCustomizeValue()));
-					
 					Map<String, String> settingMap = settingService.getSettingMap();
-					
 					model.addAttribute("settingMap", settingMap);
 				}
 			}
-        	
         }
-			
-			/* 画面設定サンプルコード */
-//			List<MSetting> settingList = settingService.getSettingList();
-//			
-//			Map<String, String> settingMap = new HashMap<>();
-//			settingList.forEach(s -> settingMap.put(s.getCustomizeKey(), s.getCustomizeValue()));
-//			
-//			model.addAttribute("settingMap", settingMap);
-			
 	}
 
 }

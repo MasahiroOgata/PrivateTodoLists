@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.example.domain.setting.service.SettingService;
 import com.example.domain.todo.model.MTodo;
 import com.example.domain.todo.service.TodoService;
 
@@ -27,21 +26,22 @@ import lombok.extern.slf4j.Slf4j;
 public class TodoListController {
 	
 	@Autowired
-	TodoService todoService;
+	private TodoService todoService;
 	
 	@Autowired
-	SettingService settingService;
-	
-	@Autowired
-	HttpSession session;
+	private HttpSession session;
 	
 	@GetMapping("")
-	
 	public String showTodoList(Model model, @RequestParam(required = false) String search) {
 		
 		if (Objects.isNull(session.getAttribute("isHidingFinishedTodo"))) {
 			session.setAttribute("isHidingFinishedTodo", 0);
-		}		
+		}
+		
+		if ((String)session.getAttribute("loginMsg") != null) {
+			model.addAttribute("flashMsg", (String)session.getAttribute("loginMsg"));
+			session.removeAttribute("loginMsg");
+		}
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); 
 		Date today = new Date();

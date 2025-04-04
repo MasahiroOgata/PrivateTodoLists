@@ -3,16 +3,34 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout/layout}">
 <head>
-<title>設定</title>
-<!-- 個別JS読込 -->
-<script th:src="@{/js/setting/setting.js}" defer></script>
-<!-- 個別CSS読込 -->
-<link rel="stylesheet" th:href="@{/css/setting/setting.css}">
+	<title>設定</title>
+	<!-- 個別JS読込 -->
+	<script th:src="@{/js/setting/setting.js}" defer></script>
+	<!-- 個別CSS読込 -->
+	<link rel="stylesheet" th:href="@{/css/setting/setting.css}">
+	<!-- flashMsgをJSに渡す -->
+	<script th:inline="javascript">
+		var flashMsg = /*[[${flashMsg}]]*/"flashMsg"
+	</script>
 </head>
 <body>
 	<div layout:fragment="content">
 		<div class="header border-bottom row justify-content-between">
 			<h1 class="h2 mx-2 text-white">設定変更</h1>
+		</div>
+		
+		<div class="modal-wrapper" id="msg-modal">
+			<div class="modal container-fluid">
+				<div class="modal-header">
+					<button type="button" class="btn-close"></button>
+				</div>
+				<div class="modal-body">
+				<p class="text-center" th:text="${flashMsg}"></p>
+				</div>
+				<div class="row justify-content-center">
+					<button type="button" class="btn btn-primary rounded-pill col-4" id="close-modal">OK</button>
+				</div>
+			</div>
 		</div>
 		
 		<form class="form-setting" method="post" th:action="@{/setting}" th:object="${settingForm}">
@@ -33,10 +51,10 @@
 				<tr>
 					<th colspan="1">背景画像</th>
 					<td colspan="3">
-						<select class="form-control" id="backgroundImg" onchange="changeBackgroundImg()">
-							<option th:text="なし"></option>
-							<div th:each="item: ${imgList}">
-								<option th:text="${item}"></option>
+						<select class="form-control" th:field="*{backgroundImg}" onchange="changeBackgroundImg()">
+							<option th:text="なし" th:value="''"></option>
+							<div th:each="img,iterStat: ${imgList}">
+								<option th:text="${iterStat.count}" th:value="${img}"></option>
 							</div>
 						</select>
 					</td>

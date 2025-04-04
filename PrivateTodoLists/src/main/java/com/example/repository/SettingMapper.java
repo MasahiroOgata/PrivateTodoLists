@@ -15,9 +15,7 @@ public interface SettingMapper {
 	/** Setting項目登録(1件毎) **/
 	public int insertOneSetting(MSetting setting);
 	
-	/** Setting項目更新（1件毎）**/
+	/** Setting項目更新(1件毎) **/
 	public int updateOneSetting(MSetting setting);
-	
-	
 
 }

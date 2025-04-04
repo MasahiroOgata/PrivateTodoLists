@@ -12,10 +12,8 @@ public class SettingForm {
 	private String backgroundImg;
 	
 	
-	SettingForm() {
-		this.headerBgColor = "#ffffff";
-		this.headerFontColor = "#ffffff";
-	}
-	
+//	SettingForm() {
+//		this.headerFontColor = "#ffffff";
+//	}
 
 }

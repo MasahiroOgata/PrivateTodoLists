@@ -1,5 +1,6 @@
 package com.example.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -10,11 +11,15 @@ import org.springframework.security.config.annotation.web.configurers.HeadersCon
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfig {
+	
+	@Autowired
+	private AuthenticationSuccessHandler customAuthenticationSuccessHandler;
 	
 	@Bean
 	PasswordEncoder passwordEncoder() {
@@ -28,7 +33,7 @@ public class SecurityConfig {
 				.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
 				.requestMatchers("/signup").permitAll()
 				.anyRequest()
-				//.permitAll() //←開発用暫定措置（完成後下記に変更）
+				//.permitAll() // 開発用暫定措置（完成後下記に変更）
 				.authenticated()
 		);
 		
@@ -38,7 +43,8 @@ public class SecurityConfig {
 				.failureUrl("/login?error")
 				.usernameParameter("userId")
 				.passwordParameter("password")
-				.defaultSuccessUrl("/todo/list", true)
+				.successHandler(customAuthenticationSuccessHandler)
+				//.defaultSuccessUrl("/todo/list", true)
 				.permitAll()
 		).logout(logout -> logout
 				.logoutUrl("/logout")

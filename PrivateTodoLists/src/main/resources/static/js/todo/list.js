@@ -3,6 +3,10 @@ window.onload = function() {
 		  $("#msg-modal").fadeIn(200);
 		  $(".modal").fadeIn(200);
 	}
+	if (flashMsg == "login") {
+		showLoginMsg()
+	}
+	
 	if (todoList.length == 0) {
 		$("#todo-table-all").hide();
 		$("#todo-table-unfinished").hide();
@@ -68,6 +72,21 @@ function selectShowingTable(state) {
 		$("#todo-table-unfinished").hide();
 	}
 	
+}
+
+function showLoginMsg() {
+	var unfinishedTodoCount = $("#todo-table-unfinished tbody tr").length;
+	if (unfinishedTodoCount != 0) {
+		$(".modal-body p").text("未完了のタスクが"+ unfinishedTodoCount + "件あります");
+	} else {
+		$(".modal-body p").text("ようこそ");
+	}	
+	var todaysTodo = todoList.filter(todo => 		
+		todo.expireDate == today.substr(0, 10) 
+	)
+	if (todaysTodo.length != 0) {
+		$(".modal-body p").text("本日期限のタスクが"+ todaysTodo.length + "件あります");
+	}
 }
 	
 //	$.ajax({

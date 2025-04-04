@@ -9,10 +9,11 @@
 	<!--<script th:src="@{/js/layout/layout.js}" defer></script>-->
 	<!-- 個別CSS読込 -->
 	<link rel="stylesheet" th:href="@{/css/todo/list.css}">
-	<!-- flashMsg,todoListをJSに渡す -->
+	<!-- flashMsg,todoList,todayをJSに渡す -->
 	<script th:inline="javascript">
-		var flashMsg = /*[[${flashMsg}]]*/"flashMsg"
-		var todoList = /*[[${todoList}]]*/"todoList"
+		var flashMsg = /*[[${flashMsg}]]*/"flashMsg";
+		var todoList = /*[[${todoList}]]*/"todoList";
+		var today = /*[[${today}]]*/"today";
 	</script>
 	<!--	var isShowingFinishedTodo = /*[[${isShowingFinishedTodo}]]*/"isShowingFinishedTodo"
 			var settingMap = /*[[${settingMap}]]*/"settingMap"
@@ -96,7 +97,7 @@
 									<th:block th:if="${item.finishedDate == null && item.expireDate eq today}">
 										<span class="text-warning">本日まで</span>
 									</th:block>
-									<th:block th:if="${item.finishedDate == null && item.expireDate gt today}">										
+									<th:block th:if="${item.finishedDate == null && item.expireDate gt today}">
 										<span class="text-primary"th:text="|残り${(item.expireDate.getTime() - today.getTime()) / 84000000}日|"></span>
 									</th:block>
 								</td>

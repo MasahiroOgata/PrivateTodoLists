@@ -34,9 +34,9 @@ public class SettingServiceImpl implements SettingService{
 //		return settingMapper.findAllSettings(getLoginUserId());
 //	}
 	
-	/** Setting設定項目全件取得 **/
+	/** Setting項目全件取得 **/
 	@Override
-	public Map<String,String> getSettingMap() {
+	public Map<String, String> getSettingMap() {
 		List<MSetting> settingList = settingMapper.findAllSettings(getLoginUserId());
 		Map<String, String> settingMap = new HashMap<>();
 		settingList.forEach(s -> settingMap.put(s.getCustomizeKey(), s.getCustomizeValue()));
@@ -50,7 +50,7 @@ public class SettingServiceImpl implements SettingService{
 		settingMapper.insertOneSetting(setting);
 	}
 		
-	/** Setting項目更新（1件毎）**/
+	/** Setting項目更新(1件毎) **/
 	@Override
 	public void editOneSetting(MSetting setting) {
 		setting.setUserId(getLoginUserId());

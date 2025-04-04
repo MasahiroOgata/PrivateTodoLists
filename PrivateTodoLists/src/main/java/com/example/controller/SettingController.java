@@ -3,13 +3,13 @@ package com.example.controller;
 import java.io.File;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.domain.setting.service.SettingService;
 import com.example.form.SettingForm;
@@ -24,8 +24,8 @@ public class SettingController {
 	@Autowired
 	SettingService settingService;
 	
-	@Autowired
-	ResourceLoader resourceLoader;
+//	@Autowired
+//	ResourceLoader resourceLoader;
 	
 	@GetMapping("")
 	public String customizeSettings(Model model, @ModelAttribute SettingForm form) {
@@ -41,14 +41,15 @@ public class SettingController {
 	}
 	
 	@PostMapping("")
-	public String saveSettings(Model model, @ModelAttribute SettingForm form) throws IllegalAccessException {
+	public String saveSettings(Model model, @ModelAttribute SettingForm form,
+			RedirectAttributes redirectAttributes) throws IllegalAccessException {
 		
 		log.info(form.toString());
 		
 		settingService.setAllSettings(form);
 		
 
-		
+		redirectAttributes.addFlashAttribute("flashMsg", "設定を変更しました");
 
 		
 		return "redirect:/setting";
