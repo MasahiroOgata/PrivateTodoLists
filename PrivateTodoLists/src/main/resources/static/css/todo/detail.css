@@ -29,10 +29,10 @@
     display: none;
 }
 
-.modal {
+.msg-modal {
     position: absolute;
     background-color: white;
-    width: 270px;
+    width: 270px; 
     height: 180px;
     border-radius: 10px;    
     opacity: 1;

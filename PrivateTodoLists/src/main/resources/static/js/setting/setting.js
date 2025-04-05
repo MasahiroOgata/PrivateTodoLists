@@ -23,6 +23,18 @@ window.onload = function() {
 		$("#backgroundImg").val("");
 	}
 	
+	if (settingMap.fontSize) {
+		$('#fontSize input[value="'+ settingMap.fontSize + '"]').prop('checked', true);
+	} else {
+		$('#fontSize input[value="1"]').prop('checked', true);
+	}
+	
+	if (settingMap.firstDayOfWeek) {
+		$('#firstDayOfWeek input[value="'+ settingMap.firstDayOfWeek + '"]').prop('checked', true);
+	} else {
+		$('#firstDayOfWeek input[value="0"]').prop('checked', true);
+	}
+	
 
 
 }
@@ -48,4 +60,13 @@ function changeBackgroundImg() {
 		$(".main").css('background-image', 'url("/img/' + $("#backgroundImg").val() + '")');	
 		//$(".main").css({'cssText': 'background-image: url("/img/' + $("#backgroundImg").val() + '") !important;'});	
 	}
+}
+
+function changeFontSize() {
+	var fontSizeNum = $("input[name='fontSize']:checked").val();
+	console.log(fontSizeNum);
+	//$("th, td, input").addClass("fs-" + fontSizeNum);
+//	$("th, td, input").removeClass("fs-6", "fs-5", "fs-4");
+//	$("th, td, input").addClass("fs-" + fontSizeNum);
+	$("th, td, input").css("font-size" , fontSizeNum + "rem");
 }

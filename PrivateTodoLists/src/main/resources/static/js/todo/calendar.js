@@ -19,12 +19,15 @@ window.onload = function() {
 		todoEvents.push(event);		
 	});
 	
+	var firsrDayNum = settingMap.firstDayOfWeek == "1" ? 1 : 0;
+	
 	var calendarEl = document.getElementById('calendar');
 	
 	var calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
         selectable: true,
         locale: "ja",
+        firstDay: firsrDayNum,
         dayMaxEvents: 2,
         buttonText: {today: '今日'},
         dayCellContent: function(day) {
@@ -109,6 +112,9 @@ window.onload = function() {
 		 }
      });
      
+     
+//     $("<span>●</span>").insertBefore(".fc-event-title fc-sticky");
+     
      calendar.render();	
      
      $(".btn-close, #modal-close").click(function () {
@@ -123,6 +129,19 @@ window.onload = function() {
 	 
 	 $(".fc-toolbar-chunk:nth-of-type(3)").prepend(
 		 '<p><span>■</span>完了 <span>■</span>未完了 <span>■</span>期限切れ</p>');
+		 
+//	 $(".fc-event").prepend(
+//		"<span>●</span>");	
+//	 	 
+//	 $(".fc-event-main").prepend(
+//		"<span>●</span>");	
+
+ //   $("<span>●</span>").insertBefore(".fc-event-title");
+    
+   $("<span>〇</span>").insertBefore(".fc-sticky");
+	 	 
+	 $(".fc-event-main-frame").prepend(
+		"<span>●</span>");
 	
 	
 	

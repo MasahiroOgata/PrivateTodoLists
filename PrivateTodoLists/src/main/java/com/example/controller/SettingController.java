@@ -47,7 +47,6 @@ public class SettingController {
 		log.info(form.toString());
 		
 		settingService.setAllSettings(form);
-		
 
 		redirectAttributes.addFlashAttribute("flashMsg", "設定を変更しました");
 

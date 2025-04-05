@@ -13,7 +13,7 @@ h3 {
 	margin: 0 auto;
 }
 
-table {
+#todo-table-all, #todo-table-unfinished {
 	max-width: 1000px;
 	margin: 0 auto;
 	
@@ -30,10 +30,10 @@ table {
     display: none;
 }
 
-.modal {
+.msg-modal {
     position: absolute;
     background-color: white;
-    width: 270px;
+    width: 270px; 
     height: 180px;
     border-radius: 10px;    
     opacity: 1;

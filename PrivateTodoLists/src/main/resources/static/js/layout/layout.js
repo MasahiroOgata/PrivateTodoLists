@@ -16,8 +16,15 @@ if ('backgroundImg' in settingMap && settingMap.backgroundImg != '') {
 } else {
 	$(".main").css('background-image', 'none');
 }
-	
-//	$(".navbar").css({'cssText': 'background-color:' + settingMap.headerBgColor + '!important;'});
-//	$(".navbar-brand").css({'cssText': 'color:' + settingMap.headerFontColor + '!important;'});
 
-$("th, td, input").addClass("fs-6");
+if ('fontSize' in settingMap) {
+	$("th, td, input, .modal-body p").css("font-size", settingMap.fontSize + "rem");
+	$("a, button").not(".navbar-brand").css("font-size", settingMap.fontSize + "rem");
+	$("#todo-table-all, #todo-table-unfinished").css("max-width", settingMap.fontSize * 1000 + "px");
+	$(".msg-modal").css('width', settingMap.fontSize * 270 +'px');
+	$(".msg-modal").css('height', settingMap.fontSize * 180 +'px');	
+} else {
+	$("th, td, input").css("font-size", "1rem");
+}
+
+

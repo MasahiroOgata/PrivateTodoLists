@@ -3,7 +3,7 @@
 	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 	layout:decorate="~{layout/layout}">
 <head>
-	<title>設定</title>
+	<title>画面設定</title>
 	<!-- 個別JS読込 -->
 	<script th:src="@{/js/setting/setting.js}" defer></script>
 	<!-- 個別CSS読込 -->
@@ -20,7 +20,7 @@
 		</div>
 		
 		<div class="modal-wrapper" id="msg-modal">
-			<div class="modal container-fluid">
+			<div class="msg-modal modal container-fluid">
 				<div class="modal-header">
 					<button type="button" class="btn-close"></button>
 				</div>
@@ -57,6 +57,30 @@
 								<option th:text="${iterStat.count}" th:value="${img}"></option>
 							</div>
 						</select>
+					</td>
+				</tr>
+				<tr>
+					<th colspan="1">文字サイズ</th>
+					<td colspan="3">
+						<div class="form-check-inline" id="fontSize">
+							<input type="radio" class="form-check-input ms-1" th:field="*{fontSize}" th:value="'1'" onchange="changeFontSize()">
+							<label class="form-check-label" th:text="小"></label>
+							<input type="radio" class="form-check-input ms-3" th:field="*{fontSize}" th:value="'1.2'" onchange="changeFontSize()">
+							<label class="form-check-label" th:text="中"></label>
+							<input type="radio" class="form-check-input ms-3" th:field="*{fontSize}" th:value="'1.4'" onchange="changeFontSize()">
+							<label class="form-check-label" th:text="大"></label>
+						</div>
+					</td>
+				</tr>
+				<tr>
+					<th colspan="1">カレンダー表示</th>
+					<td colspan="3">
+						<div class="form-check-inline" id="firstDayOfWeek">
+							<input type="radio" class="form-check-input ms-1" th:field="*{firstDayOfWeek}" th:value="'0'">
+							<label class="form-check-label" th:text="日曜始まり"></label>
+							<input type="radio" class="form-check-input ms-3" th:field="*{firstDayOfWeek}" th:value="'1'">
+							<label class="form-check-label" th:text="月曜始まり"></label>							
+						</div>
 					</td>
 				</tr>
 				<tr>

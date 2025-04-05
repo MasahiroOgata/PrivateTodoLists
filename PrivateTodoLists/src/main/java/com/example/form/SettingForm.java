@@ -11,6 +11,11 @@ public class SettingForm {
 	
 	private String backgroundImg;
 	
+	private String fontSize;
+	
+	private String firstDayOfWeek;
+	
+	
 	
 //	SettingForm() {
 //		this.headerFontColor = "#ffffff";
