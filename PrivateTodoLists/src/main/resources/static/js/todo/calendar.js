@@ -19,7 +19,7 @@ window.onload = function() {
 		todoEvents.push(event);		
 	});
 	
-	var firsrDayNum = settingMap.firstDayOfWeek == "1" ? 1 : 0;
+	var firstDayNum = settingMap.firstDayOfWeek == "1" ? 1 : 0;
 	
 	var calendarEl = document.getElementById('calendar');
 	
@@ -27,7 +27,7 @@ window.onload = function() {
         initialView: 'dayGridMonth',
         selectable: true,
         locale: "ja",
-        firstDay: firsrDayNum,
+        firstDay: firstDayNum,
         dayMaxEvents: 2,
         buttonText: {today: '今日'},
         dayCellContent: function(day) {
@@ -97,7 +97,6 @@ window.onload = function() {
 			todaysEvents.forEach((event) => {
 				
 				$("#event-content").append('<tr><td class="title">' 
-			           
              	         +'</td><td class="text-center" style="width: 25%">'
                          + '<a class="btn btn-outline-success btn-sm rounded-pill col-6" href="/todo/detail/'
                          + event.id

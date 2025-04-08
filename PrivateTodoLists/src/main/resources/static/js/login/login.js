@@ -1,0 +1,1 @@
+$(".main").css('background-image', 'url("/img/' + imgURL +'")');

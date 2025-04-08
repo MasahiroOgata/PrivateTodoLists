@@ -10,18 +10,20 @@
 }
 
 .main {
-	/*position: fixed; */
+	/* position: fixed; */
 	display: block;
 	top: 58px;
 	bottom: 0;
 	padding-left: 0px;
 	padding-right: 0px;
 	overflow-y: auto;
+	overflow-x: hidden;
 	height: calc(100vh - 58px);
 	margin-left: 0;
 	
 /*	background-image: url('/img/img1.jpg'); */
 	background-size: cover;
+	background-position: center;
 	
 }
 

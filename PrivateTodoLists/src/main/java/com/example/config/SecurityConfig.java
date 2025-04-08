@@ -31,6 +31,7 @@ public class SecurityConfig {
 		
 		http.authorizeHttpRequests(authorize -> authorize
 				.requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
+				.requestMatchers("/img/**").permitAll()
 				.requestMatchers("/signup").permitAll()
 				.anyRequest()
 				//.permitAll() // 開発用暫定措置（完成後下記に変更）
