@@ -129,19 +129,22 @@ window.onload = function() {
 	 $(".fc-toolbar-chunk:nth-of-type(3)").prepend(
 		 '<p><span>■</span>完了 <span>■</span>未完了 <span>■</span>期限切れ</p>');
 		 
+
+	
+//	 $(".fc").css('background-color', 'rgba(155,155,155,0.95)');
+	
+}
+
 //	 $(".fc-event").prepend(
 //		"<span>●</span>");	
 //	 	 
 //	 $(".fc-event-main").prepend(
 //		"<span>●</span>");	
 
- //   $("<span>●</span>").insertBefore(".fc-event-title");
+    $("<span>●</span>").insertBefore(".fc-event-title-container");
     
-   $("<span>〇</span>").insertBefore(".fc-sticky");
+     $("<span>〇</span>").insertBefore(".fc-sticky");
 	 	 
-	 $(".fc-event-main-frame").prepend(
-		"<span>●</span>");
-	
-	
-	
-}
+	 $(".fc-event-main-frame").prepend("<span>●</span>");
+	 
+	 $(".fc-event").prepend("<span>●</span>");

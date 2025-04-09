@@ -53,6 +53,7 @@
 					<td colspan="3">
 						<select class="form-control" th:field="*{backgroundImg}" onchange="changeBackgroundImg()">
 							<option th:text="なし" th:value="''"></option>
+							<option th:text="ランダム" th:value="'random'"></option>
 							<div th:each="img,iterStat: ${imgList}">
 								<option th:text="${iterStat.count}" th:value="${img}"></option>
 							</div>
@@ -85,6 +86,7 @@
 				</tr>
 				<tr>
 					<td colspan="4" class="text-center">
+						<btn class="btn btn-success rounded-pill col-3" onclick="applyFormFirstSettings()" th:text="もとに戻す"></btn>
 						<input type="submit" value="決定" class="btn btn-primary rounded-pill col-3">
 					</td>
 				</tr>

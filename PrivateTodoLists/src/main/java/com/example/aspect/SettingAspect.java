@@ -1,6 +1,8 @@
 package com.example.aspect;
 
+import java.io.File;
 import java.util.Map;
+import java.util.Random;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
@@ -20,6 +22,14 @@ public class SettingAspect {
 	@Autowired
 	SettingService settingService;
 	
+	private String getRandomImgURL() {
+		File dir = new File("src/main/resources/static/img");
+		String[] imgList = dir.list();		
+		Random random = new Random();
+		int imgNum = random.nextInt(imgList.length);
+		return imgList[imgNum]; 
+	}
+	
 	@Before("bean(*Controller) && !bean(loginController) && !bean(signupController)")			
 	public void applySetting (JoinPoint joinPoint) {
 	
@@ -33,11 +43,40 @@ public class SettingAspect {
 				if (arg instanceof Model) {
 					Model model = (Model) arg;
 					
-					Map<String, String> settingMap = settingService.getSettingMap();
+					Map<String, String> settingMap = settingService.getSettingMap();	
+					
+					if ("random".equals(settingMap.get("backgroundImg"))) {
+						settingMap.put("imgURL", getRandomImgURL());
+					} else {
+						settingMap.put("imgURL", settingMap.getOrDefault("backgroundImg", ""));
+					}
+					
+//					System.out.println(settingMap);
+				
+				
 					model.addAttribute("settingMap", settingMap);
 				}
 			}
         }
+	}
+	
+	@Before("bean(loginController) || bean(signupController)")
+	public void getBackgroundImage(JoinPoint joinPoint) {
+		
+		Object[] args = joinPoint.getArgs();
+		for (Object arg : args) {
+			if (arg instanceof Model) {
+				
+				Model model = (Model) arg;
+//				File dir = new File("src/main/resources/static/img");
+//				String[] imgList = dir.list();		
+//				Random random = new Random();
+//				int imgNum = random.nextInt(imgList.length);
+//				String imgURL = imgList[imgNum]; 
+				model.addAttribute("imgURL", getRandomImgURL());			
+			}
+		}
+		
 	}
 
 }

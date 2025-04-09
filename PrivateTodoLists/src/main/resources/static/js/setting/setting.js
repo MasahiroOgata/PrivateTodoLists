@@ -5,6 +5,11 @@ window.onload = function() {
 		  $(".modal").fadeIn(200);
 	}
 	
+	applyFormFirstSettings()
+}
+
+function applyFormFirstSettings() {
+	
 	if(settingMap.headerBgColor) {
 		$("#headerBgColor").val(settingMap.headerBgColor);
 	} else {
@@ -35,8 +40,8 @@ window.onload = function() {
 		$('#firstDayOfWeek input[value="0"]').prop('checked', true);
 	}
 	
-
-
+	applySettings();
+	//jsEvent.stopPropagation();
 }
 
 $("#close-modal, .btn-close").click(function () {
@@ -54,7 +59,7 @@ function changeHeaderTextColor() {
 }
 
 function changeBackgroundImg() {
-	if (!$("#backgroundImg").val()) {
+	if (!$("#backgroundImg").val() || $("#backgroundImg").val() == 'random') {
 		$(".main").css('background-image', 'none');
 	} else {
 		$(".main").css('background-image', 'url("/img/' + $("#backgroundImg").val() + '")');	
@@ -65,8 +70,5 @@ function changeBackgroundImg() {
 function changeFontSize() {
 	var fontSizeNum = $("input[name='fontSize']:checked").val();
 	console.log(fontSizeNum);
-	//$("th, td, input").addClass("fs-" + fontSizeNum);
-//	$("th, td, input").removeClass("fs-6", "fs-5", "fs-4");
-//	$("th, td, input").addClass("fs-" + fontSizeNum);
 	$("th, td, input").css("font-size" , fontSizeNum + "rem");
 }
