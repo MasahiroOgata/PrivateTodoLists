@@ -8,9 +8,10 @@
 	<script th:src="@{/js/setting/setting.js}" defer></script>
 	<!-- 個別CSS読込 -->
 	<link rel="stylesheet" th:href="@{/css/setting/setting.css}">
-	<!-- flashMsgをJSに渡す -->
+	<!-- imgList,flashMsgをJSに渡す -->
 	<script th:inline="javascript">
-		var flashMsg = /*[[${flashMsg}]]*/"flashMsg"
+		var imgList = /*[[${imgList}]]*/"imgList";
+		var flashMsg = /*[[${flashMsg}]]*/"flashMsg";
 	</script>
 </head>
 <body>

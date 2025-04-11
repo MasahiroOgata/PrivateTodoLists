@@ -59,8 +59,11 @@ function changeHeaderTextColor() {
 }
 
 function changeBackgroundImg() {
-	if (!$("#backgroundImg").val() || $("#backgroundImg").val() == 'random') {
+	if (!$("#backgroundImg").val()) {
 		$(".main").css('background-image', 'none');
+	}else if ($("#backgroundImg").val() == 'random') {
+		var randomImgNum = Math.floor( Math.random() * imgList.length );
+		$(".main").css('background-image', 'url("/img/' + imgList[randomImgNum] + '")');
 	} else {
 		$(".main").css('background-image', 'url("/img/' + $("#backgroundImg").val() + '")');	
 		//$(".main").css({'cssText': 'background-image: url("/img/' + $("#backgroundImg").val() + '") !important;'});	
