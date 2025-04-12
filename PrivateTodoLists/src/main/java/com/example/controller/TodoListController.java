@@ -55,6 +55,8 @@ public class TodoListController {
 		model.addAttribute("search", search);
 		model.addAttribute("todoList", todoList);
 		
+		log.info(todoList.toString());
+		
 //		/* 画面設定サンプルコード */
 //		List<MSetting> settingList = settingService.getSettingList();
 //		log.info(settingList.toString());

@@ -1,7 +1,7 @@
 window.onload = function() {
 	
 	var todoEvents = [];
-	console.log(todoList);	
+		
 	todoList.forEach((todo) => {			
 		var event = {};
 		event.id = todo.id;

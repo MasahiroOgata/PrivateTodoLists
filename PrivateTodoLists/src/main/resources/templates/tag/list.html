@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layout/layout}">
+<head>
+<title>タグ一覧</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="header border-bottom row justify-content-between">
+			<div class="d-flex">
+				<h1 class="h2 mx-2 text-white">タグ一覧</h1>
+				<a class="btn btn-primary mx-3 rounded-pill" th:href="@{/tag/create}">新規作成</a>
+			</div>
+		</div>
+		
+		
+	</div>
+
+</body>
+</html>

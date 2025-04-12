@@ -1,0 +1,25 @@
+@charset "UTF-8";
+
+.form-create {
+	max-width: 700px;
+	margin: auto;
+}
+
+/*
+input[type=radio]::after {
+	content: "";
+    display: inline-block;
+    
+    width: 140px;
+    height: 140px;
+}
+
+
+tr:nth-child(4) {
+	height: 4rem !important;
+}
+*/
+
+input[type=radio]{
+    display: none;
+}
