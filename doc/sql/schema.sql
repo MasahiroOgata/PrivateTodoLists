@@ -22,6 +22,7 @@ CREATE TABLE IF NOT EXISTS private_todo.todo_items (
 		finished_date DATE,
 		is_deleted TINYINT NOT NULL DEFAULT 0,
 		main_todo INT,
+		tag_id INT,
 		create_date_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 		update_date_time DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 		PRIMARY KEY (id)
