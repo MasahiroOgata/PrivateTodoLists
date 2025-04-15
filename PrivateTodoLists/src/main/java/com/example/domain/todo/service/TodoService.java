@@ -26,5 +26,8 @@ public interface TodoService {
 	
 	/** Todo1件削除 */
 	public void deleteOneTodo(int id);
+	
+	/** 未完了Todo件数取得 */
+	public int getUnfinishedTodoCount();
 
 }

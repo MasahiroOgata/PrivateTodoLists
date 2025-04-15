@@ -67,6 +67,12 @@ public class TodoServiceImpl implements TodoService {
 	public void deleteOneTodo(int id) {
 		todoMapper.setOneTodoDeleted(id, getLoginUserId());
 	}
+	
+	/** 未完了Todo件数取得 */
+	@Override
+	public int getUnfinishedTodoCount() {
+		return todoMapper.countUnfinishedTodo(getLoginUserId());
+	}
 
 
 }

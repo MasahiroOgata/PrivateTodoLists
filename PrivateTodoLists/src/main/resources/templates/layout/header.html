@@ -9,7 +9,13 @@
 		class="navbar navbar-fixed-top navbar-expand-sm"> <!-- navbar-dark bg-primary"-->
 		<div class="container-fluid">
 			<div class="navbar-header">
-				<a class="navbar-brand" th:href="@{/todo/list}">作業一覧</a>
+				<a class="navbar-brand position-relative" th:href="@{/todo/list}">作業一覧
+					
+						<span class=" position-absolute top-25 start-100 translate-middle
+						badge rounded-pill bg-danger" th:text="${unfinishedTodoCount}"></span>
+					
+				</a>
+				<!--p-2 text-bg-danger border border-light rounded-circle -->
 				<a class="navbar-brand" th:href="@{/todo/create}">作業登録</a>
 				<a class="navbar-brand" th:href="@{/todo/calendar}">カレンダー</a>
 				<a class="navbar-brand" th:href="@{/tag/list}">タグ一覧</a>

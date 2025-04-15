@@ -1,6 +1,13 @@
 
 applySettings();
-console.log(settingMap)
+console.log(settingMap);
+if($(".badge").text() > 0) {
+	$(".badge").show();
+}
+if ($(".badge").text() >= 100) {
+	$(".badge").text("99+");
+}
+
 
 function applySettings() {
 	if ('headerBgColor' in settingMap) {

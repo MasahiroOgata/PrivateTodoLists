@@ -30,5 +30,8 @@ public interface TodoMapper {
 	
 	/** Todo1件削除 */
 	public int setOneTodoDeleted(int id, int userId);
+	
+	/** 未完了Todo件数取得 */
+	public int countUnfinishedTodo(int userId);
 
 }

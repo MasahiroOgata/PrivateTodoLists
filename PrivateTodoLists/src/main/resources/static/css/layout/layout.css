@@ -34,3 +34,7 @@
 	background-color:gray;
 	opacity: 0.95;	
 }
+
+.badge {
+	display: none;
+}

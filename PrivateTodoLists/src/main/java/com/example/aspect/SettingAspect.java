@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.example.domain.setting.service.SettingService;
+import com.example.domain.todo.service.TodoService;
 
 @Aspect
 @Component
@@ -21,6 +22,9 @@ public class SettingAspect {
 	
 	@Autowired
 	SettingService settingService;
+	
+	@Autowired
+	TodoService todoService;
 	
 	private String getRandomImgURL() {
 		File dir = new File("src/main/resources/static/img");
@@ -55,6 +59,8 @@ public class SettingAspect {
 				
 				
 					model.addAttribute("settingMap", settingMap);
+					
+					model.addAttribute("unfinishedTodoCount", todoService.getUnfinishedTodoCount());
 				}
 			}
         }

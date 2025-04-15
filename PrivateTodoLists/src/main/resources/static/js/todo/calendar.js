@@ -1,5 +1,10 @@
 window.onload = function() {
 	
+	const TODO_FINISHED_COLOR = "#0d95f0";
+	const TODO_FINISHED_SMILE_FACE = "fa-face-smile";
+	const TODO_EXPIRED_COLOR = "#dc3545";
+	const TODO_UNFINISHED_COLOR = "#fd7e14"
+	
 	var todoEvents = [];
 		
 	todoList.forEach((todo) => {			
@@ -9,12 +14,12 @@ window.onload = function() {
 		event.start = todo.expireDate.substr(0, 10);
 		event.startStr = todo.expireDate.substr(0, 10);
 		if (todo.finishedDate) {
-			event.color = "#0d95f0";			
+			event.color = TODO_FINISHED_COLOR;			
 		} else if (!todo.finishedDate 
 					&& (new Date(todo.expireDate).getTime() < new Date().getTime() - 86400000)) {
-			event.color = "#dc3545";
+			event.color = TODO_EXPIRED_COLOR;
 		} else {
-			event.color = "#fd7e14"
+			event.color = TODO_UNFINISHED_COLOR;
 		}
 		event.custom_param = '○'
 //		event.extraParams = {
@@ -185,7 +190,7 @@ window.onload = function() {
 			  var eventId = $(this).find(".fc-event").data("event-id");
 			  var thisEvent = todoList.find(todo => todo.id == eventId);
 			  if (thisEvent.finishedDate) {
-				  var eventIcon = '<i class="fa-regular fa-face-smile"></i>';
+				  var eventIcon = '<i class="fa-regular ' + TODO_FINISHED_SMILE_FACE + '"></i>';
 			  } else if (new Date(thisEvent.expireDate).getTime() < new Date().getTime() - 86400000){
 				  var eventIcon = '<i class="fa-regular fa-face-frown"></i>';
 			  } else {

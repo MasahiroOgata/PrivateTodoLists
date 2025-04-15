@@ -16,7 +16,7 @@ h3 {
 #todo-table-all, #todo-table-unfinished {
 	max-width: 1000px;
 	margin: 0 auto;
-	
+	display: none;
 }
 
 .modal-wrapper {

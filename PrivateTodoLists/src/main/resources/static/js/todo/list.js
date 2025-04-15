@@ -16,12 +16,12 @@ window.onload = function() {
 		$("#no-task-msg").hide();
 		selectShowingTable($("#finishedCheck").prop("checked"));
 	}
-	if ($("#todo-table-unfinished tbody tr").length > 0) {
-		$(".badge").text($("#todo-table-unfinished tbody tr").length);
-		$(".badge").show();
-	} else {
-		$(".badge").hide();
-	}
+//	if ($("#todo-table-unfinished tbody tr").length > 0) {
+//		$(".badge").text($("#todo-table-unfinished tbody tr").length);
+//		$(".badge").show();
+//	} else {
+//		$(".badge").hide();
+//	}
 //	layoutSetting();
 	
 //	$(".navbar").css({'cssText': 'background-color:' + settingMap.headerBgColor + '!important;'});
