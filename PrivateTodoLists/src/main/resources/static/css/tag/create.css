@@ -20,6 +20,10 @@ tr:nth-child(4) {
 }
 */
 
-input[type=radio]{
+input[type=radio] {
     display: none;
+}
+
+#icon-select label {
+	cursor: pointer;
 }
