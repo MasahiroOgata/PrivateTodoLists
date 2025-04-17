@@ -1,5 +1,7 @@
 package com.example.controller;
 
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.annotation.Validated;
@@ -8,6 +10,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.example.domain.tag.model.MTag;
+import com.example.domain.tag.service.IconService;
+import com.example.domain.tag.service.TagService;
 import com.example.form.TagForm;
 
 import lombok.extern.slf4j.Slf4j;
@@ -17,26 +22,18 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class TagCreateController {
 	
-	private String[] iconList = {
-		"fa-solid fa-star",
-		"fa-solid fa-heart",
-		"fa-solid fa-circle-check",
-		"fa-solid fa-bell",
-		"fa-solid fa-envelope",
-		"fa-solid fa-phone",
-		"fa-solid fa-pen",
-		"fa-solid fa-building",
-		"fa-solid fa-school",
-		"fa-solid fa-hospital",
-		"fa-solid fa-cart-shopping",
-		"fa-solid fa-utensils",
-		"fa-solid fa-yen-sign",
-		"fa-solid fa-gift"
-	};
+	@Autowired
+	private IconService iconService;
 	
+	@Autowired
+	private ModelMapper modelMapper;
+	
+	@Autowired
+	private TagService tagService;
+		
 	@GetMapping("")
 	public String createTag(Model model, @ModelAttribute TagForm form) {
-		model.addAttribute("iconList", iconList);
+		model.addAttribute("iconList", iconService.getIconList());
 		return "tag/create";
 	}
 	
@@ -44,6 +41,11 @@ public class TagCreateController {
 	public String saveTag(Model model, @ModelAttribute @ Validated TagForm form) {
 		
 		log.info(form.toString());
+		
+		MTag tag = modelMapper.map(form, MTag.class);
+		tagService.createOneTag(tag);	
+		
+		log.info(tag.toString());
 		
 		return "redirect:/tag/create";
 	}

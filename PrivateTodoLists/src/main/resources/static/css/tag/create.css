@@ -20,6 +20,14 @@ tr:nth-child(4) {
 }
 */
 
+th{
+	width: 15%;
+}
+
+td:has(input[type=color])  {
+	width: 20%;
+}
+
 input[type=radio] {
     display: none;
 }

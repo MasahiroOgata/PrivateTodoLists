@@ -22,8 +22,10 @@ function applySettings() {
 		$(".navbar-brand").css({'cssText': 'color: #ffffff !important;'});
 	}
 	
-	if ('backgroundImg' in settingMap && settingMap.backgroundImg != '') {
+	if ('imgURL' in settingMap) {
 		$(".main").css('background-image', 'url("/img/' + settingMap.imgURL + '")');
+	} else if (settingMap.backgroundImg == 'random'){
+		$(".main").css('background-image', 'url("/img/img01.jpg")');
 	} else {
 		$(".main").css('background-image', 'none');
 	}

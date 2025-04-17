@@ -17,33 +17,32 @@
 		<form class="form-create" method="post" th:action="@{/tag/create}" th:object="${tagForm}">
 			<table class="table table-striped table-bordered table-hover">
 				<tr>
-					<th th:text="タグネーム"></th>
-					<td>
+					<th th:text="タグネーム"></thcolspan="1">
+					<td colspan="3">
 						<input type="text" class="form-control" th:field="*{tagName}">
 					</td>
 				</tr>
+
 				<tr>
-					<th th:text="カラー"></th>
+					<th  th:text="アイコン"></th>
+					<td id="icon-display" class="sticky_cross">
+						<span th:text="（以下から選択）"></span>
+						<i></i>
+					</td>
+					<th  th:text="カラー"></th>
 					<td>
 						<input type="color" class="form-control form-control-color" th:field="*{tagColor}" oninput="changeTagColor()">
 					</td>
 				</tr>
 				<tr>
-					<th th:text="アイコン"></th>
-					<td id="icon-display">
-						<span th:text="（以下から選択）"></span>
-						<i ></i>
-					</td>
-				</tr>
-				<tr>
-					<th></th>
-					<td id="icon-select">
+					<th ></th>
+					<td colspan="3" id="icon-select">
 						<label class="form-check-label me-1">
 							<input type="radio" class="form-check-input mx-3" th:value="no-icon" th:field="*{tagIcon}">
 							なし
 						</label>
 						<div th:each="icon: ${iconList}" style="display: inline;" class="mx-1">
-							<label class="form-check-label">								
+							<label class="form-check-label my-1">								
 								<input type="radio" class="form-check-input" th:value="${icon}" th:field="*{tagIcon}">	
 								<i class="fa-xl" th:classappend="${icon}"></i>
 							</label>
@@ -61,7 +60,7 @@
 					</td>
 				</tr>
 				<tr>
-					<td colspan="2" class="text-center">
+					<td colspan="4" class="text-center">
 						<a class="btn btn-secondary rounded-pill col-2" th:href="@{/tag/list}">戻る</a>
 						<input type="submit" value="登録" class="btn btn-primary rounded-pill col-2">
 					</td>
