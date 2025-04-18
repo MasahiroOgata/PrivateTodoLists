@@ -4,15 +4,18 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.example.domain.setting.service.SettingService;
 import com.example.domain.tag.model.MTag;
 import com.example.domain.tag.service.IconService;
 import com.example.domain.tag.service.TagService;
+import com.example.domain.todo.service.TodoService;
 import com.example.form.TagForm;
 
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +33,12 @@ public class TagCreateController {
 	
 	@Autowired
 	private TagService tagService;
+	
+	@Autowired
+	private TodoService todoService;
+	
+	@Autowired
+	private SettingService settingService;
 		
 	@GetMapping("")
 	public String createTag(Model model, @ModelAttribute TagForm form) {
@@ -38,9 +47,16 @@ public class TagCreateController {
 	}
 	
 	@PostMapping("")
-	public String saveTag(Model model, @ModelAttribute @ Validated TagForm form) {
+	public String saveTag(Model model, @ModelAttribute @ Validated TagForm form,
+			BindingResult bindingResult) {
 		
 		log.info(form.toString());
+		
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("settingMap", settingService.getSettingMap());
+			model.addAttribute("unfinishedTodoCount", todoService.getUnfinishedTodoCount());
+			return createTag(model, form);
+		}
 		
 		MTag tag = modelMapper.map(form, MTag.class);
 		tagService.createOneTag(tag);	

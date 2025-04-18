@@ -1,30 +1,38 @@
 package com.example.domain.tag.service.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.example.domain.tag.model.MTag;
 import com.example.domain.tag.service.TagService;
-import com.example.domain.user.service.impl.UserWithNameAndId;
 import com.example.repository.TagMapper;
+import com.example.security.AuthUtil;
 
+//@RequiredArgsConstructor
 @Service
 public class TagServiceImpl implements TagService {
 	
 	@Autowired
 	private TagMapper tagMapper;
 	
-	private int getLoginUserId() {
-		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-		UserWithNameAndId userWithNameAndId = (UserWithNameAndId) authentication.getPrincipal();
-		return userWithNameAndId.getId();
+//	private int getLoginUserId() {
+//		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+//		UserWithNameAndId userWithNameAndId = (UserWithNameAndId) authentication.getPrincipal();
+//		return userWithNameAndId.getId();
+//	}
+	
+	/** Tagリスト取得 */
+	@Override
+	public List<MTag> getTagItems() {
+		return tagMapper.findManyTag(AuthUtil.getLoginUserId());
 	}
 	
 	/** Tag1件登録 */
+	@Override
 	public void createOneTag(MTag tag) {
-		tag.setUserId(getLoginUserId());
+		tag.setUserId(AuthUtil.getLoginUserId());
 		tagMapper.insertOneTag(tag);
 	}
 

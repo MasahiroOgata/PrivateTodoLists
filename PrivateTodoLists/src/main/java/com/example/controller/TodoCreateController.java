@@ -3,7 +3,6 @@ package com.example.controller;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Map;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,8 +69,8 @@ public class TodoCreateController {
 			BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 		
 		if (bindingResult.hasErrors()) {
-			Map<String, String> settingMap = settingService.getSettingMap();			
-			model.addAttribute("settingMap", settingMap);
+			model.addAttribute("settingMap", settingService.getSettingMap());
+			model.addAttribute("unfinishedTodoCount", todoService.getUnfinishedTodoCount());
 			return createTodo(expireDate, model, form);
 		}
 		

@@ -21,10 +21,10 @@ import com.example.domain.todo.service.TodoService;
 public class SettingAspect {
 	
 	@Autowired
-	SettingService settingService;
+	private SettingService settingService;
 	
 	@Autowired
-	TodoService todoService;
+	private TodoService todoService;
 	
 	private String getRandomImgURL() {
 		File dir = new File("src/main/resources/static/img");

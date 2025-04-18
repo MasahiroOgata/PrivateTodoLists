@@ -5,6 +5,17 @@
 <!-- Mapperとxmlのマッピング -->
 <mapper namespace="com.example.repository.TagMapper">
 
+	<!-- Tag複数件取得 -->
+	<select id="findManyTag" resultType="MTag">
+		select
+			*
+		from
+			tags
+		where
+			user_id = #{userId}
+			and is_deleted = 0
+	</select>
+
 	<!-- Tag1件登録 -->
 	<insert id="insertOneTag">
 		insert into
