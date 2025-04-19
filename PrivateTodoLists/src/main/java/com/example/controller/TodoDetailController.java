@@ -1,7 +1,5 @@
 package com.example.controller;
 
-import java.util.Map;
-
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -50,8 +48,8 @@ public class TodoDetailController {
 	public String editOneTodo(Model model, @ModelAttribute @Validated TodoForm form, BindingResult bindingResult) {
 		 
 		if (bindingResult.hasErrors()) {
-			Map<String, String> settingMap = settingService.getSettingMap();			
-			model.addAttribute("settingMap", settingMap);
+			model.addAttribute("settingMap", settingService.getSettingMap());
+			model.addAttribute("unfinishedTodoCount", todoService.getUnfinishedTodoCount());
 			return showTodoDetail(model, form);
 		 }
 		

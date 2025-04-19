@@ -29,11 +29,24 @@ public class TagServiceImpl implements TagService {
 		return tagMapper.findManyTag(AuthUtil.getLoginUserId());
 	}
 	
+	/** Tag1件取得 */
+	@Override
+	public MTag getOneTag(int id) {
+		return tagMapper.findOneTag(id, AuthUtil.getLoginUserId());
+	}
+	
 	/** Tag1件登録 */
 	@Override
 	public void createOneTag(MTag tag) {
 		tag.setUserId(AuthUtil.getLoginUserId());
 		tagMapper.insertOneTag(tag);
+	}
+	
+	/** Tag1件更新 */
+	@Override
+	public void editOneTag(MTag tag) {
+		tag.setUserId(AuthUtil.getLoginUserId());
+		tagMapper.updateOneTag(tag);
 	}
 
 }

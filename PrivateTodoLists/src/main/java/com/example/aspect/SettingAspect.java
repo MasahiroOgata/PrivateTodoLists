@@ -28,25 +28,43 @@ public class SettingAspect {
 	
 	private String getRandomImgURL() {
 		File dir = new File("src/main/resources/static/img");
-		String[] imgList = dir.list();		
+		String[] imgList = dir.list();
 		Random random = new Random();
 		int imgNum = random.nextInt(imgList.length);
 		return imgList[imgNum]; 
 	}
 	
+	private String[] getImgList() {
+		File dir = new File("src/main/resources/static/img");
+		return  dir.list();		
+	}
+	
+//	public void addSettingAttribute(Model model) {
+//		Map<String, String> settingMap = settingService.getSettingMap();	
+//		
+//		if ("random".equals(settingMap.get("backgroundImg"))) {
+//			settingMap.put("imgURL", getRandomImgURL());
+//		} else {
+//			settingMap.put("imgURL", settingMap.getOrDefault("backgroundImg", ""));
+//		}
+//	
+//		model.addAttribute("settingMap", settingMap);		
+//		model.addAttribute("unfinishedTodoCount", todoService.getUnfinishedTodoCount());
+//	}
+	
 	@Before("bean(*Controller) && !bean(loginController) && !bean(signupController)")			
 	public void applySetting (JoinPoint joinPoint) {
-	
+		
 		MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+		
         if(signature.getMethod().isAnnotationPresent(GetMapping.class)) {
         	Object[] args = joinPoint.getArgs();
 			for (Object arg : args) {
-//				if (arg instanceof HttpServletRequest) {
-//				HttpServletRequest request = (HttpServletRequest) arg;
-//				request.setAttribute("settingMap", settingMap);
+
 				if (arg instanceof Model) {
 					Model model = (Model) arg;
 					
+//					addSettingAttribute(model);
 					Map<String, String> settingMap = settingService.getSettingMap();	
 					
 					if ("random".equals(settingMap.get("backgroundImg"))) {
@@ -54,9 +72,8 @@ public class SettingAspect {
 					} else {
 						settingMap.put("imgURL", settingMap.getOrDefault("backgroundImg", ""));
 					}
-					
-//					System.out.println(settingMap);
-				
+						
+					model.addAttribute("imgList", getImgList());
 				
 					model.addAttribute("settingMap", settingMap);
 					
@@ -71,14 +88,8 @@ public class SettingAspect {
 		
 		Object[] args = joinPoint.getArgs();
 		for (Object arg : args) {
-			if (arg instanceof Model) {
-				
+			if (arg instanceof Model) {				
 				Model model = (Model) arg;
-//				File dir = new File("src/main/resources/static/img");
-//				String[] imgList = dir.list();		
-//				Random random = new Random();
-//				int imgNum = random.nextInt(imgList.length);
-//				String imgURL = imgList[imgNum]; 
 				model.addAttribute("imgURL", getRandomImgURL());			
 			}
 		}

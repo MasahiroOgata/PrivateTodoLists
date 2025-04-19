@@ -15,6 +15,18 @@
 			user_id = #{userId}
 			and is_deleted = 0
 	</select>
+	
+	<!--  Tag1件取得 -->
+	<select id="findOneTag" resultType="MTag">
+		select
+			*
+		from
+			tags
+		where
+			id = #{id}
+			and user_id = #{userId}
+			and is_deleted = 0
+	</select>
 
 	<!-- Tag1件登録 -->
 	<insert id="insertOneTag">
@@ -32,6 +44,19 @@
 			#{tagIcon}
 		)
 	</insert>
+	
+	<!-- Tag1件更新 -->
+	<update id="updateOneTag">
+		update
+			tags
+		set
+			tag_name = #{tagName},
+			tag_color = #{tagColor},
+			tag_icon = #{tagIcon}
+		where
+			id = #{id}
+			and user_id = #{userId}	
+	</update>
 
 
 

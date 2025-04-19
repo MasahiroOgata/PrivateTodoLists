@@ -1,0 +1,23 @@
+@charset "UTF-8";
+
+.form-edit {
+	max-width: 700px;
+	margin: auto;
+}
+
+
+th{
+	width: 15%;
+}
+
+td:has(input[type=color])  {
+	width: 20%;
+}
+
+input[type=radio] {
+    display: none;
+}
+
+#icon-select label {
+	cursor: pointer;
+}

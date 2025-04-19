@@ -2,6 +2,7 @@ package com.example.form;
 
 import org.hibernate.validator.constraints.Length;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Data
@@ -9,7 +10,8 @@ public class TagForm {
 	
 	private Integer id;
 	
-	@Length(max = 15)
+	@NotBlank
+	@Length(max = 20)
 	private String tagName;
 	
 	private String tagColor;

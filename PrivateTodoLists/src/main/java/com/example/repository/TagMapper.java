@@ -12,7 +12,13 @@ public interface TagMapper {
 	/** Tagリスト取得 */
 	public List<MTag> findManyTag(int userId);
 	
+	/** Tag1件取得 */
+	public MTag findOneTag(int id, int userId);
+	
 	/** Tag1件登録 */
 	public int insertOneTag(MTag tag);
+	
+	/** Tag1件更新 */
+	public int updateOneTag(MTag tag);
 
 }

@@ -10,6 +10,8 @@ if ($(".badge").text() >= 100) {
 
 
 function applySettings() {
+	console.log(imgList);
+	
 	if ('headerBgColor' in settingMap) {
 		$(".navbar").css('background-color', settingMap.headerBgColor);
 	} else {
@@ -25,7 +27,12 @@ function applySettings() {
 	if ('imgURL' in settingMap) {
 		$(".main").css('background-image', 'url("/img/' + settingMap.imgURL + '")');
 	} else if (settingMap.backgroundImg == 'random'){
-		$(".main").css('background-image', 'url("/img/img01.jpg")');
+		var randomImgNum = Math.floor( Math.random() * imgList.length );
+		$(".main").css('background-image', 'url("/img/' + imgList[randomImgNum] + '")');
+//		var randomImgNum = Math.floor( Math.random() * 8 + 1 );
+//		$(".main").css('background-image', 'url("/img/img0' + randomImgNum + '.jpg")');
+	} else if (settingMap.backgroundImg) {
+		$(".main").css('background-image', 'url("/img/' + settingMap.backgroundImg + '")');
 	} else {
 		$(".main").css('background-image', 'none');
 	}

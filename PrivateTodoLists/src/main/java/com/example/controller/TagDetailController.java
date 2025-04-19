@@ -22,35 +22,45 @@ import com.example.form.TagForm;
 
 import lombok.extern.slf4j.Slf4j;
 
-@Controller
-@RequestMapping("/tag/create")
 @Slf4j
-public class TagCreateController {
+@Controller
+@RequestMapping("tag/detail")
+public class TagDetailController {
 	
 	@Autowired
 	private IconService iconService;
 	
 	@Autowired
-	private ModelMapper modelMapper;
+	private TagService tagService;
 	
 	@Autowired
-	private TagService tagService;
+	private ModelMapper modelMapper;
 	
 	@Autowired
 	private TodoService todoService;
 	
 	@Autowired
 	private SettingService settingService;
+
+	
+	@GetMapping("{id}")
+	public String showTagDetail(Model model, @ModelAttribute TagForm form) {
 		
-	@GetMapping("")
-	public String createTag(Model model, @ModelAttribute TagForm form) {
+		MTag tag = tagService.getOneTag(form.getId());
+		
+		if (form.getTagColor() == null) {
+			form  = modelMapper.map(tag, TagForm.class);
+		}
+		
 		model.addAttribute("iconList", iconService.getIconList());
-		return "tag/create";
+		model.addAttribute("previousTag", tag);
+		model.addAttribute("tagForm", form);
+		
+		return "tag/detail";
 	}
 	
-	@PostMapping("")
-	public String saveTag(Model model, @ModelAttribute @Validated TagForm form,
-			BindingResult bindingResult) {
+	@PostMapping("{id}")
+	public String editOneTag(Model model, @ModelAttribute @Validated TagForm form, BindingResult bindingResult) {
 		
 		log.info(form.toString());
 		
@@ -59,15 +69,13 @@ public class TagCreateController {
 			model.addAttribute("imgList", dir.list());	
 			model.addAttribute("settingMap", settingService.getSettingMap());
 			model.addAttribute("unfinishedTodoCount", todoService.getUnfinishedTodoCount());
-			return createTag(model, form);
+			return showTagDetail(model, form);
 		}
 		
 		MTag tag = modelMapper.map(form, MTag.class);
-		tagService.createOneTag(tag);	
-		
-		log.info(tag.toString());
+		tagService.editOneTag(tag);
 		
 		return "redirect:/tag/list";
+		
 	}
-
 }
