@@ -26,13 +26,13 @@ function applySettings() {
 	
 	if ('imgURL' in settingMap) {
 		$(".main").css('background-image', 'url("/img/' + settingMap.imgURL + '")');
-	} else if (settingMap.backgroundImg == 'random'){
-		var randomImgNum = Math.floor( Math.random() * imgList.length );
-		$(".main").css('background-image', 'url("/img/' + imgList[randomImgNum] + '")');
+//	} else if (settingMap.backgroundImg == 'random'){
+//		var randomImgNum = Math.floor( Math.random() * imgList.length );
+//		$(".main").css('background-image', 'url("/img/' + imgList[randomImgNum] + '")');
 //		var randomImgNum = Math.floor( Math.random() * 8 + 1 );
 //		$(".main").css('background-image', 'url("/img/img0' + randomImgNum + '.jpg")');
-	} else if (settingMap.backgroundImg) {
-		$(".main").css('background-image', 'url("/img/' + settingMap.backgroundImg + '")');
+//	} else if (settingMap.backgroundImg) {
+//		$(".main").css('background-image', 'url("/img/' + settingMap.backgroundImg + '")');
 	} else {
 		$(".main").css('background-image', 'none');
 	}

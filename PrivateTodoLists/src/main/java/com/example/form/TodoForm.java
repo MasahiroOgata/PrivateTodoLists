@@ -27,5 +27,7 @@ public class TodoForm {
 	
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date finishedDate;
+	
+	private Integer tagId;
 
 }

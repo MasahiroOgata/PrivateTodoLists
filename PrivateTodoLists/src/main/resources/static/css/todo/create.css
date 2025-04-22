@@ -16,3 +16,41 @@
 .form-create p {
 	background-color: rgb(255, 255, 255);
 }
+
+select,
+::picker(select) 
+{
+  appearance: base-select;
+}
+
+.select2-search__field {
+	display: none;
+}
+
+.select2-container .select2-selection--single {
+  height: 38px !important; /* Bootstrapのinput高さ */
+  padding: 6px 12px;
+  border: 1px solid #ced4da !important;
+  border-radius: 0.375rem !important; /* Bootstrapのrounded */
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.form-control:focus {
+  color: #212529;
+  background-color: #fff;
+  border-color: #86b7fe;
+  outline: none;
+  box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
+}
+
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+  line-height: 24px;  
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+  height: 36px;
+  top: 1px;
+  right: 10px;
+}

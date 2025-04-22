@@ -86,7 +86,7 @@ function showLoginMsg() {
 		$(".modal-body p").text("ようこそ");
 	}	
 	var todaysTodo = todoList.filter(todo => 		
-		todo.expireDate == today.substr(0, 10) 
+		todo.expireDate == today.substr(0, 10) && todo.finishedDate == null
 	)
 	if (todaysTodo.length != 0) {
 		$(".modal-body p").text("本日期限のタスクが"+ todaysTodo.length + "件あります");

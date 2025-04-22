@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.example.domain.setting.service.SettingService;
+import com.example.domain.tag.service.TagService;
 import com.example.domain.todo.model.MTodo;
 import com.example.domain.todo.service.TodoService;
 import com.example.form.TodoForm;
@@ -33,16 +33,12 @@ public class TodoCreateController {
 	private TodoService todoService;
 	
 	@Autowired
-	private SettingService settingService;
+	private TagService tagService;
 	
 	@Autowired
 	private ModelMapper modelMapper;
 	
-//	@InitBinder
-//	public void initBinder(WebDataBinder binder) {
-//		binder.setAllowedFields("itemName", "registrationDate", "expireDate", "finishedDate");
-//	}
-	
+
 	@GetMapping("")
 	public String createTodo(@RequestParam(required = false) String expireDate,
 			Model model, @ModelAttribute TodoForm form) {
@@ -54,24 +50,26 @@ public class TodoCreateController {
 			} catch (ParseException e) {
 				
 			}
-			//form.setExpireDate(java.sql.Date.valueOf(expireDate));			
+			
 		}
 		if (form.getExpireDate() == null) {
 			form.setExpireDate(new Date());
 		}
 		
+		model.addAttribute("tagList", tagService.getTagItems());
+		log.info(tagService.getTagItems().toString());
+		
 		return "todo/create";
 	}
 	
 	@PostMapping("")
-	public String saveTodo(@RequestParam(required = false) String expireDate, 
+	public String saveTodo(//@RequestParam(required = false) String expireDate, 
 			Model model, @ModelAttribute @Validated TodoForm form, 
+			
 			BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 		
 		if (bindingResult.hasErrors()) {
-			model.addAttribute("settingMap", settingService.getSettingMap());
-			model.addAttribute("unfinishedTodoCount", todoService.getUnfinishedTodoCount());
-			return createTodo(expireDate, model, form);
+			return createTodo(form.getExpireDate().toString(), model, form);
 		}
 		
 		log.info(form.toString());

@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,7 +35,8 @@ public class TodoDetailController {
 		
 		MTodo todo = todoService.getOneTodo(form.getId());
 		
-		if(form.getRegistrationDate() == null) {			
+		if(form.getRegistrationDate() == null) {
+			modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 			form = modelMapper.map(todo, TodoForm.class);
 		}
 		
