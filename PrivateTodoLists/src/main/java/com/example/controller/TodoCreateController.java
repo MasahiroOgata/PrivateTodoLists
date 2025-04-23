@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.modelmapper.ModelMapper;
+import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -75,6 +76,7 @@ public class TodoCreateController {
 		log.info(form.toString());
 		
 		form.setRegistrationDate(new Date());
+		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
 		MTodo todo = modelMapper.map(form, MTodo.class);
 		
 		todoService.createOneTodo(todo);

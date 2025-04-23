@@ -16,6 +16,14 @@ window.onload = function() {
 		$("#no-task-msg").hide();
 		selectShowingTable($("#finishedCheck").prop("checked"));
 	}
+	
+	$("i").each(function(){
+		$(this).css('color', $(this).data("tag-color"));
+	});
+	
+	const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+	const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+	
 //	if ($("#todo-table-unfinished tbody tr").length > 0) {
 //		$(".badge").text($("#todo-table-unfinished tbody tr").length);
 //		$(".badge").show();

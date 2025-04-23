@@ -81,11 +81,19 @@
 						<div th:each="item: ${todoList}">
 							<tr th:if="${item.finishedDate == null || i == 0}">
 								<td>
-									<th:block th:if="${item.id == newTodoId}">
-										<span class="fs-6 fst-italic text-primary">new</span>
+									<th:block th:if="${item.tagId != null}">
+										<span data-bs-toggle="tooltip" data-bs-placement="right" th:attr="data-bs-title=${item.tag.tagName}">
+											<i class="fa-xl" th:classappend="${item.tag.tagIcon}"  
+											th:attr="data-tag-color=${item.tag.tagColor}" ></i>
+										</span>
 									</th:block>
 								</td>
-								<td th:text="${item.itemName}"></td>
+								<td>
+									<th:block th:if="${item.id == newTodoId}">
+										<span class="fs-6 fst-italic text-primary">new</span>
+									</th:block>	
+									<span th:text="${item.itemName}"></span>								
+								</td>
 								<td th:text="${#dates.format(item.expireDate,'YYYY-MM-dd')}"></td>
 								<td>
 									<th:block th:if="${item.finishedDate != null}">
