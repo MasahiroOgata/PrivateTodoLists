@@ -43,7 +43,7 @@
 				<tr>
 					<th th:text="タグ"></th>
 					<td>
-						<select id="tag-select" class="form-control" th:field="*{tagId}">
+						<select id="tag-select" class="form-control focus-ring" th:field="*{tagId}">
 							<option th:text="なし" th:value="null"></option>
 							<option th:each="item : ${tagList}" 
 							        th:value="${item.id}" 

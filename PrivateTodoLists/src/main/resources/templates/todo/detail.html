@@ -6,6 +6,9 @@
 	<title>作業詳細</title>
 	<!-- 個別CSS読込 -->
 	<link rel="stylesheet" th:href="@{/css/todo/detail.css}">
+	<!-- Select2 -->
+	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js" defer></script>
 	<!-- TODOフォームの初期値をJSに渡す -->
 	<script th:inline="javascript">
 		const previousTodo = /*[[${previousTodo}]]*/"previousTodo";	
@@ -65,6 +68,19 @@
 							<th th:text="#{finishedDate}"></th>
 							<td>
 								<input type="date" class="form-control" th:field="*{finishedDate}" placeholder="yyyy-MM-dd" oninput="enableEdit()" disabled>
+							</td>
+						</tr>
+						<tr>
+							<th th:text="タグ"></th>
+							<td>
+								<select id="tag-select" class="form-control" th:field="*{tagId}" onchange="enableEdit()">
+									<option th:text="なし" th:value="null"></option>
+									<option th:each="item : ${tagList}" 
+									        th:value="${item.id}" 
+									        th:text="${item.tagName}" 
+									        th:attr="data-icon=${item.tagIcon}, data-color=${item.tagColor}">
+									</option>
+								</select>
 							</td>
 						</tr>
 						<tr>

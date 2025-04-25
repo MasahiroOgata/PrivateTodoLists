@@ -6,6 +6,8 @@ window.onload = function() {
 	const TODO_UNFINISHED_COLOR = "#fd7e14"
 	
 	var todoEvents = [];
+	
+	console.log(todoList);
 		
 	todoList.forEach((todo) => {			
 		var event = {};
@@ -42,7 +44,6 @@ window.onload = function() {
         headerToolbar: {
 	        left: 'title',
 	        center: '',
-//	        right: 'today prev,next'
 	        right: 'myTodayButton myPrevButton,myNextButton'
         },
         customButtons: {
@@ -78,8 +79,8 @@ window.onload = function() {
         eventDidMount: function(info) {
 		    // イベント要素にIDをdata属性として追加
 		    $(info.el).attr('data-event-id', info.event.id);
-		    console.log(info.event);
-		    console.log(info.event.backgroundColor);
+//		    console.log(info.event);
+//		    console.log(info.event.backgroundColor);
 		//    $(info.el).attr('data-event-id', info.event.extraParams);
 		//	$(info.el).attr('data-event-param', info.event.extendedProps.custom_param);
 			$(info.el).attr('data-event-color', info.event.backgroundColor);			
@@ -104,7 +105,7 @@ window.onload = function() {
 			});			
             var finishedDateTxt;
             if (clickedEvent.finishedDate != null) {
-				finishedDateTxt = clickedEvent.finishedDate + "完了";
+				finishedDateTxt = clickedEvent.finishedDate.substr(0, 10) + "完了";
 			} else {
 				finishedDateTxt = "未完了"
 			}
@@ -118,7 +119,7 @@ window.onload = function() {
                          + '</td></tr>'
                          ); 
             
-            $("#todo-transition-btn").text("詳細").removeClass("btn-primary").addClass("btn-outline-success");
+            $("#todo-transition-btn").text("詳細").removeClass("btn-outline-primary").addClass("btn-outline-success");
             $("#todo-transition-btn").attr("href","/todo/detail/" + e.event.id);
             
 			e.jsEvent.stopPropagation(); //クリックイベントの伝播を止める。
@@ -159,7 +160,7 @@ window.onload = function() {
                          $("#event-content tr:last-child td:last-child a").attr('href', '/todo/detail/' + event.id)
                          .css("font-size", settingMap.fontSize + "rem");
  			});
- 			$("#todo-transition-btn").text("作業登録").removeClass("btn-outline-success").addClass("btn-primary");
+ 			$("#todo-transition-btn").text("作業登録").removeClass("btn-outline-success").addClass("btn-outline-primary");
  			$("#todo-transition-btn").attr("href","/todo/create?expireDate=" + info.dateStr);		
 		 }
      });
@@ -189,6 +190,7 @@ window.onload = function() {
 			  var eventColor = $(this).find(".fc-event").data("event-color");
 			  var eventId = $(this).find(".fc-event").data("event-id");
 			  var thisEvent = todoList.find(todo => todo.id == eventId);
+
 			  if (thisEvent.finishedDate) {
 				  var eventIcon = '<i class="fa-regular ' + TODO_FINISHED_SMILE_FACE + '"></i>';
 			  } else if (new Date(thisEvent.expireDate).getTime() < new Date().getTime() - 86400000){
@@ -196,6 +198,11 @@ window.onload = function() {
 			  } else {
 				  var eventIcon = '<i class="fa-regular fa-face-meh"></i>';
 			  }
+			  if (thisEvent.tag) {    
+			      eventIcon = '<i class="' + thisEvent.tag.tagIcon + '"></i>';
+			      eventColor = thisEvent.tag.tagColor;
+			  }
+//			  var eventIcon = '<i class="' + thisEvent.tag.tagIcon + '"></i>';
 			  $(this).prepend(
 			    '<span style="color: ' +
 			    eventColor +
@@ -204,8 +211,7 @@ window.onload = function() {
 			    eventIcon +
 			    '</span>'
 			  );
-			});		 
-	//	 $(".fc-daygrid-event-harness").prepend('<span style="color: black; background-color: rgba(0,0,0,0);">●</span>');
+			});	
 		 $(".fc-event").css({'display': 'inline-block', 'width': '80%'});
 	}	
 	console.log(calendar.currentData.eventSources);

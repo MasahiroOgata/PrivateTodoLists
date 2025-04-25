@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.example.domain.setting.service.SettingService;
+import com.example.domain.tag.service.TagService;
 import com.example.domain.todo.model.MTodo;
 import com.example.domain.todo.service.TodoService;
 import com.example.form.TodoForm;
@@ -28,6 +29,9 @@ public class TodoDetailController {
 	private SettingService settingService;
 	
 	@Autowired
+	private TagService tagService;
+	
+	@Autowired
 	private ModelMapper modelMapper;
 	
 	@GetMapping("{id}")
@@ -40,6 +44,7 @@ public class TodoDetailController {
 			form = modelMapper.map(todo, TodoForm.class);
 		}
 		
+		model.addAttribute("tagList", tagService.getTagItems());
 		model.addAttribute("previousTodo", todo);
 		model.addAttribute("todoForm", form);
 		

@@ -21,6 +21,7 @@
 			<h1 class="h2 mx-2 text-white">タグ詳細・修正</h1>
 		</div>
 		<form class="form-edit" th:object="${tagForm}" method="post" th:action="@{'/tag/detail/' + *{id}}">
+			<p th:if="${#fields.hasErrors('tagName')}" th:errors="*{tagName}" class="text-center text-danger my-0"></p>
 			<table class="table table-striped table-bordered table-hover">
 				<tr>
 					<th th:text="#{tagName}"></th>

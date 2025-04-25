@@ -5,6 +5,10 @@
 	margin: auto;
 }
 
+.form-edit p {
+	background-color: rgb(255, 255, 255);
+}
+
 
 th{
 	width: 15%;
