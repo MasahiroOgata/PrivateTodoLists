@@ -11,6 +11,8 @@ public class SettingForm {
 	
 	private String backgroundImg;
 	
+	private String fontFamily;
+	
 	private String fontSize;
 	
 	private String firstDayOfWeek;

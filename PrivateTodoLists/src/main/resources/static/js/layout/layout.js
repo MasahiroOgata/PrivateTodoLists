@@ -37,6 +37,11 @@ function applySettings() {
 		$(".main").css('background-image', 'none');
 	}
 	
+	if ('fontFamily' in settingMap) {
+		$(".main").css("font-family", settingMap.fontFamily);
+		$(".navbar-brand").css({'font-family': 'color:' + settingMap.fontFamily + '!important;'});
+	}
+	
 	if ('fontSize' in settingMap) {
 		$("th, td, input, .modal-body p").css("font-size", settingMap.fontSize + "rem");
 		$("a, button").not(".navbar-brand").css("font-size", settingMap.fontSize + "rem");

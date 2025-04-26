@@ -25,7 +25,15 @@
 	background-size: cover;
 	background-position: center;
 	
+/*	font-family: "HGMaruGothicMPRO"; */
+/*	font-family: "sans-serif";*/
+	
 }
+
+/*
+.navbar-brand {
+	font-family: "Yu Mincho" !important;
+}*/
 
 .header {
 	padding-top: 1rem !important;
@@ -33,6 +41,8 @@
 	margin-bottom: 1rem !important;	
 	background-color:gray;
 	opacity: 0.95;	
+	
+	
 }
 
 .badge {

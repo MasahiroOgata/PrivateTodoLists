@@ -28,6 +28,12 @@ function applyFormFirstSettings() {
 		$("#backgroundImg").val("");
 	}
 	
+	if (settingMap.fontFamily) {
+		$('#fontFamily input[value="'+ settingMap.fontFamily + '"]').prop('checked', true);
+	} else {
+		$('#fontFamily input[value="sans-serif"]').prop('checked', true);
+	}
+	
 	if (settingMap.fontSize) {
 		$('#fontSize input[value="'+ settingMap.fontSize + '"]').prop('checked', true);
 	} else {

@@ -1,7 +1,6 @@
 window.onload = function() {
 	
 	const TODO_FINISHED_COLOR = "#0d95f0";
-	const TODO_FINISHED_SMILE_FACE = "fa-face-smile";
 	const TODO_EXPIRED_COLOR = "#dc3545";
 	const TODO_UNFINISHED_COLOR = "#fd7e14"
 	
@@ -191,30 +190,48 @@ window.onload = function() {
 			  var eventId = $(this).find(".fc-event").data("event-id");
 			  var thisEvent = todoList.find(todo => todo.id == eventId);
 
-			  if (thisEvent.finishedDate) {
-				  var eventIcon = '<i class="fa-regular ' + TODO_FINISHED_SMILE_FACE + '"></i>';
-			  } else if (new Date(thisEvent.expireDate).getTime() < new Date().getTime() - 86400000){
-				  var eventIcon = '<i class="fa-regular fa-face-frown"></i>';
-			  } else {
-				  var eventIcon = '<i class="fa-regular fa-face-meh"></i>';
-			  }
-			  if (thisEvent.tag) {    
-			      eventIcon = '<i class="' + thisEvent.tag.tagIcon + '"></i>';
+//			  if (thisEvent.finishedDate) {
+//				  var eventIcon = '<i class="fa-regular fa-face-smile"></i>';
+//			  } else if (new Date(thisEvent.expireDate).getTime() < new Date().getTime() - 86400000){
+//				  var eventIcon = '<i class="fa-regular fa-face-frown"></i>';
+//			  } else {
+//				  var eventIcon = '<i class="fa-regular fa-face-meh"></i>';
+//			  }
+			  if (thisEvent.tag) {
+				  $(this).find(".fc-event").css({'display': 'inline-block', 'width': '82%'});    
+			     var eventIcon = '<i class="' + thisEvent.tag.tagIcon + '"></i>';
 			      eventColor = thisEvent.tag.tagColor;
-			  }
-//			  var eventIcon = '<i class="' + thisEvent.tag.tagIcon + '"></i>';
-			  $(this).prepend(
-			    '<span style="color: ' +
-			    eventColor +
-			    '; background-color: rgba(0,0,0,0);' +
-			    'display: inline-block; width: 15%;" class="text-center">' +
-			    eventIcon +
-			    '</span>'
-			  );
+			      
+			      //var tagName = text(thisEvent.tag.tagName);
+			      //console.log(tagName);
+			      
+			      $span = 
+			  
+				  $(this).prepend(
+				    '<span data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="' +
+				    thisEvent.tag.tagName +
+				    '" style="color: ' +
+				    eventColor +
+				    '; background-color: rgba(0,0,0,0);' +
+				    'display: inline-block; width: 15%;" class="text-center">' +
+				    eventIcon +
+				    '</span>'
+			    	);
+			    	
+			      $(this).find('span').data('bs-title', thisEvent.tag.tagName);
+			      console.log($(this).find('span').data('bs-title'));
+			      $(this).find('span').addClass("sample-class");
+			    }
 			});	
-		 $(".fc-event").css({'display': 'inline-block', 'width': '80%'});
+			
+		const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+		const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+	
+			
+		
+		// $(".fc-event").css({'display': 'inline-block', 'width': '80%'});
 	}	
-	console.log(calendar.currentData.eventSources);
+//	console.log(calendar.currentData.eventSources);
 //	 $(".fc").css('background-color', 'rgba(155,155,155,0.95)');
 	
 }
