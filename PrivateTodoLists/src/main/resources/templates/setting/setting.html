@@ -65,12 +65,12 @@
 					<th colspan="1">フォント変更</th>
 					<td colspan="3">
 						<div class="form-check-inline" id="fontFamily">
-							<input type="radio" class="form-check-input ms-1" th:field="*{fontFamily}" th:value="'sans-serif'" onchange="">
-							<label class="form-check-label" th:text="ゴシック体"  style="font-family: sans-serif;"></label>
-							<input type="radio" class="form-check-input ms-3" th:field="*{fontFamily}" th:value="'Yu Mincho'" onchange="">
-							<label class="form-check-label" th:text="明朝体" style="font-family: Yu Mincho;"></label>
-							<input type="radio" class="form-check-input ms-3" th:field="*{fontFamily}" th:value="'HGMaruGothicMPRO'" onchange="">
-							<label class="form-check-label" th:text="丸文字" style="font-family: HGMaruGothicMPRO;"></label>
+							<input type="radio" class="form-check-input ms-1" th:field="*{fontFamily}" th:value="'system-ui'" onchange="changeFontFamily()">
+							<label class="form-check-label" th:text="ゴシック体"  style="font-family: system-ui;"></label>
+							<input type="radio" class="form-check-input ms-3" th:field="*{fontFamily}" th:value="'Yu Mincho'" onchange="changeFontFamily()">
+							<label class="form-check-label" th:text="明朝体" style="font-family: 'Yu Mincho';"></label>
+							<input type="radio" class="form-check-input ms-3" th:field="*{fontFamily}" th:value="'HG丸ｺﾞｼｯｸM-PRO'" onchange="changeFontFamily()">
+							<label class="form-check-label" th:text="丸文字" style="font-family: 'HG丸ｺﾞｼｯｸM-PRO';"></label>
 						</div>
 					</td>
 				</tr>

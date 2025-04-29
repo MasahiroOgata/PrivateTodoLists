@@ -6,6 +6,7 @@ window.onload = function() {
 	}
 	
 	applyFormFirstSettings()
+	console.log($(".navbar-brand").css('font-family'));
 }
 
 function applyFormFirstSettings() {
@@ -31,7 +32,7 @@ function applyFormFirstSettings() {
 	if (settingMap.fontFamily) {
 		$('#fontFamily input[value="'+ settingMap.fontFamily + '"]').prop('checked', true);
 	} else {
-		$('#fontFamily input[value="sans-serif"]').prop('checked', true);
+		$('#fontFamily input[value="system-ui"]').prop('checked', true);
 	}
 	
 	if (settingMap.fontSize) {
@@ -76,8 +77,16 @@ function changeBackgroundImg() {
 	}
 }
 
+function changeFontFamily() {	
+	var navbarStyle = $(".navbar-brand").attr('style');
+	console.log(navbarStyle);
+	var fontFamily = $("input[name='fontFamily']:checked").val();
+	$(".main").not('#fontFamily').css("font-family", fontFamily);
+	$(".navbar-brand").css({'cssText': navbarStyle + 'font-family:' + fontFamily + '!important;'});
+	
+}
+
 function changeFontSize() {
 	var fontSizeNum = $("input[name='fontSize']:checked").val();
-	console.log(fontSizeNum);
 	$("th, td, input").css("font-size" , fontSizeNum + "rem");
 }

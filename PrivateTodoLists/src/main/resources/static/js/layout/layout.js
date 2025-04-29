@@ -10,7 +10,6 @@ if ($(".badge").text() >= 100) {
 
 
 function applySettings() {
-	console.log(imgList);
 	
 	if ('headerBgColor' in settingMap) {
 		$(".navbar").css('background-color', settingMap.headerBgColor);
@@ -37,9 +36,13 @@ function applySettings() {
 		$(".main").css('background-image', 'none');
 	}
 	
+	var navbarStyle = $(".navbar-brand").attr('style');
 	if ('fontFamily' in settingMap) {
 		$(".main").css("font-family", settingMap.fontFamily);
-		$(".navbar-brand").css({'font-family': 'color:' + settingMap.fontFamily + '!important;'});
+		$(".navbar-brand").css({'cssText': navbarStyle + 'font-family:' + settingMap.fontFamily + '!important;'});
+	} else {
+		$(".main").css("font-family", "system-ui");
+		$(".navbar-brand").css({'cssText': navbarStyle + 'font-family: "system-ui" !important;'});
 	}
 	
 	if ('fontSize' in settingMap) {

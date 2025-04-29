@@ -205,7 +205,7 @@ window.onload = function() {
 			      //var tagName = text(thisEvent.tag.tagName);
 			      //console.log(tagName);
 			      
-			      $span = 
+			      //$span = 
 			  
 				  $(this).prepend(
 				    '<span data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="' +
