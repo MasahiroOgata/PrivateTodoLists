@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.example.domain.setting.service.SettingService;
 import com.example.domain.todo.model.MTodo;
 import com.example.domain.todo.service.TodoService;
 
@@ -27,6 +28,9 @@ public class TodoListController {
 	
 	@Autowired
 	private TodoService todoService;
+	
+	@Autowired 
+	private SettingService settingService;
 	
 	@Autowired
 	private HttpSession session;
@@ -71,9 +75,12 @@ public class TodoListController {
 	@PostMapping("")
 //	public @ResponseBody String toggleShowFinishedTodo(Model model, @RequestParam boolean state) {
 	public void toggleShowFinishedTodo(Model model, @RequestParam boolean state) {
-			
-		int nowShowingState = (int) session.getAttribute("isHidingFinishedTodo");
-		session.setAttribute("isHidingFinishedTodo", Math.abs(nowShowingState - 1));
+		
+		String CustomizeValue = state ? "1":"0";
+		settingService.setOneSetting("isHidingFinishedTodo", CustomizeValue);
+		
+//		int nowShowingState = (int) session.getAttribute("isHidingFinishedTodo");
+//		session.setAttribute("isHidingFinishedTodo", Math.abs(nowShowingState - 1));
 		
 //		List<MTodo> todoList = todoService.getTodoItems();
 //		model.addAttribute("todoList", todoList);

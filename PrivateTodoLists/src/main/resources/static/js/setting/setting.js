@@ -46,6 +46,11 @@ function applyFormFirstSettings() {
 	} else {
 		$('#firstDayOfWeek input[value="0"]').prop('checked', true);
 	}
+	 if (settingMap.isHidingFinishedTodo) {
+		$('#isHidingFinishedTodo input[value="' + settingMap.isHidingFinishedTodo + '"]').prop('checked', true);
+	} else {
+		$('#isHidingFinishedTodo input[value="0"]').prop('checked', true);
+	}
 	
 	applySettings();
 	//jsEvent.stopPropagation();
@@ -89,4 +94,5 @@ function changeFontFamily() {
 function changeFontSize() {
 	var fontSizeNum = $("input[name='fontSize']:checked").val();
 	$("th, td, input").css("font-size" , fontSizeNum + "rem");
+	$(".form-setting").css("max-width", fontSizeNum * 700 + "px");
 }

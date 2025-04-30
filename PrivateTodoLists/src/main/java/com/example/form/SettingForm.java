@@ -17,10 +17,7 @@ public class SettingForm {
 	
 	private String firstDayOfWeek;
 	
+	private String isHidingFinishedTodo;
 	
-	
-//	SettingForm() {
-//		this.headerFontColor = "#ffffff";
-//	}
 
 }

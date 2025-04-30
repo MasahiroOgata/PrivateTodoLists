@@ -66,11 +66,11 @@
 					<td colspan="3">
 						<div class="form-check-inline" id="fontFamily">
 							<input type="radio" class="form-check-input ms-1" th:field="*{fontFamily}" th:value="'system-ui'" onchange="changeFontFamily()">
-							<label class="form-check-label" th:text="ゴシック体"  style="font-family: system-ui;"></label>
+							<label class="form-check-label" th:text="ブラウザ設定"  style="font-family: system-ui;"></label>
 							<input type="radio" class="form-check-input ms-3" th:field="*{fontFamily}" th:value="'Yu Mincho'" onchange="changeFontFamily()">
 							<label class="form-check-label" th:text="明朝体" style="font-family: 'Yu Mincho';"></label>
 							<input type="radio" class="form-check-input ms-3" th:field="*{fontFamily}" th:value="'HG丸ｺﾞｼｯｸM-PRO'" onchange="changeFontFamily()">
-							<label class="form-check-label" th:text="丸文字" style="font-family: 'HG丸ｺﾞｼｯｸM-PRO';"></label>
+							<label class="form-check-label" th:text="丸ゴシック" style="font-family: 'HG丸ｺﾞｼｯｸM-PRO';"></label>
 						</div>
 					</td>
 				</tr>
@@ -99,11 +99,23 @@
 					</td>
 				</tr>
 				<tr>
+					<th colspan="1">完了済みタスクの表示</th>
+					<td colspan="3">
+						<div class="form-check-inline" id="isHidingFinishedTodo">
+							<input type="radio" class="form-check-input ms-1" th:field="*{isHidingFinishedTodo}" th:value="'0'">
+							<label class="form-check-label" th:text="表示"></label>
+							<input type="radio" class="form-check-input ms-1" th:field="*{isHidingFinishedTodo}" th:value="'1'">
+							<label class="form-check-label" th:text="非表示"></label>
+						</div>
+					</td>
+				</tr>
+				<tr>
 					<td colspan="4" class="text-center">
 						<btn class="btn btn-success rounded-pill col-3" onclick="applyFormFirstSettings()" th:text="もとに戻す"></btn>
 						<input type="submit" value="決定" class="btn btn-primary rounded-pill col-3">
 					</td>
 				</tr>
+
 								
 			</table>
 		</form>		

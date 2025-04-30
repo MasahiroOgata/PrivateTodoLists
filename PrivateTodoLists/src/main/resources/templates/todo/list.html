@@ -45,7 +45,7 @@
 					<div class="form-check form-switch mx-3 mt-3">
 						<label class="form-check-label text-white">完了済みタスクを非表示にする</label>
 						<input class="form-check-input" type="checkbox" role="switch" 
-						th:checked="${session.isHidingFinishedTodo == 1}"
+						th:checked="${_settingMap.isHidingFinishedTodo == '1'}"
 						id ="finishedCheck" 
 						onchange="toggleShowFinishedTodo()">
 					</div>
@@ -111,10 +111,10 @@
 								</td>
 								<td>
 									<div class="row">							
-									<a class="btn btn-sm rounded-pill col-5 mx-1" th:href="@{'/todo/finish/' + ${item.id}}"
+									<a class="btn btn-sm rounded-pill col mx-1" th:href="@{'/todo/finish/' + ${item.id}}"
 									th:text="${item.finishedDate == null}? '完了する' : '未完了にする'" 
 									th:classappend="${item.finishedDate == null}? 'btn-outline-primary' : 'btn-outline-danger' "></a>
-									<a class="btn btn-outline-success btn-sm rounded-pill col-5" th:href="@{'/todo/detail/' + ${item.id}}">詳細</a>
+									<a class="btn btn-outline-success btn-sm rounded-pill col me-2" th:href="@{'/todo/detail/' + ${item.id}}">詳細</a>
 									</div>
 								</td>					
 							</tr>

@@ -49,6 +49,7 @@ function applySettings() {
 		$("th, td, input, .modal-body p").css("font-size", settingMap.fontSize + "rem");
 		$("a, button").not(".navbar-brand").css("font-size", settingMap.fontSize + "rem");
 		$("#todo-table-all, #todo-table-unfinished").css("max-width", settingMap.fontSize * 1000 + "px");
+		$(".form-setting").css("max-width", settingMap.fontSize * 700 + "px");
 		$(".msg-modal").css('width', settingMap.fontSize * 270 +'px');
 		$(".msg-modal").css('height', settingMap.fontSize * 180 +'px');	
 	} else {

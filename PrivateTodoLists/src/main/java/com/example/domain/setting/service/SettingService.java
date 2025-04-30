@@ -23,4 +23,6 @@ public interface SettingService {
 	/** Setting登録・更新(一括) **/
 	public void setAllSettings(SettingForm form) throws IllegalAccessException ;
 	
+	/** Setting登録・更新(1件毎) **/
+	public void setOneSetting(String CustomizeKey, String CustomizeValue);
 }

@@ -110,6 +110,14 @@ window.onload = function() {
 			}
 			
 			$("#event-date").text(e.event.title);
+			if (clickedEvent.tag) {
+				$("#event-date").append('<span><i class="mx-2 fa-lg '
+				         + clickedEvent.tag.tagIcon
+				         + '"></i></span><span class="h4 fw-normal"></span>');
+				$("#event-date span i").css("color", clickedEvent.tag.tagColor);
+				$("#event-date span:last-child").text(clickedEvent.tag.tagName);
+			}			
+			
 			$("#event-content").css("font-size", settingMap.fontSize + "rem"); 
             $("#event-content").append('<tr><td>'
                          + e.event.startStr + "まで"

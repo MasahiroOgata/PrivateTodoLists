@@ -76,5 +76,22 @@ public class SettingServiceImpl implements SettingService{
 			}
 		}
 	}
+	
+	/** Setting登録・更新(1件) **/
+	@Override
+	public void setOneSetting(String CustomizeKey, String CustomizeValue) {
+		
+		Map<String, String> settingMap = getSettingMap();
+		MSetting setting = new MSetting();
+		setting.setCustomizeKey(CustomizeKey);
+		setting.setCustomizeValue(CustomizeValue);
+		
+		if (settingMap.containsKey(CustomizeKey)) {
+			editOneSetting(setting);
+		} else {
+			registerOneSetting(setting);
+		}
+	}
+	
 
 }

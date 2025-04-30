@@ -14,7 +14,9 @@ window.onload = function() {
 		$("#no-task-msg").show();
 	} else {
 		$("#no-task-msg").hide();
-		selectShowingTable($("#finishedCheck").prop("checked"));
+		$("#finishedCheck").prop("checked", settingMap.isHidingFinishedTodo == '1');
+		selectShowingTable(settingMap.isHidingFinishedTodo == '1');
+		//selectShowingTable($("#finishedCheck").prop("checked"));
 	}
 	
 	$("i").each(function(){
