@@ -91,6 +91,7 @@ window.onload = function() {
 //        eventBorderColor: 'white',
         
         eventClick: function(e) {
+			$(".fc .fc-more-popover").css({'cssText': 'display: none; !important;'});
 			$("#event-modal").fadeIn(200);
             $(".modal").fadeIn(200);                        
             $("#event-content").html("");
@@ -173,7 +174,16 @@ window.onload = function() {
      });
      
      calendar.render();
-     showEventIcon();	
+     showEventIcon();
+     
+     $(".fc-daygrid-more-link").click(function() {
+		 console.log('clicked!');
+		 showEventIcon();
+	 });	
+	 
+	 $(".fc-popover").mouseover(function() {
+		console.log('hover!'); 
+	 });
      
      $(".btn-close, #modal-close").click(function () {
 		$("#event-modal").hide();
@@ -193,9 +203,11 @@ window.onload = function() {
 	
 	function showEventIcon() {
 		 $(".fc-daygrid-event-harness span").remove()
+		 //$(".fc-popover-body .fc-daygrid-event-harness .fc-event").remove()
 		 $(".fc-daygrid-event-harness").each(function() {
 			  var eventColor = $(this).find(".fc-event").data("event-color");
 			  var eventId = $(this).find(".fc-event").data("event-id");
+			  console.log(eventId);
 			  var thisEvent = todoList.find(todo => todo.id == eventId);
 
 //			  if (thisEvent.finishedDate) {
@@ -206,7 +218,7 @@ window.onload = function() {
 //				  var eventIcon = '<i class="fa-regular fa-face-meh"></i>';
 //			  }
 			  if (thisEvent.tag) {
-				  $(this).find(".fc-event").css({'display': 'inline-block', 'width': '82%'});    
+				  $(this).find(".fc-event").css({'display': 'inline-block', 'width': '75%'});    
 			     var eventIcon = '<i class="' + thisEvent.tag.tagIcon + '"></i>';
 			      eventColor = thisEvent.tag.tagColor;
 			      
@@ -220,14 +232,14 @@ window.onload = function() {
 				    thisEvent.tag.tagName +
 				    '" style="color: ' +
 				    eventColor +
-				    '; background-color: rgba(0,0,0,0);' +
-				    'display: inline-block; width: 15%;" class="text-center">' +
+				    '; background-color: rgba(0,0,0,0); display: inline-block; width: 15%;"' 
+				    + ' class="text-center">' +
 				    eventIcon +
 				    '</span>'
 			    	);
 			    	
 			      $(this).find('span').data('bs-title', thisEvent.tag.tagName);
-			      console.log($(this).find('span').data('bs-title'));
+			     // console.log($(this).find('span').data('bs-title'));
 			      $(this).find('span').addClass("sample-class");
 			    }
 			});	

@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -72,13 +71,13 @@ public class TodoListController {
 		return "todo/list";
 	}
 	
-	@PostMapping("")
-//	public @ResponseBody String toggleShowFinishedTodo(Model model, @RequestParam boolean state) {
-	public void toggleShowFinishedTodo(Model model, @RequestParam boolean state) {
-		
-		String CustomizeValue = state ? "1":"0";
-		settingService.setOneSetting("isHidingFinishedTodo", CustomizeValue);
-		
+//	@PostMapping("")
+////	public @ResponseBody String toggleShowFinishedTodo(Model model, @RequestParam boolean state) {
+//	public void toggleShowFinishedTodo(Model model, @RequestParam boolean state) {
+//		
+//		String CustomizeValue = state ? "1":"0";
+//		settingService.setOneSetting("isHidingFinishedTodo", CustomizeValue);
+//		
 //		int nowShowingState = (int) session.getAttribute("isHidingFinishedTodo");
 //		session.setAttribute("isHidingFinishedTodo", Math.abs(nowShowingState - 1));
 		
@@ -86,7 +85,7 @@ public class TodoListController {
 //		model.addAttribute("todoList", todoList);
 		
 		//return "redirect:/todo/list";
-	}
+//	}
 	
 //	@PostMapping("")
 //	public String toggleShowFinishedTodo(Model model, @RequestParam boolean state) {

@@ -51,8 +51,8 @@ function toggleShowFinishedTodo() {
 	selectShowingTable(state);
 	
 	$.ajax({
-            url: "/todo/list", // 取得するHTMLのURL
-            method: "POST",
+            url: "/todo/toggle", // 取得するHTMLのURL
+            method: "PUT",
             data: { state: state },
             //contentType: "json",
             success: function (data) {
@@ -61,7 +61,7 @@ function toggleShowFinishedTodo() {
  
             },
             error: function () {
-                alert("データの取得に失敗しました");
+                alert("データの更新に失敗しました");
             }
         });
 	
