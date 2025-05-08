@@ -48,7 +48,7 @@ public class SettingAspect {
 			settingMap.put("imgURL", settingMap.getOrDefault("backgroundImg", ""));
 		}
 		
-		request.setAttribute("_settingMap", settingMap);
+		request.setAttribute("settingMap", settingMap);
 		request.setAttribute("unfinishedTodoCount", todoService.getUnfinishedTodoCount());
 		
 	}

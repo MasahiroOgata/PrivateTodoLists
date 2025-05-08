@@ -11,11 +11,14 @@ if ($(".badge").text() >= 100) {
 
 function applySettings() {
 	
-	if ('headerBgColor' in settingMap) {
-		$(".navbar").css('background-color', settingMap.headerBgColor);
-	} else {
-		$(".navbar").css('background-color', '#0d6efd');
-	}
+	var headerBgColor = 'headerBgColor' in settingMap ? settingMap.headerBgColor : '#0d6efd';
+	$(".navbar").css('background-color', headerBgColor);
+	
+//	if ('headerBgColor' in settingMap) {
+//		$(".navbar").css('background-color', settingMap.headerBgColor);
+//	} else {
+//		$(".navbar").css('background-color', '#0d6efd');
+//	}
 	
 	if ('headerFontColor' in settingMap) {
 		$(".navbar-brand").css({'cssText': 'color:' + settingMap.headerFontColor + '!important;'});

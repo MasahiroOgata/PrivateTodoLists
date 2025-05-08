@@ -7,6 +7,8 @@ window.onload = function() {
 		showLoginMsg()
 	}
 	
+	var isHidingFinishedTodo = "isHidingFinishedTodo" in settingMap ? settingMap.isHidingFinishedTodo : '0';
+	
 	if (todoList.length == 0) {
 		$("#todo-table-all").hide();
 		$("#todo-table-unfinished").hide();
@@ -14,8 +16,8 @@ window.onload = function() {
 		$("#no-task-msg").show();
 	} else {
 		$("#no-task-msg").hide();
-		$("#finishedCheck").prop("checked", settingMap.isHidingFinishedTodo == '1');
-		selectShowingTable(settingMap.isHidingFinishedTodo == '1');
+		$("#finishedCheck").prop("checked", isHidingFinishedTodo == '1');
+		selectShowingTable(isHidingFinishedTodo == '1');
 		//selectShowingTable($("#finishedCheck").prop("checked"));
 	}
 	
