@@ -5,11 +5,11 @@ window.onload = function() {
 		  $(".modal").fadeIn(200);
 	}
 	
-	applyFormFirstSettings()
+	applyFormPresentSettings()
 	console.log($(".navbar-brand").css('font-family'));
 }
 
-function applyFormFirstSettings() {
+function applyFormPresentSettings() {
 	
 	if(settingMap.headerBgColor) {
 		$("#headerBgColor").val(settingMap.headerBgColor);
@@ -26,7 +26,7 @@ function applyFormFirstSettings() {
 	if (settingMap.backgroundImg) {
 		$("#backgroundImg").val(settingMap.backgroundImg);
 	} else {
-		$("#backgroundImg").val("");
+		$("#backgroundImg").val("none");
 	}
 	
 	if (settingMap.fontFamily) {

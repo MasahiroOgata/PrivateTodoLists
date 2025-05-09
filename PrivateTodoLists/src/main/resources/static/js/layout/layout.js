@@ -14,49 +14,24 @@ function applySettings() {
 	var headerBgColor = 'headerBgColor' in settingMap ? settingMap.headerBgColor : '#0d6efd';
 	$(".navbar").css('background-color', headerBgColor);
 	
-//	if ('headerBgColor' in settingMap) {
-//		$(".navbar").css('background-color', settingMap.headerBgColor);
-//	} else {
-//		$(".navbar").css('background-color', '#0d6efd');
-//	}
+	var headerFontColor = 'headerFontColor' in settingMap ? settingMap.headerFontColor : '#ffffff';
+	$(".navbar-brand").css({'cssText': 'color:' + headerFontColor + '!important;'});
 	
-	if ('headerFontColor' in settingMap) {
-		$(".navbar-brand").css({'cssText': 'color:' + settingMap.headerFontColor + '!important;'});
-	} else {
-		$(".navbar-brand").css({'cssText': 'color: #ffffff !important;'});
-	}
+	var imgURL = settingMap.imgURL == 'none' ? 'none' : 'url("/img/' + settingMap.imgURL + '")';
+	$(".main").css('background-image', imgURL);
 	
-	if ('imgURL' in settingMap) {
-		$(".main").css('background-image', 'url("/img/' + settingMap.imgURL + '")');
-//	} else if (settingMap.backgroundImg == 'random'){
-//		var randomImgNum = Math.floor( Math.random() * imgList.length );
-//		$(".main").css('background-image', 'url("/img/' + imgList[randomImgNum] + '")');
-//		var randomImgNum = Math.floor( Math.random() * 8 + 1 );
-//		$(".main").css('background-image', 'url("/img/img0' + randomImgNum + '.jpg")');
-//	} else if (settingMap.backgroundImg) {
-//		$(".main").css('background-image', 'url("/img/' + settingMap.backgroundImg + '")');
-	} else {
-		$(".main").css('background-image', 'none');
-	}
-	
+	var fontFamily = 'fontFamily' in settingMap ? settingMap.fontFamily : 'system-ui';
 	var navbarStyle = $(".navbar-brand").attr('style');
-	if ('fontFamily' in settingMap) {
-		$(".main").css("font-family", settingMap.fontFamily);
-		$(".navbar-brand").css({'cssText': navbarStyle + 'font-family:' + settingMap.fontFamily + '!important;'});
-	} else {
-		$(".main").css("font-family", "system-ui");
-		$(".navbar-brand").css({'cssText': navbarStyle + 'font-family: "system-ui" !important;'});
-	}
+	$(".main").css("font-family", fontFamily);
+	$(".navbar-brand").css({'cssText': navbarStyle + 'font-family:' + fontFamily + '!important;'});
 	
-	if ('fontSize' in settingMap) {
-		$("th, td, input, .modal-body p").css("font-size", settingMap.fontSize + "rem");
-		$("a, button").not(".navbar-brand").css("font-size", settingMap.fontSize + "rem");
-		$("#todo-table-all, #todo-table-unfinished").css("max-width", settingMap.fontSize * 1000 + "px");
-		$(".form-setting").css("max-width", settingMap.fontSize * 700 + "px");
-		$(".msg-modal").css('width', settingMap.fontSize * 270 +'px');
-		$(".msg-modal").css('height', settingMap.fontSize * 180 +'px');	
-	} else {
-		$("th, td, input").css("font-size", "1rem");
-	}
-
+	var fontSize = 'fontSize' in settingMap ? settingMap.fontSize : '1';
+	$("th, td, input, select, .select2, .modal-body p").css("font-size", fontSize + "rem");
+	$("a, button").not(".navbar-brand").css("font-size", fontSize + "rem");
+	$(".select2-container, .select2-selection--single").css({'cssText': 'font-size:' + fontSize + 'rem !important;'});
+	$(".select2-selection__rendered, .select2-results__options").css({'cssText': 'font-size:' + fontSize + 'rem !important;'});
+	$("#todo-table-all, #todo-table-unfinished").css("max-width", fontSize * 1000 + "px");
+	$(".form-setting").css("max-width", fontSize * 700 + "px");
+	$(".msg-modal").css({'width': fontSize * 270 +'px', 'height':fontSize * 180 +'px'});
+	
 }

@@ -6,7 +6,6 @@
 	<title>作業一覧</title>
 	<!-- 個別JS読込 -->
 	<script th:src="@{/js/todo/list.js}" defer></script>
-	<!--<script th:src="@{/js/layout/layout.js}" defer></script>-->
 	<!-- 個別CSS読込 -->
 	<link rel="stylesheet" th:href="@{/css/todo/list.css}">
 	<!-- flashMsg,todoList,todayをJSに渡す -->
@@ -46,6 +45,7 @@
 						<label class="form-check-label text-white">完了済みタスクを非表示にする</label>
 						<input class="form-check-input" type="checkbox" role="switch" 
 						id ="finishedCheck" 
+						th:checked="${settingMap.isHidingFinishedTodo == '1'}"
 						onchange="toggleShowFinishedTodo()">
 					</div>
 				</div>

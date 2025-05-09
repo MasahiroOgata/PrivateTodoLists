@@ -19,7 +19,6 @@
 		<div class="header border-bottom row justify-content-between">
 			<h1 class="h2 mx-2 text-white">設定変更</h1>
 		</div>
-		
 		<div class="modal-wrapper" id="msg-modal">
 			<div class="msg-modal modal container-fluid">
 				<div class="modal-header">
@@ -33,7 +32,6 @@
 				</div>
 			</div>
 		</div>
-		
 		<form class="form-setting" method="post" th:action="@{/setting}" th:object="${settingForm}">
 			<table class="table table-striped table-bordered table-hover">
 				<tr>
@@ -53,7 +51,7 @@
 					<th colspan="1">背景画像</th>
 					<td colspan="3">
 						<select class="form-control" th:field="*{backgroundImg}" onchange="changeBackgroundImg()">
-							<option th:text="なし" th:value="''"></option>
+							<option th:text="なし" th:value="'none'"></option>
 							<option th:text="ランダム" th:value="'random'"></option>
 							<div th:each="img,iterStat: ${imgList}">
 								<option th:text="${iterStat.count}" th:value="${img}"></option>
@@ -111,12 +109,10 @@
 				</tr>
 				<tr>
 					<td colspan="4" class="text-center">
-						<btn class="btn btn-success rounded-pill col-3" onclick="applyFormFirstSettings()" th:text="もとに戻す"></btn>
+						<btn class="btn btn-success rounded-pill col-3" onclick="applyFormPresentSettings()" th:text="もとに戻す"></btn>
 						<input type="submit" value="決定" class="btn btn-primary rounded-pill col-3">
 					</td>
 				</tr>
-
-								
 			</table>
 		</form>		
 	</div>

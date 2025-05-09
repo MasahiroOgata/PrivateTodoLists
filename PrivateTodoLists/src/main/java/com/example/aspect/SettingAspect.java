@@ -45,7 +45,11 @@ public class SettingAspect {
 		if ("random".equals(settingMap.get("backgroundImg"))) {
 			settingMap.put("imgURL", getRandomImgURL());
 		} else {
-			settingMap.put("imgURL", settingMap.getOrDefault("backgroundImg", ""));
+			settingMap.put("imgURL", settingMap.getOrDefault("backgroundImg", "none"));
+		}
+		
+		if (!settingMap.containsKey("isHidingFinishedTodo")) {
+			settingMap.put("isHidingFinishedTodo", "0");
 		}
 		
 		request.setAttribute("settingMap", settingMap);

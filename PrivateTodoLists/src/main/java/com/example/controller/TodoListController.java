@@ -4,7 +4,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
-import java.util.Objects;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,9 +36,9 @@ public class TodoListController {
 	@GetMapping("")
 	public String showTodoList(Model model, @RequestParam(required = false) String search) {
 		
-		if (Objects.isNull(session.getAttribute("isHidingFinishedTodo"))) {
-			session.setAttribute("isHidingFinishedTodo", 0);
-		}
+//		if (Objects.isNull(session.getAttribute("isHidingFinishedTodo"))) {
+//			session.setAttribute("isHidingFinishedTodo", 0);
+//		}
 		
 		if ((String)session.getAttribute("loginMsg") != null) {
 			model.addAttribute("flashMsg", (String)session.getAttribute("loginMsg"));

@@ -1,4 +1,8 @@
 $(document).ready(function() {
+	
+//	$(".select2-selection__rendered, .select2-results__options").css({'cssText': 'font-size:' + settingMap.fontSize + 'rem !important;'});
+//	$(".select2-results__options").css({'cssText': 'font-size:' + settingMap.fontSize + 'rem !important;'});	
+	
     $('#tag-select').select2({
 		width: '100%',
     	templateResult: formatOption,
@@ -23,6 +27,9 @@ $(document).ready(function() {
       $option.prepend(`<i class="${iconClass}" style="margin-right: 1rem; color: ${iconColor};"></i>`)
       return $option;
     }
-  });
+    
+	    
+    
+});
   
  
