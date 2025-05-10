@@ -1,10 +1,35 @@
 window.onload = function() {
 	
+	var holidayEvents = [];
+	
+	var todoEvents = [];
+
+    $.ajax({
+          url: 'https://holidays-jp.github.io/api/v1/date.json',
+          type: 'GET',
+          dataType: 'json',
+          timeout: 5000
+    }).done(function(data){
+		  console.log(data);
+		  Object.keys(data).forEach((key) => {
+			  var event = {};
+			  event.start = key;
+			  event.startStr = key;
+			  event.title = data[key];
+			  event.color = TODO_FINISHED_COLOR;
+			  holidayEvents.push(event);	
+		  });
+		  console.log(holidayEvents);
+	}).fail(function(data){
+	}).always(function(data){  
+	});
+
+	
 	const TODO_FINISHED_COLOR = "#0d95f0";
 	const TODO_EXPIRED_COLOR = "#dc3545";
 	const TODO_UNFINISHED_COLOR = "#fd7e14"
 	
-	var todoEvents = [];
+	
 	
 	console.log(todoList);
 		
@@ -27,8 +52,10 @@ window.onload = function() {
 //	        custom_param1: '○',
 //	        custom_param2: 'somethingelse'
 //        };
-		todoEvents.push(event);		
+		todoEvents.push(event);	
+			
 	});
+	console.log(todoEvents);
 	
 	var firstDayNum = settingMap.firstDayOfWeek == "1" ? 1 : 0;
 	
@@ -40,6 +67,7 @@ window.onload = function() {
         locale: "ja",
         firstDay: firstDayNum,
         dayMaxEvents: 2,
+        contentHeight: 'auto',
         headerToolbar: {
 	        left: 'title',
 	        center: '',
@@ -74,6 +102,9 @@ window.onload = function() {
 		},
 	
         events: todoEvents,
+		
+//		events : holidayEvents,
+        
         
         eventDidMount: function(info) {
 		    // イベント要素にIDをdata属性として追加
@@ -246,8 +277,9 @@ window.onload = function() {
 			
 		const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
 		const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
-	
-			
+
+		$('.fc-daygrid-day-top span').remove();
+		$('.fc-daygrid-day-top').append('<span class="mt-1 ms-0 text-danger">holiday title</span>');
 		
 		// $(".fc-event").css({'display': 'inline-block', 'width': '80%'});
 	}	
