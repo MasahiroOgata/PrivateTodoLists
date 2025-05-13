@@ -1,29 +1,44 @@
 window.onload = function() {
 	
-	var holidayEvents = [];
+//	var holidayEvents = [];
+	
+	var holidays = {};
 	
 	var todoEvents = [];
 
-    $.ajax({
-          url: 'https://holidays-jp.github.io/api/v1/date.json',
-          type: 'GET',
-          dataType: 'json',
-          timeout: 5000
-    }).done(function(data){
-		  console.log(data);
-		  Object.keys(data).forEach((key) => {
-			  var event = {};
-			  event.start = key;
-			  event.startStr = key;
-			  event.title = data[key];
-			  event.color = TODO_FINISHED_COLOR;
-			  holidayEvents.push(event);	
-		  });
-		  console.log(holidayEvents);
-	}).fail(function(data){
-	}).always(function(data){  
-	});
-
+//    $.ajax({
+//          url: 'https://holidays-jp.github.io/api/v1/date.json',
+//          type: 'GET',
+//          dataType: 'json',
+//          timeout: 5000
+//    }).done(function(data){
+//		 holidays = JSON.parse(JSON.stringify(data));
+//		 // Object.keys(data).forEach((key) => {
+//		//	  holidays[key] = data[key];
+////			  var event = {};
+////			  event.start = key;
+////			  event.startStr = key;
+////			  event.title = data[key];
+////			  event.color = TODO_FINISHED_COLOR;
+////			  holidayEvents.push(event);	
+//		//  });
+//		  console.log(holidays);
+//		 // console.log(holidayEvents);
+//	}).fail(function(data){
+//	}).always(function(data){  
+//	});
+	
+	async function loadHolidays() {
+	  const res = await fetch("https://holidays-jp.github.io/api/v1/date.json");
+	  const data = await res.json();
+	
+	  return data;
+	}
+	
+	//holidays = loadHolidays();
+	
+	//console.log(holidays);
+	//console.log(holidayEvents);
 	
 	const TODO_FINISHED_COLOR = "#0d95f0";
 	const TODO_EXPIRED_COLOR = "#dc3545";
@@ -232,7 +247,7 @@ window.onload = function() {
 		 '<span><i class="fa-regular fa-face-meh"></i></span>未完了 ' +
 		 '<span><i class="fa-regular fa-face-frown"></i></span>期限切れ</p>');
 	
-	function showEventIcon() {
+	async function showEventIcon() {
 		 $(".fc-daygrid-event-harness span").remove()
 		 //$(".fc-popover-body .fc-daygrid-event-harness .fc-event").remove()
 		 $(".fc-daygrid-event-harness").each(function() {
@@ -249,7 +264,7 @@ window.onload = function() {
 //				  var eventIcon = '<i class="fa-regular fa-face-meh"></i>';
 //			  }
 			  if (thisEvent.tag) {
-				  $(this).find(".fc-event").css({'display': 'inline-block', 'width': '75%'});    
+				  $(this).find(".fc-event").css({'display': 'inline-block', 'width': '80%'});    
 			     var eventIcon = '<i class="' + thisEvent.tag.tagIcon + '"></i>';
 			      eventColor = thisEvent.tag.tagColor;
 			      
@@ -279,7 +294,23 @@ window.onload = function() {
 		const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 
 		$('.fc-daygrid-day-top span').remove();
-		$('.fc-daygrid-day-top').append('<span class="mt-1 ms-0 text-danger">holiday title</span>');
+//		$('.fc-daygrid-day-top').append('<span class="mt-1 ms-0 text-danger">holiday title</span>');
+		
+		holidays = await loadHolidays()
+		
+//		console.log(typeof holidays);
+//		console.log(holidays);
+//		console.log(Object.keys(holidays));
+//		console.log(("2025-05-05") in holidays);
+		
+		$('.fc-daygrid-day-top').each(function(){
+			var date_str = $(this).closest('.fc-day').data('date');
+			if (date_str in holidays) {
+				$(this).append('<span class="mt-1 ms-0 text-danger"></span>');
+				var holiday_name = holidays[date_str].includes('振替休日')? '振替休日' : holidays[date_str];
+				$(this).find('span').text(holiday_name);
+			};
+		});
 		
 		// $(".fc-event").css({'display': 'inline-block', 'width': '80%'});
 	}	
