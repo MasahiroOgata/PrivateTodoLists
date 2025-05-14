@@ -94,6 +94,7 @@ window.onload = function() {
 	          click: function () {
 	            calendar.today(); // 今日に戻す
 	            showEventIcon(); // カスタム処理
+	            showHolidays();
 	          }
 	        },
 	        myPrevButton: {
@@ -101,6 +102,7 @@ window.onload = function() {
 	         	click: function () {
 		            calendar.prev(); // 通常の前の月・週・日に移動
 		            showEventIcon(); // カスタム処理
+		            showHolidays();
 	         	}
 	        },
 	        myNextButton: {
@@ -108,6 +110,7 @@ window.onload = function() {
 	         	click: function () {
 		            calendar.next(); // 通常の次の月・週・日に移動 fc-icon fc-icon-chevron-right
 		            showEventIcon(); // カスタム処理
+		            showHolidays();
 	        	}
 	        }
         },
@@ -221,15 +224,34 @@ window.onload = function() {
      
      calendar.render();
      showEventIcon();
+     showHolidays();
      
-     $(".fc-daygrid-more-link").click(function() {
-		 console.log('clicked!');
-		 showEventIcon();
-	 });	
+//     $(".fc-daygrid-more-link").click(function() {
+//		 	setTimeout(function() {
+//		showEventIcon();
+//	}, 500);
+//		 console.log('clicked!');
+//		 showEventIcon();
+//	 });
 	 
-	 $(".fc-popover").mouseover(function() {
-		console.log('hover!'); 
-	 });
+	 const observer = new MutationObserver(function(mutationsList) {
+		mutationsList.forEach(function(mutation) {
+			mutation.addedNodes.forEach(function(node) {
+				if (node.nodeType === 1 && node.classList.contains('fc-more-popover')) {
+					// ポップオーバーが追加されたので、アイコン表示処理を実行
+					showEventIcon();
+				}
+			});
+		});
+	});
+
+	// body以下を監視対象とする
+	observer.observe(document.body, { childList: true, subtree: true });
+	 	
+	 
+//	 $(".fc-popover").mouseover(function() {
+//		console.log('hover!'); 
+//	 });
      
      $(".btn-close, #modal-close").click(function () {
 		$("#event-modal").hide();
@@ -247,13 +269,13 @@ window.onload = function() {
 		 '<span><i class="fa-regular fa-face-meh"></i></span>未完了 ' +
 		 '<span><i class="fa-regular fa-face-frown"></i></span>期限切れ</p>');
 	
-	async function showEventIcon() {
+	function showEventIcon() {
 		 $(".fc-daygrid-event-harness span").remove()
 		 //$(".fc-popover-body .fc-daygrid-event-harness .fc-event").remove()
 		 $(".fc-daygrid-event-harness").each(function() {
 			  var eventColor = $(this).find(".fc-event").data("event-color");
 			  var eventId = $(this).find(".fc-event").data("event-id");
-			  console.log(eventId);
+//			  console.log(eventId);
 			  var thisEvent = todoList.find(todo => todo.id == eventId);
 
 //			  if (thisEvent.finishedDate) {
@@ -289,23 +311,27 @@ window.onload = function() {
 			      $(this).find('span').addClass("sample-class");
 			    }
 			});	
+
 			
 		const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
 		const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
-
+	}	
+	
+	async  function showHolidays() {
 		$('.fc-daygrid-day-top span').remove();
 //		$('.fc-daygrid-day-top').append('<span class="mt-1 ms-0 text-danger">holiday title</span>');
 		
 		holidays = await loadHolidays()
 		
 //		console.log(typeof holidays);
-//		console.log(holidays);
+		console.log(holidays);
 //		console.log(Object.keys(holidays));
 //		console.log(("2025-05-05") in holidays);
 		
 		$('.fc-daygrid-day-top').each(function(){
 			var date_str = $(this).closest('.fc-day').data('date');
 			if (date_str in holidays) {
+				$(this).closest('.fc-day').addClass('fc-day-holiday');
 				$(this).append('<span class="mt-1 ms-0 text-danger"></span>');
 				var holiday_name = holidays[date_str].includes('振替休日')? '振替休日' : holidays[date_str];
 				$(this).find('span').text(holiday_name);

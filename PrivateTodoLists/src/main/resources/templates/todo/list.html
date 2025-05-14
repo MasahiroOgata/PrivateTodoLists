@@ -81,7 +81,7 @@
 							<tr th:if="${item.finishedDate == null || i == 0}">
 								<td>
 									<th:block th:if="${item.tagId != null}">
-										<span data-bs-toggle="tooltip" data-bs-placement="right" th:attr="data-bs-title=${item.tag.tagName}">
+										<span data-bs-toggle="tooltip" data-bs-placement="top" th:attr="data-bs-title=${item.tag.tagName}">
 											<i class="fa-xl" th:classappend="${item.tag.tagIcon}"  
 											th:attr="data-tag-color=${item.tag.tagColor}" ></i>
 										</span>
