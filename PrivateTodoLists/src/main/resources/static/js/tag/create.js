@@ -13,3 +13,10 @@ $("#icon-select input").change(function() {
 //	$("#icon-display i").addClass($(this).next().attr("class"))
 //	.removeClass("fa-xl").addClass("fa-2xl");
 });
+
+changeTagColor();
+if ($('input[name="tagIcon"]:checked').val()) {
+	$("#icon-display span").text("");
+	$("#icon-display i").removeClass();
+	$("#icon-display i").addClass($('input[name="tagIcon"]:checked').val()).addClass("fa-2xl")	
+};

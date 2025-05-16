@@ -28,12 +28,12 @@ window.onload = function() {
 //	}).always(function(data){  
 //	});
 	
-	async function loadHolidays() {
-	  const res = await fetch("https://holidays-jp.github.io/api/v1/date.json");
-	  const data = await res.json();
-	
-	  return data;
-	}
+//	async function loadHolidays() {
+//	  const res = await fetch("https://holidays-jp.github.io/api/v1/date.json");
+//	  const data = await res.json();
+//	
+//	  return data;
+//	}
 	
 	//holidays = loadHolidays();
 	
@@ -90,12 +90,12 @@ window.onload = function() {
         },
         customButtons: {
 			myTodayButton: {
-	          text: '今日',
-	          click: function () {
-	            calendar.today(); // 今日に戻す
-	            showEventIcon(); // カスタム処理
-	            showHolidays();
-	          }
+		        text: '今日',
+		        click: function () {
+		            calendar.today(); // 今日に戻す
+		            showEventIcon(); // カスタム処理
+		            showHolidays();
+		        }
 	        },
 	        myPrevButton: {
 				icon: 'chevron-left',
@@ -108,21 +108,17 @@ window.onload = function() {
 	        myNextButton: {
 				icon: 'chevron-right',
 	         	click: function () {
-		            calendar.next(); // 通常の次の月・週・日に移動 fc-icon fc-icon-chevron-right
+		            calendar.next(); // 通常の次の月・週・日に移動
 		            showEventIcon(); // カスタム処理
 		            showHolidays();
 	        	}
 	        }
-        },
-        
+        },        
         dayCellContent: function(day) {
 		    	return day.date.getDate();
 		},
 	
         events: todoEvents,
-		
-//		events : holidayEvents,
-        
         
         eventDidMount: function(info) {
 		    // イベント要素にIDをdata属性として追加
@@ -206,19 +202,19 @@ window.onload = function() {
 			} else {
 				$(".modal").css({'height': '400px', 'width':'50%', 'max-width': '750px', 'min-width': '400px'});
 			}
-
+			
 			todaysEvents.forEach((event) => {
 				$("#event-content").css("font-size", settingMap.fontSize + "rem");
 				$("#event-content").append('<tr><td class="title">' 
              	         + '</td><td class="text-center" style="width: 25%">'
              	         + '<a class="btn btn-outline-success btn-sm rounded-pill col-6">詳細</a></td></tr>'
                          );
-                         $("#event-content tr:last-child td:first-child").text(event.title);
-                         $("#event-content tr:last-child td:last-child a").attr('href', '/todo/detail/' + event.id)
-                         .css("font-size", settingMap.fontSize + "rem");
- 			});
- 			$("#todo-transition-btn").text("作業登録").removeClass("btn-outline-success").addClass("btn-outline-primary");
- 			$("#todo-transition-btn").attr("href","/todo/create?expireDate=" + info.dateStr);		
+				$("#event-content tr:last-child td:first-child").text(event.title);
+				$("#event-content tr:last-child td:last-child a").attr('href', '/todo/detail/' + event.id)
+					.css("font-size", settingMap.fontSize + "rem");
+			});
+			$("#todo-transition-btn").text("作業登録").removeClass("btn-outline-success").addClass("btn-outline-primary");
+			$("#todo-transition-btn").attr("href","/todo/create?expireDate=" + info.dateStr);		
 		 }
      });
      
@@ -273,7 +269,7 @@ window.onload = function() {
 		 $(".fc-daygrid-event-harness span").remove()
 		 //$(".fc-popover-body .fc-daygrid-event-harness .fc-event").remove()
 		 $(".fc-daygrid-event-harness").each(function() {
-			  var eventColor = $(this).find(".fc-event").data("event-color");
+//			  var eventColor = $(this).find(".fc-event").data("event-color");
 			  var eventId = $(this).find(".fc-event").data("event-id");
 //			  console.log(eventId);
 			  var thisEvent = todoList.find(todo => todo.id == eventId);
@@ -287,8 +283,8 @@ window.onload = function() {
 //			  }
 			  if (thisEvent.tag) {
 				  $(this).find(".fc-event").css({'display': 'inline-block', 'width': '80%'});    
-			     var eventIcon = '<i class="' + thisEvent.tag.tagIcon + '"></i>';
-			      eventColor = thisEvent.tag.tagColor;
+			     var tagIcon = '<i class="' + thisEvent.tag.tagIcon + '"></i>';
+			     var tagColor = thisEvent.tag.tagColor;
 			      
 			      //var tagName = text(thisEvent.tag.tagName);
 			      //console.log(tagName);
@@ -299,10 +295,10 @@ window.onload = function() {
 				    '<span data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="' +
 				    thisEvent.tag.tagName +
 				    '" style="color: ' +
-				    eventColor +
+				    tagColor +
 				    '; background-color: rgba(0,0,0,0); display: inline-block; width: 15%;"' 
 				    + ' class="text-center">' +
-				    eventIcon +
+				    tagIcon +
 				    '</span>'
 			    	);
 			    	
@@ -311,7 +307,6 @@ window.onload = function() {
 			      $(this).find('span').addClass("sample-class");
 			    }
 			});	
-
 			
 		const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
 		const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
@@ -321,7 +316,10 @@ window.onload = function() {
 		$('.fc-daygrid-day-top span').remove();
 //		$('.fc-daygrid-day-top').append('<span class="mt-1 ms-0 text-danger">holiday title</span>');
 		
-		holidays = await loadHolidays()
+//		holidays = await loadHolidays()
+		
+		const res = await fetch("https://holidays-jp.github.io/api/v1/date.json");
+	 	const holidays = await res.json();
 		
 //		console.log(typeof holidays);
 		console.log(holidays);

@@ -22,13 +22,11 @@ $(document).ready(function() {
       }
       const iconColor = $(option.element).data('color');
 
-      const $option = $(`<span></span>`);
+      const $option = $('<span></span>');
       $option.text(option.text);
       $option.prepend(`<i class="${iconClass}" style="margin-right: 1rem; color: ${iconColor};"></i>`)
       return $option;
     }
-    
-	    
     
 });
   

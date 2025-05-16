@@ -2,7 +2,6 @@ package com.example.controller;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,27 +11,23 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.example.domain.setting.service.SettingService;
 import com.example.domain.tag.service.TagService;
 import com.example.domain.todo.model.MTodo;
 import com.example.domain.todo.service.TodoService;
 import com.example.form.TodoForm;
 
+import lombok.RequiredArgsConstructor;
+
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/todo/detail")
 public class TodoDetailController {
 	
-	@Autowired
-	private TodoService todoService;
+	private final TodoService todoService;
 	
-	@Autowired
-	private SettingService settingService;
+	private final TagService tagService;
 	
-	@Autowired
-	private TagService tagService;
-	
-	@Autowired
-	private ModelMapper modelMapper;
+	private final ModelMapper modelMapper;
 	
 	@GetMapping("{id}")
 	public String showTodoDetail(Model model, @ModelAttribute TodoForm form) {
@@ -52,13 +47,12 @@ public class TodoDetailController {
 	}
 	
 	@PostMapping("{id}")
-	public String editOneTodo(Model model, @ModelAttribute @Validated TodoForm form, BindingResult bindingResult) {
-		 
+	public String editOneTodo(Model model, @ModelAttribute @Validated TodoForm form, 
+			BindingResult bindingResult) {
+		
 		if (bindingResult.hasErrors()) {
-			model.addAttribute("settingMap", settingService.getSettingMap());
-			model.addAttribute("unfinishedTodoCount", todoService.getUnfinishedTodoCount());
 			return showTodoDetail(model, form);
-		 }
+		}
 		
 		MTodo todo = modelMapper.map(form, MTodo.class);
 		todoService.editOneTodo(todo);

@@ -6,7 +6,6 @@ import java.util.Date;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,57 +22,47 @@ import com.example.domain.todo.model.MTodo;
 import com.example.domain.todo.service.TodoService;
 import com.example.form.TodoForm;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.RequiredArgsConstructor;
 
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/todo/create")
-@Slf4j
 public class TodoCreateController {
 	
-	@Autowired
-	private TodoService todoService;
+	private final TodoService todoService;
 	
-	@Autowired
-	private TagService tagService;
+	private final TagService tagService;
 	
-	@Autowired
-	private ModelMapper modelMapper;
-	
+	private final ModelMapper modelMapper;
 
 	@GetMapping("")
 	public String createTodo(@RequestParam(required = false) String expireDate,
 			Model model, @ModelAttribute TodoForm form) {
+		
 		if (expireDate != null) {
-			 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-");
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-");
 			try  {
 				Date newExpireDate = sdf.parse(expireDate);
 				form.setExpireDate(newExpireDate);
 			} catch (ParseException e) {
-				
 			}
-			
 		}
 		if (form.getExpireDate() == null) {
 			form.setExpireDate(new Date());
 		}
 		
 		model.addAttribute("tagList", tagService.getTagItems());
-		log.info(tagService.getTagItems().toString());
 		
 		return "todo/create";
 	}
 	
 	@PostMapping("")
-	public String saveTodo(//@RequestParam(required = false) String expireDate, 
-			Model model, @ModelAttribute @Validated TodoForm form, 
-			
+	public String saveTodo(	Model model, @ModelAttribute @Validated TodoForm form, 
 			BindingResult bindingResult, RedirectAttributes redirectAttributes) {
 		
 		if (bindingResult.hasErrors()) {
 			return createTodo(form.getExpireDate().toString(), model, form);
 		}
-		
-		log.info(form.toString());
 		
 		form.setRegistrationDate(new Date());
 		modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);

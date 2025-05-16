@@ -16,6 +16,7 @@
 		</div>
 		<form class="form-create" method="post" th:action="@{/tag/create}" th:object="${tagForm}">
 			<p th:if="${#fields.hasErrors('tagName')}" th:errors="*{tagName}" class="text-center text-danger my-0"></p>
+			<p th:if="${#fields.hasErrors('tagIcon')}" th:errors="*{tagIcon}" class="text-center text-danger my-0"></p>
 			<table class="table table-striped table-bordered table-hover">
 				<tr>
 					<th th:text="#{tagName}"></thcolspan="1">
