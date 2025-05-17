@@ -1,7 +1,6 @@
 package com.example.controller;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,21 +15,18 @@ import com.example.domain.tag.service.IconService;
 import com.example.domain.tag.service.TagService;
 import com.example.form.TagForm;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.RequiredArgsConstructor;
 
-@Slf4j
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("tag/detail")
 public class TagDetailController {
+
+	private final IconService iconService;
 	
-	@Autowired
-	private IconService iconService;
-	
-	@Autowired
-	private TagService tagService;
-	
-	@Autowired
-	private ModelMapper modelMapper;
+	private  final TagService tagService;
+
+	private final ModelMapper modelMapper;
 	
 	@GetMapping("{id}")
 	public String showTagDetail(Model model, @ModelAttribute TagForm form) {
@@ -50,8 +46,7 @@ public class TagDetailController {
 	
 	@PostMapping("{id}")
 	public String editOneTag(Model model, @ModelAttribute @Validated TagForm form, BindingResult bindingResult) {
-		
-		log.info(form.toString());
+
 		
 		if (bindingResult.hasErrors()) {
 			return showTagDetail(model, form);

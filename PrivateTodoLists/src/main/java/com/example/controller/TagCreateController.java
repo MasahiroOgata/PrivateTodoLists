@@ -1,7 +1,6 @@
 package com.example.controller;
 
 import org.modelmapper.ModelMapper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,21 +15,18 @@ import com.example.domain.tag.service.IconService;
 import com.example.domain.tag.service.TagService;
 import com.example.form.TagForm;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.RequiredArgsConstructor;
 
 @Controller
+@RequiredArgsConstructor
 @RequestMapping("/tag/create")
-@Slf4j
 public class TagCreateController {
 	
-	@Autowired
-	private IconService iconService;
+	private final IconService iconService;
 	
-	@Autowired
-	private ModelMapper modelMapper;
+	private final ModelMapper modelMapper;
 	
-	@Autowired
-	private TagService tagService;
+	private final TagService tagService;
 		
 	@GetMapping("")
 	public String createTag(Model model, @ModelAttribute TagForm form) {
@@ -42,16 +38,12 @@ public class TagCreateController {
 	public String saveTag(Model model, @ModelAttribute @Validated TagForm form,
 			BindingResult bindingResult) {
 		
-		log.info(form.toString());
-		
 		if (bindingResult.hasErrors()) {
 			return createTag(model, form);
 		}
 		
 		MTag tag = modelMapper.map(form, MTag.class);
 		tagService.createOneTag(tag);	
-		
-		log.info(tag.toString());
 		
 		return "redirect:/tag/list";
 	}
