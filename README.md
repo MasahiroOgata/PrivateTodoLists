@@ -1,5 +1,8 @@
 # PrivateTodoLists
 非共有型のTODO管理リストアプリ
+
+![Image](https://github.com/user-attachments/assets/4a69aa5d-3c65-4965-834c-b9ed3cd46594)
+
 ## 主な課題
 + ユーザー登録機能の実装
 + ~ユーザー固有のTODOアイテムテーブルの作成・運用~
