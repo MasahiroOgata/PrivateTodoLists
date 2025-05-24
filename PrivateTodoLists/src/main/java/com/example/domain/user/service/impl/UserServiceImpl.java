@@ -2,26 +2,31 @@ package com.example.domain.user.service.impl;
 
 import java.util.Objects;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.example.domain.todo.service.TodoService;
 import com.example.domain.user.model.MUser;
 import com.example.domain.user.service.UserService;
 import com.example.repository.UserMapper;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 	
-	@Autowired
-	private UserMapper userMapper;
+	private final UserMapper userMapper;
 	
-	@Autowired
-	private TodoService todoService;
+	private final PasswordEncoder passwordEncoder;
 	
-	@Autowired
-	private PasswordEncoder passwordEncoder;
+//	@Autowired
+//	private UserMapper userMapper;
+//	
+//	@Autowired
+//	private TodoService todoService;
+//	
+//	@Autowired
+//	private PasswordEncoder passwordEncoder;
 	
 	/** ユーザー登録 */
 //	@Transactional

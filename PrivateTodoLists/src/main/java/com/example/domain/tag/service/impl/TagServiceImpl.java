@@ -2,7 +2,6 @@ package com.example.domain.tag.service.impl;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.domain.tag.model.MTag;
@@ -10,18 +9,13 @@ import com.example.domain.tag.service.TagService;
 import com.example.repository.TagMapper;
 import com.example.security.AuthUtil;
 
-//@RequiredArgsConstructor
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class TagServiceImpl implements TagService {
-	
-	@Autowired
-	private TagMapper tagMapper;
-	
-//	private int getLoginUserId() {
-//		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-//		UserWithNameAndId userWithNameAndId = (UserWithNameAndId) authentication.getPrincipal();
-//		return userWithNameAndId.getId();
-//	}
+
+	private final TagMapper tagMapper;
 	
 	/** Tagリスト取得 */
 	@Override

@@ -2,7 +2,6 @@ package com.example.domain.todo.service.impl;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.domain.todo.model.MTodo;
@@ -10,11 +9,13 @@ import com.example.domain.todo.service.TodoService;
 import com.example.repository.TodoMapper;
 import com.example.security.AuthUtil;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class TodoServiceImpl implements TodoService {
 	
-	@Autowired
-	private TodoMapper todoMapper;
+	private final TodoMapper todoMapper;
 	
 //	private int getLoginUserId() {
 //		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

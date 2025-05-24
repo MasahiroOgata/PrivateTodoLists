@@ -7,7 +7,6 @@ import java.util.Random;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 
@@ -15,19 +14,18 @@ import com.example.domain.setting.service.SettingService;
 import com.example.domain.todo.service.TodoService;
 
 import jakarta.servlet.http.HttpServletRequest;
+import lombok.RequiredArgsConstructor;
 
 @Aspect
 @Component
+@RequiredArgsConstructor
 public class SettingAspect {
 	
-	@Autowired
-	private SettingService settingService;
+	private final SettingService settingService;
 	
-	@Autowired
-	private TodoService todoService;
+	private final TodoService todoService;
 	
-	@Autowired
-	private HttpServletRequest request;
+	private final HttpServletRequest request;
 	
 	private String getRandomImgURL() {
 		File dir = new File("src/main/resources/static/img");
