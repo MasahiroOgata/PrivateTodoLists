@@ -124,17 +124,7 @@ window.onload = function() {
         eventDidMount: function(info) {
 		    // イベント要素にIDをdata属性として追加
 		    $(info.el).attr('data-event-id', info.event.id);
-//		    console.log(info.event);
-//		    console.log(info.event.backgroundColor);
-		//    $(info.el).attr('data-event-id', info.event.extraParams);
-		//	$(info.el).attr('data-event-param', info.event.extendedProps.custom_param);
-			$(info.el).attr('data-event-color', info.event.backgroundColor);			
 		},
-        
-//        eventDisplay: 'list-item',
-//        eventTextColor: 'red',
-//        eventBackgroundColor: 'green',
-//        eventBorderColor: 'white',
         
         eventClick: function(e) {
 			$(".fc .fc-more-popover").css({'cssText': 'display: none; !important;'});
@@ -222,20 +212,12 @@ window.onload = function() {
      calendar.render();
      showEventIcon();
      showHolidays();
-     
-//     $(".fc-daygrid-more-link").click(function() {
-//		 	setTimeout(function() {
-//		showEventIcon();
-//	}, 500);
-//		 console.log('clicked!');
-//		 showEventIcon();
-//	 });
 	 
 	 const observer = new MutationObserver(function(mutationsList) {
 		mutationsList.forEach(function(mutation) {
 			mutation.addedNodes.forEach(function(node) {
 				if (node.nodeType === 1 && node.classList.contains('fc-more-popover')) {
-					// ポップオーバーが追加されたので、アイコン表示処理を実行
+					// ポップオーバーが追加されたときに、アイコン表示処理を実行
 					showEventIcon();
 				}
 			});
@@ -245,18 +227,6 @@ window.onload = function() {
 	// body以下を監視対象とする
 	observer.observe(document.body, { childList: true, subtree: true });
 	 
-//	 
-//	async function getHolidays () {
-//		const res = await fetch("https://holidays-jp.github.io/api/v1/date.json");
-//	 	return await res.json();
-//	}
-//	
-//	 const holidays =  getHolidays();	
-	 
-//	 $(".fc-popover").mouseover(function() {
-//		console.log('hover!'); 
-//	 });
-     
      $(".btn-close, #modal-close").click(function () {
 		$("#event-modal").hide();
 	 });
@@ -275,34 +245,21 @@ window.onload = function() {
 	
 	function showEventIcon() {
 		 $(".fc-daygrid-event-harness span").remove()
-		 //$(".fc-popover-body .fc-daygrid-event-harness .fc-event").remove()
 		 $(".fc-daygrid-event-harness").each(function() {
-//			  var eventColor = $(this).find(".fc-event").data("event-color");
-			  var eventId = $(this).find(".fc-event").data("event-id");
-//			  console.log(eventId);
-			  var thisEvent = todoList.find(todo => todo.id == eventId);
 
-//			  if (thisEvent.finishedDate) {
-//				  var eventIcon = '<i class="fa-regular fa-face-smile"></i>';
-//			  } else if (new Date(thisEvent.expireDate).getTime() < new Date().getTime() - 86400000){
-//				  var eventIcon = '<i class="fa-regular fa-face-frown"></i>';
-//			  } else {
-//				  var eventIcon = '<i class="fa-regular fa-face-meh"></i>';
-//			  }
+			  var eventId = $(this).find(".fc-event").data("event-id");
+			  var thisEvent = todoList.find(todo => todo.id == eventId);
+			  
 			 if (thisEvent.tag) {
 				 $(this).find(".fc-event").css({'display': 'inline-block', 'width': '80%'});    
 				 var tagIcon = '<i class="' + thisEvent.tag.tagIcon + '"></i>';
 				 var tagColor = thisEvent.tag.tagColor;
-			      
-			      //var tagName = text(thisEvent.tag.tagName);
-			      //console.log(tagName);
-			      
-			      //$span = 
-			  
+				 
 				 $(this).prepend(
-				    '<span data-bs-toggle="tooltip" data-bs-placement="left" data-bs-title="' +
-				    thisEvent.tag.tagName +
-				    '" style="color: ' +
+				    '<span data-bs-toggle="tooltip" data-bs-placement="left"' +
+//				    ' data-bs-title="' +
+//				    thisEvent.tag.tagName +
+				    ' style="color: ' +
 				    tagColor +
 				    '; background-color: rgba(0,0,0,0); display: inline-block; width: 15%;"' 
 				    + ' class="text-center">' +
@@ -310,9 +267,9 @@ window.onload = function() {
 				    '</span>'
 			    	);
 			    	
-			      $(this).find('span').data('bs-title', thisEvent.tag.tagName);
+			      $(this).find('span').attr('data-bs-title', thisEvent.tag.tagName);
 			     // console.log($(this).find('span').data('bs-title'));
-			      $(this).find('span').addClass("sample-class");
+			     // $(this).find('span').addClass("sample-class");
 			    }
 			});	
 			
@@ -327,12 +284,7 @@ window.onload = function() {
 //		holidays = await loadHolidays()
 		
 		const res = await fetch("https://holidays-jp.github.io/api/v1/date.json");
-	 	const holidays = await res.json();
-		
-//		console.log(typeof holidays);
-//		console.log(holidays);
-//		console.log(Object.keys(holidays));
-//		console.log(("2025-05-05") in holidays);
+		const holidays = await res.json();
 		
 		$('.fc-daygrid-day-top').each(function(){
 			var dateStr = $(this).closest('.fc-day').data('date');

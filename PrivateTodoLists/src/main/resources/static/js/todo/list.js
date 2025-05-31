@@ -37,6 +37,11 @@ window.onload = function() {
 //	$(".navbar-brand").css({'cssText': 'color:' + settingMap.headerFontColor + '!important;'});
 	
 	
+	$('.table').DataTable();
+	
+	
+	
+	
 	
 }
             

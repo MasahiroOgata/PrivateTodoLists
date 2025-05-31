@@ -14,67 +14,25 @@ function applyFormPresentSettings() {
 	var headerBgColor = settingMap.headerBgColor || '#0d6efd';
 	$("#headerBgColor").val(headerBgColor);
 	
-//	if(settingMap.headerBgColor) {
-//		$("#headerBgColor").val(settingMap.headerBgColor);
-//	} else {
-//		$("#headerBgColor").val('#0d6efd');
-//	}
-
 	var headerFontColor = settingMap.headerFontColor || '#ffffff';
 	$("#headerFontColor").val(headerFontColor);
-	
-//	if(settingMap.headerFontColor) {
-//		$("#headerFontColor").val(settingMap.headerFontColor);
-//	} else {
-//		$("#headerFontColor").val('#ffffff');
-//	}
 
 	var backgroundImg = settingMap.backgroundImg || 'none';
 	$("#backgroundImg").val(backgroundImg);
 	
-//	if (settingMap.backgroundImg) {
-//		$("#backgroundImg").val(settingMap.backgroundImg);
-//	} else {
-//		$("#backgroundImg").val("none");
-//	}
-	
 	var fontFamily = settingMap.fontFamily || 'system-ui';
 	$('#fontFamily input[value="'+ fontFamily + '"]').prop('checked', true);
 	
-//	if (settingMap.fontFamily) {
-//		$('#fontFamily input[value="'+ settingMap.fontFamily + '"]').prop('checked', true);
-//	} else {
-//		$('#fontFamily input[value="system-ui"]').prop('checked', true);
-//	}
 	var fontSize = settingMap.fontSize || '1';
 	$('#fontSize input[value="'+ fontSize + '"]').prop('checked', true);
 	
-//	if (settingMap.fontSize) {
-//		$('#fontSize input[value="'+ settingMap.fontSize + '"]').prop('checked', true);
-//	} else {
-//		$('#fontSize input[value="1"]').prop('checked', true);
-//	}
-
 	var firstDayOfWeek = settingMap.firstDayOfWeek || '0';
 	$('#firstDayOfWeek input[value="'+ firstDayOfWeek + '"]').prop('checked', true);
-	
-//	if (settingMap.firstDayOfWeek) {
-//		$('#firstDayOfWeek input[value="'+ settingMap.firstDayOfWeek + '"]').prop('checked', true);
-//	} else {
-//		$('#firstDayOfWeek input[value="0"]').prop('checked', true);
-//	}
 	
 	var isHidingFinishedTodo = settingMap.isHidingFinishedTodo || '0';
 	$('#isHidingFinishedTodo input[value="' + isHidingFinishedTodo + '"]').prop('checked', true);
 	
-//	 if (settingMap.isHidingFinishedTodo) {
-//		$('#isHidingFinishedTodo input[value="' + settingMap.isHidingFinishedTodo + '"]').prop('checked', true);
-//	} else {
-//		$('#isHidingFinishedTodo input[value="0"]').prop('checked', true);
-//	}
-	
 	applySettings();
-
 }
 
 $("#close-modal, .btn-close").click(function () {

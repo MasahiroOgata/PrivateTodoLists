@@ -5,9 +5,11 @@
 <head>
 	<title>作業一覧</title>
 	<!-- 個別JS読込 -->
+	<script th:src="@{https://cdn.datatables.net/2.3.1/js/dataTables.js}" defer></script>
 	<script th:src="@{/js/todo/list.js}" defer></script>
 	<!-- 個別CSS読込 -->
 	<link rel="stylesheet" th:href="@{/css/todo/list.css}">
+	<link rel="stylesheet" href="https://cdn.datatables.net/2.3.1/css/dataTables.dataTables.css" />
 	<!-- flashMsg,todoList,todayをJSに渡す -->
 	<script th:inline="javascript">
 		var flashMsg = /*[[${flashMsg}]]*/"flashMsg";
