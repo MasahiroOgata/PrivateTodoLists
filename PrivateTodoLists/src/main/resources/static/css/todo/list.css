@@ -19,6 +19,27 @@ h3 {
 	display: none;
 }
 
+.dt-container {
+	background-color: white;
+}
+
+.dt-search {
+    display: none;
+}
+
+th:nth-of-type(1) {
+	pointer-events: none;
+	cursor: default !important;
+}
+
+.dt-orderable-asc:nth-of-type(1) .dt-column-order {
+	display: none;
+}
+
+.dt-layout-start, .dt-layout-end {
+	padding: 0.5rem;
+}
+
 .modal-wrapper {
     position: fixed;
     top: 0;

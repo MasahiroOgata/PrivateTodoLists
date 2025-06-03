@@ -37,9 +37,14 @@ window.onload = function() {
 //	$(".navbar-brand").css({'cssText': 'color:' + settingMap.headerFontColor + '!important;'});
 	
 	
-	$('.table').DataTable();
+	$('.table').DataTable({
+		"info": true,
+		language: {
+    		url: 'https://cdn.datatables.net/plug-ins/2.3.1/i18n/ja.json',
+    	},
+	});
 	
-	
+	$("th:nth-of-type(1)").prop('disabled', true);
 	
 	
 	

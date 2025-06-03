@@ -89,9 +89,9 @@
 									<th:block th:if="${item.id == newTodoId}">
 										<span class="fs-6 fst-italic text-primary">new</span>
 									</th:block>	
-									<span th:text="${item.itemName}"></span>								
+									<span th:text="${item.itemName}"></span>
 								</td>
-								<td th:text="${#dates.format(item.expireDate,'YYYY-MM-dd')}"></td>
+								<td><span th:text="${#dates.format(item.expireDate,'YYYY-MM-dd')}"></span></td>
 								<td>
 									<th:block th:if="${item.finishedDate != null}">
 										<span th:text="${#dates.format(item.finishedDate,'YYYY-MM-dd')}"></span>
