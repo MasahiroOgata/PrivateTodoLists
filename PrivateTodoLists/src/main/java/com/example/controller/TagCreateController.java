@@ -22,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/tag/create")
 public class TagCreateController {
 	
-	private final IconService iconService;
+	//private final IconService iconService;
 	
 	private final ModelMapper modelMapper;
 	
@@ -30,7 +30,7 @@ public class TagCreateController {
 		
 	@GetMapping("")
 	public String createTag(Model model, @ModelAttribute TagForm form) {
-		model.addAttribute("iconList", iconService.getIconList());
+		model.addAttribute("iconList", IconService.getIconList());
 		return "tag/create";
 	}
 	

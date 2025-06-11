@@ -22,7 +22,7 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("tag/detail")
 public class TagDetailController {
 
-	private final IconService iconService;
+	//private final IconService iconService;
 	
 	private  final TagService tagService;
 
@@ -37,7 +37,7 @@ public class TagDetailController {
 			form  = modelMapper.map(tag, TagForm.class);
 		}
 		
-		model.addAttribute("iconList", iconService.getIconList());
+		model.addAttribute("iconList", IconService.getIconList());
 		model.addAttribute("previousTag", tag);
 		model.addAttribute("tagForm", form);
 		

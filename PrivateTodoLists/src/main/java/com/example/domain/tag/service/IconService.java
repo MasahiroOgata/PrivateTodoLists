@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class IconService {
 	
-	public List<String> getIconList() {
+	public static List<String> getIconList() {
 		return List.of(
 			"fa-solid fa-star",
 			"fa-solid fa-heart",
