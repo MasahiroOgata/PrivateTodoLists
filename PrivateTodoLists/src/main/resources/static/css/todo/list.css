@@ -13,6 +13,11 @@ h3 {
 	margin: 0 auto;
 }
 
+#rest-table-wrapper {
+	max-width: 1000px;
+	margin: 0 auto;	
+}
+
 #todo-table-all, #todo-table-unfinished {
 	max-width: 1000px;
 	margin: 0 auto;

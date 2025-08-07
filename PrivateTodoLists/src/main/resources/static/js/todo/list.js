@@ -15,7 +15,7 @@ window.onload = function() {
 		$("#no-task-msg").show();
 	} else {
 		$("#finishedCheck").prop("checked", isHidingFinishedTodo == '1');
-		selectShowingTable(isHidingFinishedTodo == '1');
+//		selectShowingTable(isHidingFinishedTodo == '1');
 	}
 	
 	$("i").each(function(){
@@ -37,22 +37,158 @@ window.onload = function() {
 //	$(".navbar-brand").css({'cssText': 'color:' + settingMap.headerFontColor + '!important;'});
 	
 	
-	$('.table').DataTable({
+
+	
+	getTodoList()
+	
+//	$('.table').DataTable({
+//		"info": true,
+//		language: {
+//    		url: 'https://cdn.datatables.net/plug-ins/2.3.1/i18n/ja.json',
+//    	},
+//	});
+//	
+//	$("th:nth-of-type(1)").prop('disabled', true);
+	
+	
+	
+}
+
+var todoData = null;
+var table = null;
+
+//function escapeHtml(text) {
+//  return $('<div>').text(text).html();
+//}
+
+function createDataTables() {
+	if (table != null) {
+		table.destroy();
+	}
+	
+	table = $('#rest-table').DataTable({
 		"info": true,
 		language: {
     		url: 'https://cdn.datatables.net/plug-ins/2.3.1/i18n/ja.json',
     	},
+    	
+    	data: todoData,
+//    	colums: [
+//			{width: '5%'},
+//			{width: '40%'},
+//			{width: '15%'},
+//			{width: '15%'},
+//			{width: '25%'},			
+//		],
+    	columns:[
+			{ 
+				width: '5%',
+				data: null,
+				render: function(data, type, row){					
+					if (row.tag) {
+						var html = '<span><i class="fa-xl '
+						+ row.tag.tagIcon 
+						+ '" data-tag-color="'
+						+ row.tag.tagColor
+						+'"></i></span> '
+						return html;
+					}
+					return "";
+				}
+			},
+			{ 
+				width: '40%',
+				data: 'itemName',
+				render: function(data, type, row) {	
+					return $('<div>').text(data).html();
+				}
+			},
+			{ 
+				width: '15%',
+				data: 'expireDate',
+				render: function(data, type, row) {
+					var date = new Date(data);
+					var year = date.getFullYear();
+					var month = date.getMonth() + 1;
+					var day = date.getDate();
+					return year + "/" + month + "/" + day;
+				}
+			},
+			{ 
+				width: '15%',
+				data: 'finishedDate',
+				render: function(data, type, row) {
+					if (!data) {
+						return "未完了";
+					} else {
+						var date = new Date(data);
+						var year = date.getFullYear();
+						var month = date.getMonth() + 1;
+						var day = date.getDate();
+						return year + "/" + month + "/" + day;
+					}
+				}
+			},
+			{ 
+				width: '25%',
+				data: null,
+				render: function(data, type, row) {
+					var url = '<div class="row">';
+					const id = row.id;
+					const finishedDate = row.finishedDate;
+					
+					if (finishedDate==null) {
+						url +='<button class="btn btn-outline-primary btn-sm rounded-pill col mx-1" onclick="finishTodo('
+						+ id
+						+ ')">完了する</button>';						
+					} else {
+						url +='<button class="btn btn-outline-danger btn-sm rounded-pill col mx-1" onclick="finishTodo('
+						+ id
+						+ ')">未完了にする</button>';						
+					}	
+					
+					url += '<a class="btn btn-outline-success btn-sm rounded-pill col me-2" href="/todo/detail/'
+					+ id + '">詳細</a></div>'					
+					return url;				
+				}				
+			},
+		],
+		drawCallback: function(){
+			$("i").each(function(){
+				$(this).css('color', $(this).data("tag-color"));
+			});			
+		}
 	});
 	
 	$("th:nth-of-type(1)").prop('disabled', true);
-	
-	
 	
 }
             
 $("#close-modal, .btn-close").click(function () {
 	$("#msg-modal").hide();
 });
+
+function getTodoList() {
+	$.ajax({
+			type: "GET", 
+			url: "/todo/get/list",
+			dataType: "json",
+			contentType: "application/json; charset=UTF-8",
+			cache: false,
+			timeout: 5000,
+	}).done(function(data){
+			console.log(data);
+			todoData = data;
+					
+	}).fail(function(){
+		
+	}).always(function(){
+		createDataTables()
+		
+
+	
+	});
+}
 
 function toggleShowFinishedTodo() {
 	var state = $("#finishedCheck").prop("checked");
@@ -71,6 +207,38 @@ function toggleShowFinishedTodo() {
         });
 }
 
+function finishTodo(todoId) {
+//	var thisId = "#" + id;
+//	var state = $(thisId).hasClass('unfinished');
+//	var todoId = Number(id.substr(18));
+	
+	$.ajax({
+            url: "/todo/finishtoggle", // 取得するHTMLのURL
+            method: "PUT",
+            data: { todoId: todoId},
+            success: function () {
+				getTodoList();
+            },
+            error: function () {
+                alert("データの更新に失敗しました");
+            }
+        });
+        
+     
+        
+//     if (state) {
+//		 
+//		 $(thisId).removeClass('btn-outline-primary unfinished').addClass('btn-outline-danger finished');
+//		 $(thisId).text('未完了にする');
+//	 } else {
+//		 $(thisId).removeClass('btn-outline-danger finished').addClass('btn-outline-primary unfinished');
+//		 $(thisId).text('完了する');
+//	 }
+        
+	
+	
+}
+
 function selectShowingTable(state) {
 	$("#no-task-msg, #todo-table-all, #todo-table-unfinished" ).hide();
 	if(state) {	
@@ -84,6 +252,8 @@ function selectShowingTable(state) {
 		$("#todo-table-all").show();
 	}
 }
+ 
+
 
 function showLoginMsg() {
 	var unfinishedTodoCount = $("#todo-table-unfinished tbody tr").length;
