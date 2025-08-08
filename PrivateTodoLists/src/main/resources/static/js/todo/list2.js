@@ -18,12 +18,12 @@ window.onload = function() {
 //		selectShowingTable(isHidingFinishedTodo == '1');
 	}
 	
-//	$("i").each(function(){
-//		$(this).css('color', $(this).data("tag-color"));
-//	});
+	$("i").each(function(){
+		$(this).css('color', $(this).data("tag-color"));
+	});
 	
-//	const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-//	const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+	const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+	const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 	
 //	if ($("#todo-table-unfinished tbody tr").length > 0) {
 //		$(".badge").text($("#todo-table-unfinished tbody tr").length);
@@ -61,8 +61,6 @@ function createDataTables() {
 	if (table != null) {
 		table.destroy();
 	}
-	
-	DataTable.type('date', 'className', ' ');
 
 	table = $('#rest-table').DataTable({
 		"info": true,
@@ -80,10 +78,7 @@ function createDataTables() {
 				data: null,
 				render: function(data, type, row){					
 					if (row.tag) {
-						var html = '<span data-bs-toggle="tooltip" data-bs-placement="top" '
-						+ 'data-bs-title="'
-						+ row.tag.tagName
-						+ '"><i class="fa-xl '
+						var html = '<span><i class="fa-xl '
 						+ row.tag.tagIcon 
 						+ '" data-tag-color="'
 						+ row.tag.tagColor
@@ -151,20 +146,14 @@ function createDataTables() {
 			},
 		],
 		drawCallback: function(){
-			setIconsData()		
+			$("i").each(function(){
+				$(this).css('color', $(this).data("tag-color"));
+			});			
 		}
 	});
 	
 	$("th:nth-of-type(1)").prop('disabled', true);
 	
-}
-
-function setIconsData() {
-	$("i").each(function(){
-		$(this).css('color', $(this).data("tag-color"));
-	});	
-	const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-	const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 }
             
 $("#close-modal, .btn-close").click(function () {
@@ -200,7 +189,7 @@ function toggleShowFinishedTodo() {
 	selectShowingTable(state);
 	
 	$.ajax({
-            url: "/todo/tabletoggle",
+            url: "/todo/tabletoggle", // 取得するHTMLのURL
             method: "PUT",
             data: { state: state },
             success: function () {
@@ -215,25 +204,33 @@ function finishTodo(btn) {
     var row = table.row($(btn).closest('tr'));
     var rowData = row.data();
     var todoId = rowData.id;
-    
-    console.log(rowData);
 	
 	$.ajax({
-            url: "/todo/finishtoggle", 
+            url: "/todo/finishtoggle", // 取得するHTMLのURL
             method: "PUT",
             data: { todoId: todoId},
             success: function (updatedTodo) {
                 row.data(updatedTodo).invalidate();
                 //console.log("更新後 finishedDate:", updatedTodo.finishedDate);
-                console.log(updatedTodo);
-                setIconsData()
-
             },
             error: function () {
                 alert("データの更新に失敗しました");
             }
         });
-
+        
+//     console.log(rowData);
+        
+//     if (state) {
+//		 
+//		 $(thisId).removeClass('btn-outline-primary unfinished').addClass('btn-outline-danger finished');
+//		 $(thisId).text('未完了にする');
+//	 } else {
+//		 $(thisId).removeClass('btn-outline-danger finished').addClass('btn-outline-primary unfinished');
+//		 $(thisId).text('完了する');
+//	 }
+        
+	
+	
 }
 
 function selectShowingTable(state) {

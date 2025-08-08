@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.domain.setting.service.SettingService;
+import com.example.domain.tag.service.TagService;
 import com.example.domain.todo.model.MTodo;
 import com.example.domain.todo.service.TodoService;
 
@@ -22,8 +23,9 @@ public class TodoRestController {
 	
 	private final SettingService settingService;
 	private final TodoService todoService;
+	private final TagService tagService;
 	
-	@PutMapping("/toggle")
+	@PutMapping("/tabletoggle")
 	public int toggleHideFinishedTodo(boolean state) {
 		String CustomizeValue = state ? "1":"0";
 		settingService.setOneSetting("isHidingFinishedTodo", CustomizeValue);
@@ -32,7 +34,7 @@ public class TodoRestController {
 	}
 	
 	@PutMapping("/finishtoggle")
-	public int toggleTodoFinishUnfinish(int todoId) {
+	public MTodo toggleTodoFinishUnfinish(int todoId) {
 		MTodo todo = todoService.getOneTodo(todoId);
 		
 		if (todo.getFinishedDate() == null) {
@@ -42,8 +44,11 @@ public class TodoRestController {
 		}
 		
 		todoService.editOneTodo(todo);
+		if (todo.getTagId() != null) {
+			todo.setTag(tagService.getOneTag(todo.getTagId()));
+		}
 		
-		return 0;		
+		return todo;		
 	}
 	
 	@GetMapping("get/list")

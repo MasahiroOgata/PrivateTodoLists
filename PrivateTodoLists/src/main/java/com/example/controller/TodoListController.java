@@ -48,4 +48,28 @@ public class TodoListController {
 		
 		return "todo/list";
 	}
+	
+	@GetMapping("2")
+	public String showTodoList2(Model model, @RequestParam(required = false) String search) {
+		
+		if ((String)session.getAttribute("loginMsg") != null) {
+			model.addAttribute("flashMsg", (String)session.getAttribute("loginMsg"));
+			session.removeAttribute("loginMsg");
+		}
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd"); 
+		Date today = new Date();
+		try {
+			today= sdf.parse(sdf.format(today));
+		} catch(ParseException e){
+		}		
+		model.addAttribute("today", today);
+		
+		List<MTodo> todoList = todoService.getTodoItems(search);
+		model.addAttribute("search", search);
+		model.addAttribute("todoList", todoList);
+		
+		return "todo/list2";
+	}
+	
 }
