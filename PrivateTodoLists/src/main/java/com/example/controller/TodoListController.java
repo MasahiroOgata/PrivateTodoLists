@@ -42,9 +42,9 @@ public class TodoListController {
 		}		
 		model.addAttribute("today", today);
 		
-		List<MTodo> todoList = todoService.getTodoItems(search);
+//		List<MTodo> todoList = todoService.getTodoItems(search);
 		model.addAttribute("search", search);
-		model.addAttribute("todoList", todoList);
+//		model.addAttribute("todoList", todoList);
 		
 		return "todo/list";
 	}

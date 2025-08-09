@@ -15,7 +15,7 @@ window.onload = function() {
 		$("#no-task-msg").show();
 	} else {
 		$("#finishedCheck").prop("checked", isHidingFinishedTodo == '1');
-//		selectShowingTable(isHidingFinishedTodo == '1');
+		selectShowingTable(isHidingFinishedTodo == '1');
 	}
 	
 	$("i").each(function(){
@@ -39,7 +39,7 @@ window.onload = function() {
 	
 
 	
-	getTodoList();
+//	getTodoList();
 	
 //	$('.table').DataTable({
 //		"info": true,

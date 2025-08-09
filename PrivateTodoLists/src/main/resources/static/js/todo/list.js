@@ -9,49 +9,17 @@ window.onload = function() {
 	
 	var isHidingFinishedTodo = "isHidingFinishedTodo" in settingMap ? settingMap.isHidingFinishedTodo : '0';
 	
-	if (todoList.length == 0) {
-		$("#todo-table-all, #todo-table-unfinished").hide();
-		$("#no-task-msg").text("“作業登録”からタスクを登録してください");
-		$("#no-task-msg").show();
-	} else {
-		$("#finishedCheck").prop("checked", isHidingFinishedTodo == '1');
-//		selectShowingTable(isHidingFinishedTodo == '1');
-	}
-	
-//	$("i").each(function(){
-//		$(this).css('color', $(this).data("tag-color"));
-//	});
-	
-//	const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-//	const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
-	
-//	if ($("#todo-table-unfinished tbody tr").length > 0) {
-//		$(".badge").text($("#todo-table-unfinished tbody tr").length);
-//		$(".badge").show();
+//	if (todoList.length == 0) {
+//		$("#todo-table-all, #todo-table-unfinished").hide();
+//		$("#no-task-msg").text("“作業登録”からタスクを登録してください");
+//		$("#no-task-msg").show();
 //	} else {
-//		$(".badge").hide();
+//		$("#finishedCheck").prop("checked", isHidingFinishedTodo == '1');
+//
 //	}
-//	layoutSetting();
 	
-//	$(".navbar").css({'cssText': 'background-color:' + settingMap.headerBgColor + '!important;'});
-//	$(".navbar-brand").css({'cssText': 'color:' + settingMap.headerFontColor + '!important;'});
-	
-	
-
 	
 	getTodoList();
-	
-//	$('.table').DataTable({
-//		"info": true,
-//		language: {
-//    		url: 'https://cdn.datatables.net/plug-ins/2.3.1/i18n/ja.json',
-//    	},
-//	});
-//	
-//	$("th:nth-of-type(1)").prop('disabled', true);
-	
-	
-	
 }
 
 var todoData = null;
@@ -136,11 +104,9 @@ function createDataTables() {
 					
 					if (finishedDate==null) {
 						url +='<button class="btn btn-outline-primary btn-sm rounded-pill col mx-1" onclick="finishTodo('
-						//+ id
 						+ 'this)">完了する</button>';						
 					} else {
 						url +='<button class="btn btn-outline-danger btn-sm rounded-pill col mx-1" onclick="finishTodo('
-						//+ id
 						+ 'this)">未完了にする</button>';						
 					}	
 					
@@ -187,9 +153,6 @@ function getTodoList() {
 	}).fail(function(){
 		
 	}).always(function(){
-//		createDataTables()
-		
-
 	
 	});
 }
