@@ -63,7 +63,7 @@
 		<h3 class="text-info text-center bg-white" id="no-task-msg"></h3>
 
 		<th:block th:each="i : ${#numbers.sequence(0,1)}">
-			<div th:id="${i == 0}? 'todo-table-all': 'todo-table-unfinished'">
+			<div class="d-none d-sm-block" th:id="${i == 0}? 'todo-table-all': 'todo-table-unfinished'">
 				<table class="table table-striped table-hover table-responsive">
 					<thead class="thead-light">
 						<tr>
@@ -113,13 +113,6 @@
 									th:text="${item.finishedDate == null}? '完了する' : '未完了にする'" 
 									th:id="'todoFinishButton' + ${i} + '_' + ${item.id}"
 									th:classappend="${item.finishedDate == null}? 'btn-outline-primary' : 'btn-outline-danger' "></a>
-									<!--
-									<button class="btn btn-sm rounded-pill col mx-1"
-									th:text="${item.finishedDate == null}? '完了する' : '未完了にする'" 
-									th:id="'todoFinishButton' + ${i} + '_' + ${item.id}"
-									th:classappend="${item.finishedDate == null}? 'btn-outline-primary unfinished' : 'btn-outline-danger finished' "
-									onclick="finishTodo(this.id)"></button>
-									-->
 									<a class="btn btn-outline-success btn-sm rounded-pill col me-2" th:href="@{'/todo/detail/' + ${item.id}}">詳細</a>
 									</div>
 								</td>					
@@ -129,6 +122,32 @@
 				</table>
 			</div>
 		</th:block>
+		
+		<div class="d-block d-sm-none">
+				<table id="todoListSmall" class="table table-bordered table-striped table-hover">
+				<tbody>
+					<tr th:each="item: ${todoList}">
+						<td class="data" style="max-width: 170px;">
+							<span class="fw-bold text-truncate d-inline-block" th:text="${item.itemName}" style="max-width: 170px;"></span><br>
+							<span class="text-truncate d-inline-block" th:text="${#dates.format(item.expireDate,'MM/dd') + 'まで'}" style="max-width: 170px;"></span>
+						</td>					
+						<td class="text-center align-middle">
+							<div class="d-flex justify-content-center align-items-center gap-1">
+								<th:block th:if="${item.finishedDate == null}">
+									<a class="btn btn-sm btn-primary" th:href="@{'/todo/finish/' + ${item.id}}">完了する</a>
+								</th:block>
+								<th:block th:if="${item.finishedDate != null}">
+									<a class="btn btn-sm btn-secondary" th:href="@{'/todo/finish/' + ${item.id}}">未完了にする</a>
+								</th:block>
+								<a class="btn btn-sm btn-info" th:href="@{'/todo/detail/' + ${item.id}}">詳細</a>
+							</div>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	
+		
 	</div>	
 </body>
 </html>
