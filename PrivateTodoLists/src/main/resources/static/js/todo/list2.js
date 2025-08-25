@@ -234,6 +234,7 @@ function finishTodo(btn) {
 }
 
 function selectShowingTable(state) {
+	console.log(state);
 	$("#no-task-msg, #todo-table-all, #todo-table-unfinished" ).hide();
 	if(state) {	
 		if ($("#todo-table-unfinished tbody td").length == 0) {

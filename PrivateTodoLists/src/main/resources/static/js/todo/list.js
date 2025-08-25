@@ -4,7 +4,8 @@ window.onload = function() {
 		  $(".modal").fadeIn(200);
 	}
 	if (flashMsg == "login") {
-		showLoginMsg()
+		$(".modal-body p").text("ようこそ");
+		//showLoginMsg()
 	}
 	
 	var isHidingFinishedTodo = "isHidingFinishedTodo" in settingMap ? settingMap.isHidingFinishedTodo : '0';
