@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,7 +29,8 @@ public class TodoListController {
 	private final HttpSession session;
 	
 	@GetMapping("")
-	public String showTodoList(Model model, @RequestParam(required = false) String search) {
+	public String showTodoList(Model model, @RequestParam(required = false) String search,
+			@PageableDefault(size = 10) Pageable pageable) {
 		
 		if ((String)session.getAttribute("loginMsg") != null) {
 			model.addAttribute("flashMsg", (String)session.getAttribute("loginMsg"));
@@ -42,9 +45,9 @@ public class TodoListController {
 		}		
 		model.addAttribute("today", today);
 		
-//		List<MTodo> todoList = todoService.getTodoItems(search);
+		List<MTodo> todoList = todoService.getTodoItems(search);
 		model.addAttribute("search", search);
-//		model.addAttribute("todoList", todoList);
+		model.addAttribute("todoList", todoList);
 		
 		return "todo/list";
 	}
@@ -69,7 +72,7 @@ public class TodoListController {
 		model.addAttribute("search", search);
 		model.addAttribute("todoList", todoList);
 		
-		return "todo/list2";
+		return "todo/listb";
 	}
 	
 }

@@ -6,14 +6,14 @@
 	<title>作業一覧</title>
 	<!-- 個別JS読込 -->
 	<script th:src="@{https://cdn.datatables.net/2.3.1/js/dataTables.js}" defer></script>
-	<script th:src="@{/js/todo/list2.js}" defer></script>
+	<script th:src="@{/js/todo/listb.js}" defer></script>
 	<!-- 個別CSS読込 -->
-	<link rel="stylesheet" th:href="@{/css/todo/list2.css}">
 	<link rel="stylesheet" href="https://cdn.datatables.net/2.3.1/css/dataTables.dataTables.css" />
+	<link rel="stylesheet" th:href="@{/css/todo/listb.css}">
 	<!-- flashMsg,todoList,todayをJSに渡す -->
 	<script th:inline="javascript">
 		var flashMsg = /*[[${flashMsg}]]*/"flashMsg";
-		var todoList = /*[[${todoList}]]*/"todoList";
+		// var todoList = /*[[${todoList}]]*/"todoList";
 		var today = /*[[${today}]]*/"today";
 	</script>
 </head>
@@ -48,9 +48,9 @@
 					</div>
 				</div>
 			</div>
-			<div class="d-inline-flex col-md-4 justify-content-start">
+			<div class="d-flex col-md-4 justify-content-start">
 				<form method="get" th:action="@{/todo/list}" class="row">
-					<div class="col ms-3" style="width: 300px">
+					<div class="col ms-3" >
 						<input type="text" class="form-control" name="search" th:value="${search}">
 					</div>
 					<div class="col">
@@ -61,17 +61,40 @@
 		</div>
 		
 		<h3 class="text-info text-center bg-white" id="no-task-msg"></h3>
-
+		<div id="rest-table-wrapper">
+		<table id="rest-table" class="table table-striped table-hover table-responsive">
+			<thead class="thead-light">
+				<tr>
+					<th style="width: 5%"></th>
+					<th style="width: 40%">項目</th>
+					<th style="width: 15%">期限日</th>
+					<th style="width: 15%">完了日</th>
+					<th style="width: 25%">操作</th>
+				</tr>
+			</thead>
+			<!--
+			<tbody>
+				<tr>					
+					<td>アイコン</td>
+					<td></td>
+					<td></td>
+					<td></td>
+					<td></td>
+				</tr>
+			</tbody> -->			
+		</table>
+		</div>
+<!--
 		<th:block th:each="i : ${#numbers.sequence(0,1)}">
-			<div th:id="${i == 0}? 'todo-table-all': 'todo-table-unfinished'" class="p-2">
+			<div th:id="${i == 0}? 'todo-table-all': 'todo-table-unfinished'">
 				<table class="table table-striped table-hover table-responsive">
 					<thead class="thead-light">
 						<tr>
-							<th class="d-none d-md-table-cell" style="width: 5%"></th>
-							<th class="d-none d-md-table-cell" style="width: 40%">項目</th>
-							<th class="d-none d-md-table-cell" style="width: 10%">期限日</th>
-							<th class="d-none d-md-table-cell" style="width: 10%">完了日</th>
-							<th class="d-none d-md-table-cell" style="width: 35%">操作</th>
+							<th style="width: 5%"></th>
+							<th style="width: 40%">項目</th>
+							<th style="width: 15%">期限日</th>
+							<th style="width: 15%">完了日</th>
+							<th style="width: 25%">操作</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -85,16 +108,14 @@
 										</span>
 									</th:block>
 								</td>
-								
-								
-								<td class="d-none d-md-table-cell">
+								<td>
 									<th:block th:if="${item.id == newTodoId}">
 										<span class="fs-6 fst-italic text-primary">new</span>
 									</th:block>	
 									<span th:text="${item.itemName}"></span>
 								</td>
-								<td class="d-none d-md-table-cell"><span th:text="${#dates.format(item.expireDate,'YYYY-MM-dd')}"></span></td>
-								<td class="d-none d-md-table-cell">
+								<td><span th:text="${#dates.format(item.expireDate,'YYYY-MM-dd')}"></span></td>
+								<td>
 									<th:block th:if="${item.finishedDate != null}">
 										<span th:text="${#dates.format(item.finishedDate,'YYYY-MM-dd')}"></span>
 									</th:block>
@@ -108,39 +129,21 @@
 										<span class="text-primary"th:text="|残り${(item.expireDate.getTime() - today.getTime()) / 84000000}日|"></span>
 									</th:block>
 								</td>
-								
-								<td class="d-md-none">
-									<th:block th:if="${item.id == newTodoId}">
-										<span class="fs-6 fst-italic text-primary">new</span>
-									</th:block>	
-									<span th:text="${item.itemName}"></span><br>
-									<p class="row mb-0 pt-2">
-										<span class="fw-bold col" th:text="|${#dates.format(item.expireDate,'MM/dd')}まで|"></span>
-										<th:block th:if="${item.finishedDate != null}">
-											<span class="fw-light col" th:text="|${#dates.format(item.finishedDate,'MM/dd')}まで|"></span>
-										</th:block>
-										<th:block th:if="${item.finishedDate == null && item.expireDate lt today}">
-											<span class="fw-light col text-danger">期限切れ</span>
-										</th:block>
-										<th:block th:if="${item.finishedDate == null && item.expireDate eq today}">
-											<span class="fw-light col text-warning">本日まで</span>
-										</th:block>
-										<th:block th:if="${item.finishedDate == null && item.expireDate gt today}">
-											<span class="fw-light col text-primary"th:text="|残り${(item.expireDate.getTime() - today.getTime()) / 84000000}日|"></span>
-										</th:block>
-									</p>
-									
-									
-								</td>
-								
-								
 								<td>
 									<div class="row">
-									<a class="btn btn-sm rounded-pill col-10 col-md-6 mx-1 mb-1" th:href="@{'/todo/finish/' + ${item.id}}"
+																
+									<a class="btn btn-sm rounded-pill col mx-1" th:href="@{'/todo/finish/' + ${item.id}}"
 									th:text="${item.finishedDate == null}? '完了する' : '未完了にする'" 
 									th:id="'todoFinishButton' + ${i} + '_' + ${item.id}"
 									th:classappend="${item.finishedDate == null}? 'btn-outline-primary' : 'btn-outline-danger' "></a>
-									<a class="btn btn-outline-success btn-sm rounded-pill col-10 col-md-5 ms-1 mb-1" th:href="@{'/todo/detail/' + ${item.id}}">詳細</a>
+									
+									<button class="btn btn-sm rounded-pill col mx-1"
+									th:text="${item.finishedDate == null}? '完了する' : '未完了にする'" 
+									th:id="'todoFinishButton' + ${i} + '_' + ${item.id}"
+									th:classappend="${item.finishedDate == null}? 'btn-outline-primary unfinished' : 'btn-outline-danger finished' "
+									onclick="finishTodo(this.id)"></button>
+									
+									<a class="btn btn-outline-success btn-sm rounded-pill col me-2" th:href="@{'/todo/detail/' + ${item.id}}">詳細</a>
 									</div>
 								</td>					
 							</tr>
@@ -149,34 +152,7 @@
 				</table>
 			</div>
 		</th:block>
-		
-		<!--
-		<div class="d-block d-sm-none">
-				<table id="todoListSmall" class="table table-bordered table-striped table-hover">
-				<tbody>
-					<tr th:each="item: ${todoList}">
-						<td class="data" style="max-width: 170px;">
-							<span class="fw-bold text-truncate d-inline-block" th:text="${item.itemName}" style="max-width: 170px;"></span><br>
-							<span class="text-truncate d-inline-block" th:text="${#dates.format(item.expireDate,'MM/dd') + 'まで'}" style="max-width: 170px;"></span>
-						</td>					
-						<td class="text-center align-middle">
-							<div class="d-flex justify-content-center align-items-center gap-1">
-								<th:block th:if="${item.finishedDate == null}">
-									<a class="btn btn-sm btn-primary" th:href="@{'/todo/finish/' + ${item.id}}">完了する</a>
-								</th:block>
-								<th:block th:if="${item.finishedDate != null}">
-									<a class="btn btn-sm btn-secondary" th:href="@{'/todo/finish/' + ${item.id}}">未完了にする</a>
-								</th:block>
-								<a class="btn btn-sm btn-info" th:href="@{'/todo/detail/' + ${item.id}}">詳細</a>
-							</div>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</div>
-		-->
-	
-		
+-->
 	</div>	
 </body>
 </html>

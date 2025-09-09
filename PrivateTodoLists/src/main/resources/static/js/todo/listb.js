@@ -4,54 +4,23 @@ window.onload = function() {
 		  $(".modal").fadeIn(200);
 	}
 	if (flashMsg == "login") {
-		showLoginMsg()
+		$(".modal-body p").text("ようこそ");
+		//showLoginMsg()
 	}
 	
 	var isHidingFinishedTodo = "isHidingFinishedTodo" in settingMap ? settingMap.isHidingFinishedTodo : '0';
 	
-	if (todoList.length == 0) {
-		$("#todo-table-all, #todo-table-unfinished").hide();
-		$("#no-task-msg").text("“作業登録”からタスクを登録してください");
-		$("#no-task-msg").show();
-	} else {
-		$("#finishedCheck").prop("checked", isHidingFinishedTodo == '1');
-		selectShowingTable(isHidingFinishedTodo == '1');
-	}
-	
-	$("i").each(function(){
-		$(this).css('color', $(this).data("tag-color"));
-	});
-	
-	const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
-	const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
-	
-//	if ($("#todo-table-unfinished tbody tr").length > 0) {
-//		$(".badge").text($("#todo-table-unfinished tbody tr").length);
-//		$(".badge").show();
+//	if (todoList.length == 0) {
+//		$("#todo-table-all, #todo-table-unfinished").hide();
+//		$("#no-task-msg").text("“作業登録”からタスクを登録してください");
+//		$("#no-task-msg").show();
 //	} else {
-//		$(".badge").hide();
+//		$("#finishedCheck").prop("checked", isHidingFinishedTodo == '1');
+//
 //	}
-//	layoutSetting();
-	
-//	$(".navbar").css({'cssText': 'background-color:' + settingMap.headerBgColor + '!important;'});
-//	$(".navbar-brand").css({'cssText': 'color:' + settingMap.headerFontColor + '!important;'});
 	
 	
-
-	
-//	getTodoList();
-	
-//	$('.table').DataTable({
-//		"info": true,
-//		language: {
-//    		url: 'https://cdn.datatables.net/plug-ins/2.3.1/i18n/ja.json',
-//    	},
-//	});
-//	
-//	$("th:nth-of-type(1)").prop('disabled', true);
-	
-	
-	
+	getTodoList();
 }
 
 var todoData = null;
@@ -61,6 +30,8 @@ function createDataTables() {
 	if (table != null) {
 		table.destroy();
 	}
+	
+	DataTable.type('date', 'className', ' ');
 
 	table = $('#rest-table').DataTable({
 		"info": true,
@@ -78,7 +49,10 @@ function createDataTables() {
 				data: null,
 				render: function(data, type, row){					
 					if (row.tag) {
-						var html = '<span><i class="fa-xl '
+						var html = '<span data-bs-toggle="tooltip" data-bs-placement="top" '
+						+ 'data-bs-title="'
+						+ row.tag.tagName
+						+ '"><i class="fa-xl '
 						+ row.tag.tagIcon 
 						+ '" data-tag-color="'
 						+ row.tag.tagColor
@@ -131,11 +105,9 @@ function createDataTables() {
 					
 					if (finishedDate==null) {
 						url +='<button class="btn btn-outline-primary btn-sm rounded-pill col mx-1" onclick="finishTodo('
-						//+ id
 						+ 'this)">完了する</button>';						
 					} else {
 						url +='<button class="btn btn-outline-danger btn-sm rounded-pill col mx-1" onclick="finishTodo('
-						//+ id
 						+ 'this)">未完了にする</button>';						
 					}	
 					
@@ -146,14 +118,20 @@ function createDataTables() {
 			},
 		],
 		drawCallback: function(){
-			$("i").each(function(){
-				$(this).css('color', $(this).data("tag-color"));
-			});			
+			setIconsData()		
 		}
 	});
 	
 	$("th:nth-of-type(1)").prop('disabled', true);
 	
+}
+
+function setIconsData() {
+	$("i").each(function(){
+		$(this).css('color', $(this).data("tag-color"));
+	});	
+	const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+	const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
 }
             
 $("#close-modal, .btn-close").click(function () {
@@ -176,9 +154,6 @@ function getTodoList() {
 	}).fail(function(){
 		
 	}).always(function(){
-//		createDataTables()
-		
-
 	
 	});
 }
@@ -189,7 +164,7 @@ function toggleShowFinishedTodo() {
 	selectShowingTable(state);
 	
 	$.ajax({
-            url: "/todo/tabletoggle", // 取得するHTMLのURL
+            url: "/todo/tabletoggle",
             method: "PUT",
             data: { state: state },
             success: function () {
@@ -204,37 +179,28 @@ function finishTodo(btn) {
     var row = table.row($(btn).closest('tr'));
     var rowData = row.data();
     var todoId = rowData.id;
+    
+    console.log(rowData);
 	
 	$.ajax({
-            url: "/todo/finishtoggle", // 取得するHTMLのURL
+            url: "/todo/finishtoggle", 
             method: "PUT",
             data: { todoId: todoId},
             success: function (updatedTodo) {
                 row.data(updatedTodo).invalidate();
                 //console.log("更新後 finishedDate:", updatedTodo.finishedDate);
+                console.log(updatedTodo);
+                setIconsData()
+
             },
             error: function () {
                 alert("データの更新に失敗しました");
             }
         });
-        
-//     console.log(rowData);
-        
-//     if (state) {
-//		 
-//		 $(thisId).removeClass('btn-outline-primary unfinished').addClass('btn-outline-danger finished');
-//		 $(thisId).text('未完了にする');
-//	 } else {
-//		 $(thisId).removeClass('btn-outline-danger finished').addClass('btn-outline-primary unfinished');
-//		 $(thisId).text('完了する');
-//	 }
-        
-	
-	
+
 }
 
 function selectShowingTable(state) {
-	console.log(state);
 	$("#no-task-msg, #todo-table-all, #todo-table-unfinished" ).hide();
 	if(state) {	
 		if ($("#todo-table-unfinished tbody td").length == 0) {
