@@ -39,6 +39,7 @@ public class TodoServiceImpl implements TodoService {
 	/** Todoリスト取得 */
 	@Override
 	public List<MTodo> getTodoItems(String search) {
+		//RowBounds rowBounds = new RowBounds((int)pageable.getOffset(), pageable.getPageSize());
 		return todoMapper.findManyTodo(search, AuthUtil.getLoginUserId());
 	}
 	
@@ -72,6 +73,10 @@ public class TodoServiceImpl implements TodoService {
 	public int getUnfinishedTodoCount() {
 		return todoMapper.countUnfinishedTodo(AuthUtil.getLoginUserId());
 	}
+
+
+
+
 
 
 }

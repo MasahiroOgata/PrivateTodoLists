@@ -53,7 +53,8 @@ public class TodoListController {
 	}
 	
 	@GetMapping("2")
-	public String showTodoList2(Model model, @RequestParam(required = false) String search) {
+	public String showTodoList2(Model model, @RequestParam(required = false) String search,
+			@PageableDefault(size = 10) Pageable pageable) {
 		
 		if ((String)session.getAttribute("loginMsg") != null) {
 			model.addAttribute("flashMsg", (String)session.getAttribute("loginMsg"));
