@@ -75,7 +75,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<div th:each="item: ${todoList}">
+						<div th:each="item: ${todoListWithPage}">
 							<tr th:if="${item.finishedDate == null || i == 0}">
 								
 								<!-- アイコン -->

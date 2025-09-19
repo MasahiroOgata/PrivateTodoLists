@@ -2,6 +2,10 @@ package com.example.domain.todo.service.impl;
 
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.example.domain.todo.model.MTodo;
@@ -40,7 +44,18 @@ public class TodoServiceImpl implements TodoService {
 	@Override
 	public List<MTodo> getTodoItems(String search) {
 		//RowBounds rowBounds = new RowBounds((int)pageable.getOffset(), pageable.getPageSize());
-		return todoMapper.findManyTodo(search, AuthUtil.getLoginUserId());
+		return todoMapper.findManyTodo(search, AuthUtil.getLoginUserId(), new RowBounds(0, Integer.MAX_VALUE));
+	}
+	
+	/** Todoリスト取得（ページネーション付き） */
+	@Override
+	public Page<MTodo> getTodoItemsWithPages(String search, Pageable pageable) {
+		RowBounds rowBounds = new RowBounds((int)pageable.getOffset(), pageable.getPageSize());
+		List<MTodo> todoList = todoMapper.findManyTodo(search, AuthUtil.getLoginUserId(), rowBounds);
+		
+		Long total = todoMapper.count(search, AuthUtil.getLoginUserId());
+		
+		return new PageImpl<>(todoList, pageable, total);
 	}
 	
 	/** Todo1件取得 */

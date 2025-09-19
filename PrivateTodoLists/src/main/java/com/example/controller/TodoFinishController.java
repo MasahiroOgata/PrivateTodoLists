@@ -32,7 +32,7 @@ public class TodoFinishController {
 		
 		todoService.editOneTodo(todo);
 		
-		return "redirect:/todo/list/2";
+		return "redirect:/todo/list";
 	}
 
 }

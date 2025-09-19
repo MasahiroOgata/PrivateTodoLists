@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.session.RowBounds;
 
 import com.example.domain.todo.model.MTodo;
 
@@ -16,8 +17,11 @@ public interface TodoMapper {
 //	/** 作成された固有テーブルの存在を確認 */
 //	public int countUserOwnTable(String signupUserId);
 	
+	/** Todo総数取得 */
+	public Long count(String search, int userId);
+	
 	/** Todoリスト取得 */
-	public List<MTodo> findManyTodo(@Param("search") String search, int userId);
+	public List<MTodo> findManyTodo(@Param("search") String search, int userId, RowBounds rowBounds);
 	
 	/** Todo1件取得 */
 	public MTodo findOneTodo(int id, int userId);

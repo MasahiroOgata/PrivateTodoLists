@@ -2,6 +2,9 @@ package com.example.domain.todo.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.example.domain.todo.model.MTodo;
 
 public interface TodoService {
@@ -14,6 +17,9 @@ public interface TodoService {
 	
 	/** Todoリスト取得 */
 	public List<MTodo> getTodoItems(String search);
+	
+	/** Todoリスト取得（ページネーション付き） */
+	public Page<MTodo> getTodoItemsWithPages(String search, Pageable pageable);
 	
 	/** Todo1件取得 */
 	public MTodo getOneTodo(int id);

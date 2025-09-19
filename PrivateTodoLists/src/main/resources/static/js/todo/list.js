@@ -53,135 +53,135 @@ window.onload = function() {
 	
 	
 }
-
-var todoData = null;
-var table = null;
-
-function createDataTables() {
-	if (table != null) {
-		table.destroy();
-	}
-
-	table = $('#rest-table').DataTable({
-		"info": true,
-		language: {
-    		url: 'https://cdn.datatables.net/plug-ins/2.3.1/i18n/ja.json',
-    	},
-//    	scrollY: "90vh",
-//        scrollCollapse: true,
-//    	fixedHeader: true,
-    	data: todoData,
-
-    	columns:[
-			{ 
-				width: '5%',
-				data: null,
-				render: function(data, type, row){					
-					if (row.tag) {
-						var html = '<span><i class="fa-xl '
-						+ row.tag.tagIcon 
-						+ '" data-tag-color="'
-						+ row.tag.tagColor
-						+'"></i></span> '
-						return html;
-					}
-					return "";
-				}
-			},
-			{ 
-				width: '40%',
-				data: 'itemName',
-				render: function(data, type, row) {	
-					return $('<div>').text(data).html();
-				}
-			},
-			{ 
-				width: '15%',
-				data: 'expireDate',
-				render: function(data, type, row) {
-					var date = new Date(data);
-					var year = date.getFullYear();
-					var month = date.getMonth() + 1;
-					var day = date.getDate();
-					return year + "/" + month + "/" + day;
-				}
-			},
-			{ 
-				width: '15%',
-				data: 'finishedDate',
-				render: function(data, type, row) {
-					if (!data) {
-						return "未完了";
-					} else {
-						var date = new Date(data);
-						var year = date.getFullYear();
-						var month = date.getMonth() + 1;
-						var day = date.getDate();
-						return year + "/" + month + "/" + day;
-					}
-				}
-			},
-			{ 
-				width: '25%',
-				data: null,
-				render: function(data, type, row) {
-					var url = '<div class="row">';
-					const id = row.id;
-					const finishedDate = row.finishedDate;
-					
-					if (finishedDate==null) {
-						url +='<button class="btn btn-outline-primary btn-sm rounded-pill col mx-1" onclick="finishTodo('
-						//+ id
-						+ 'this)">完了する</button>';						
-					} else {
-						url +='<button class="btn btn-outline-danger btn-sm rounded-pill col mx-1" onclick="finishTodo('
-						//+ id
-						+ 'this)">未完了にする</button>';						
-					}	
-					
-					url += '<a class="btn btn-outline-success btn-sm rounded-pill col me-2" href="/todo/detail/'
-					+ id + '">詳細</a></div>'					
-					return url;				
-				}				
-			},
-		],
-		drawCallback: function(){
-			$("i").each(function(){
-				$(this).css('color', $(this).data("tag-color"));
-			});			
-		}
-	});
-	
-	$("th:nth-of-type(1)").prop('disabled', true);
-	
-}
+//
+//var todoData = null;
+//var table = null;
+//
+//function createDataTables() {
+//	if (table != null) {
+//		table.destroy();
+//	}
+//
+//	table = $('#rest-table').DataTable({
+//		"info": true,
+//		language: {
+//    		url: 'https://cdn.datatables.net/plug-ins/2.3.1/i18n/ja.json',
+//    	},
+////    	scrollY: "90vh",
+////        scrollCollapse: true,
+////    	fixedHeader: true,
+//    	data: todoData,
+//
+//    	columns:[
+//			{ 
+//				width: '5%',
+//				data: null,
+//				render: function(data, type, row){					
+//					if (row.tag) {
+//						var html = '<span><i class="fa-xl '
+//						+ row.tag.tagIcon 
+//						+ '" data-tag-color="'
+//						+ row.tag.tagColor
+//						+'"></i></span> '
+//						return html;
+//					}
+//					return "";
+//				}
+//			},
+//			{ 
+//				width: '40%',
+//				data: 'itemName',
+//				render: function(data, type, row) {	
+//					return $('<div>').text(data).html();
+//				}
+//			},
+//			{ 
+//				width: '15%',
+//				data: 'expireDate',
+//				render: function(data, type, row) {
+//					var date = new Date(data);
+//					var year = date.getFullYear();
+//					var month = date.getMonth() + 1;
+//					var day = date.getDate();
+//					return year + "/" + month + "/" + day;
+//				}
+//			},
+//			{ 
+//				width: '15%',
+//				data: 'finishedDate',
+//				render: function(data, type, row) {
+//					if (!data) {
+//						return "未完了";
+//					} else {
+//						var date = new Date(data);
+//						var year = date.getFullYear();
+//						var month = date.getMonth() + 1;
+//						var day = date.getDate();
+//						return year + "/" + month + "/" + day;
+//					}
+//				}
+//			},
+//			{ 
+//				width: '25%',
+//				data: null,
+//				render: function(data, type, row) {
+//					var url = '<div class="row">';
+//					const id = row.id;
+//					const finishedDate = row.finishedDate;
+//					
+//					if (finishedDate==null) {
+//						url +='<button class="btn btn-outline-primary btn-sm rounded-pill col mx-1" onclick="finishTodo('
+//						//+ id
+//						+ 'this)">完了する</button>';						
+//					} else {
+//						url +='<button class="btn btn-outline-danger btn-sm rounded-pill col mx-1" onclick="finishTodo('
+//						//+ id
+//						+ 'this)">未完了にする</button>';						
+//					}	
+//					
+//					url += '<a class="btn btn-outline-success btn-sm rounded-pill col me-2" href="/todo/detail/'
+//					+ id + '">詳細</a></div>'					
+//					return url;				
+//				}				
+//			},
+//		],
+//		drawCallback: function(){
+//			$("i").each(function(){
+//				$(this).css('color', $(this).data("tag-color"));
+//			});			
+//		}
+//	});
+//	
+//	$("th:nth-of-type(1)").prop('disabled', true);
+//	
+//}
             
 $("#close-modal, .btn-close").click(function () {
 	$("#msg-modal").hide();
 });
 
-function getTodoList() {
-	$.ajax({
-			type: "GET", 
-			url: "/todo/get/list",
-			dataType: "json",
-			contentType: "application/json; charset=UTF-8",
-			cache: false,
-			timeout: 5000,
-	}).done(function(data){
-			console.log(data);
-			todoData = data;
-			createDataTables();
-					
-	}).fail(function(){
-		
-	}).always(function(){
-//		createDataTables()
-		
-
-	
-	});
-}
+//function getTodoList() {
+//	$.ajax({
+//			type: "GET", 
+//			url: "/todo/get/list",
+//			dataType: "json",
+//			contentType: "application/json; charset=UTF-8",
+//			cache: false,
+//			timeout: 5000,
+//	}).done(function(data){
+//			console.log(data);
+//			todoData = data;
+//			createDataTables();
+//					
+//	}).fail(function(){
+//		
+//	}).always(function(){
+////		createDataTables()
+//		
+//
+//	
+//	});
+//}
 
 function toggleShowFinishedTodo() {
 	var state = $("#finishedCheck").prop("checked");
@@ -200,23 +200,23 @@ function toggleShowFinishedTodo() {
         });
 }
 
-function finishTodo(btn) {
-    var row = table.row($(btn).closest('tr'));
-    var rowData = row.data();
-    var todoId = rowData.id;
-	
-	$.ajax({
-            url: "/todo/finishtoggle", // 取得するHTMLのURL
-            method: "PUT",
-            data: { todoId: todoId},
-            success: function (updatedTodo) {
-                row.data(updatedTodo).invalidate();
-                //console.log("更新後 finishedDate:", updatedTodo.finishedDate);
-            },
-            error: function () {
-                alert("データの更新に失敗しました");
-            }
-        });
+//function finishTodo(btn) {
+//    var row = table.row($(btn).closest('tr'));
+//    var rowData = row.data();
+//    var todoId = rowData.id;
+//	
+//	$.ajax({
+//            url: "/todo/finishtoggle", // 取得するHTMLのURL
+//            method: "PUT",
+//            data: { todoId: todoId},
+//            success: function (updatedTodo) {
+//                row.data(updatedTodo).invalidate();
+//                //console.log("更新後 finishedDate:", updatedTodo.finishedDate);
+//            },
+//            error: function () {
+//                alert("データの更新に失敗しました");
+//            }
+//        });
         
 //     console.log(rowData);
         
@@ -231,7 +231,7 @@ function finishTodo(btn) {
         
 	
 	
-}
+//}
 
 function selectShowingTable(state) {
 	console.log(state);

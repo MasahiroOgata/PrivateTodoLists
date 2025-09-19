@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
@@ -46,8 +47,10 @@ public class TodoListController {
 		model.addAttribute("today", today);
 		
 		List<MTodo> todoList = todoService.getTodoItems(search);
+		Page<MTodo> todoListWithPage = todoService.getTodoItemsWithPages(search, pageable);
 		model.addAttribute("search", search);
 		model.addAttribute("todoList", todoList);
+		model.addAttribute("todoListWithPage", todoListWithPage);
 		
 		return "todo/list";
 	}
