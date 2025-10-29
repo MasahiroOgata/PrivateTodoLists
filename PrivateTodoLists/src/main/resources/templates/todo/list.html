@@ -75,7 +75,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<div th:each="item: ${todoListWithPage}">
+						<div th:each="item: ${i == 0} ? ${todoListWithPage} : ${todoList}">
 							<tr th:if="${item.finishedDate == null || i == 0}">
 								
 								<!-- アイコン -->
@@ -149,6 +149,23 @@
 						</div>
 					</tbody>
 				</table>
+				<th:block th:if="${i == 0}">
+					<div class="row justify-content-between">
+						<p class="col"th:text="'全' + ${todoListWithPage.totalElements} + '件'"></p>
+						<nav class="col">
+							<ul class="pagination justify-content-end">
+								<li th:if="${todoListWithPage.hasPrevious()}" class="page-item">
+									<a class="page-link" th:href="@{/todo/list(page=${todoListWithPage.number})}">前へ</a>
+								</li>
+								<li th:if="${todoListWithPage.hasNext()}" class="page-item">
+									<a class="page-link" th:href="@{/todo/list(page=${todoListWithPage.number + 2})}">次へ</a>
+								</li>
+							</ul>
+						</nav>
+						<!-- <p class="col text-end" th:text="${todoListWithPage.number} + '/' + ${todoListWithPage.totalPages} + ${todoListWithPage.isFirst}"></p> -->
+					</div>
+					
+				</th:block>
 			</div>
 		</th:block>
 		
