@@ -1,51 +1,10 @@
 window.onload = function() {
 	
-//	var holidayEvents = [];
-	
-//	var holidays = {};
-	
 	var todoEvents = [];
 
-//    $.ajax({
-//          url: 'https://holidays-jp.github.io/api/v1/date.json',
-//          type: 'GET',
-//          dataType: 'json',
-//          timeout: 5000
-//    }).done(function(data){
-//		 holidays = JSON.parse(JSON.stringify(data));
-//		 // Object.keys(data).forEach((key) => {
-//		//	  holidays[key] = data[key];
-////			  var event = {};
-////			  event.start = key;
-////			  event.startStr = key;
-////			  event.title = data[key];
-////			  event.color = TODO_FINISHED_COLOR;
-////			  holidayEvents.push(event);	
-//		//  });
-//		  console.log(holidays);
-//		 // console.log(holidayEvents);
-//	}).fail(function(data){
-//	}).always(function(data){  
-//	});
-	
-//	async function loadHolidays() {
-//	  const res = await fetch("https://holidays-jp.github.io/api/v1/date.json");
-//	  const data = await res.json();
-//	
-//	  return data;
-//	}
-	
-	//holidays = loadHolidays();
-	
-	//console.log(holidays);
-	//console.log(holidayEvents);
-	
 	const TODO_FINISHED_COLOR = "#0d95f0";
 	const TODO_EXPIRED_COLOR = "#dc3545";
 	const TODO_UNFINISHED_COLOR = "#fd7e14"
-	
-//	const res = await fetch("https://holidays-jp.github.io/api/v1/date.json");
-//	const holidays = await res.json();
 	
 	console.log(todoList);
 		
@@ -64,10 +23,6 @@ window.onload = function() {
 			event.color = TODO_UNFINISHED_COLOR;
 		}
 		event.custom_param = '○'
-//		event.extraParams = {
-//	        custom_param1: '○',
-//	        custom_param2: 'somethingelse'
-//        };
 		todoEvents.push(event);	
 			
 	});
@@ -166,7 +121,7 @@ window.onload = function() {
             $("#todo-transition-btn").text("詳細").removeClass("btn-outline-primary").addClass("btn-outline-success");
             $("#todo-transition-btn").attr("href","/todo/detail/" + e.event.id);
             
-			e.jsEvent.stopPropagation(); //クリックイベントの伝播を止める。
+			e.jsEvent.stopPropagation(); //クリックイベントの伝播を止めdateClickが発火しないようにする
 		},
         
         dateClick: function (info) {
@@ -217,7 +172,7 @@ window.onload = function() {
 		mutationsList.forEach(function(mutation) {
 			mutation.addedNodes.forEach(function(node) {
 				if (node.nodeType === 1 && node.classList.contains('fc-more-popover')) {
-					// ポップオーバーが追加されたときに、アイコン表示処理を実行
+					// ポップオーバーが追加されたとき(表示月の変更時)に、アイコン表示処理を実行
 					showEventIcon();
 				}
 			});
@@ -257,8 +212,6 @@ window.onload = function() {
 				 
 				 $(this).prepend(
 				    '<span data-bs-toggle="tooltip" data-bs-placement="left"' +
-//				    ' data-bs-title="' +
-//				    thisEvent.tag.tagName +
 				    ' style="color: ' +
 				    tagColor +
 				    '; background-color: rgba(0,0,0,0); display: inline-block; width: 15%;"' 
@@ -268,8 +221,7 @@ window.onload = function() {
 			    	);
 			    	
 			      $(this).find('span').attr('data-bs-title', thisEvent.tag.tagName);
-			     // console.log($(this).find('span').data('bs-title'));
-			     // $(this).find('span').addClass("sample-class");
+
 			    }
 			});	
 			
@@ -279,9 +231,6 @@ window.onload = function() {
 	
 	async function showHolidays() {
 		$('.fc-daygrid-day-top span').remove();
-//		$('.fc-daygrid-day-top').append('<span class="mt-1 ms-0 text-danger">holiday title</span>');
-		
-//		holidays = await loadHolidays()
 		
 		const res = await fetch("https://holidays-jp.github.io/api/v1/date.json");
 		const holidays = await res.json();
@@ -296,9 +245,7 @@ window.onload = function() {
 			};
 		});
 		
-		// $(".fc-event").css({'display': 'inline-block', 'width': '80%'});
 	}	
-//	console.log(calendar.currentData.eventSources);
-//	 $(".fc").css('background-color', 'rgba(155,155,155,0.95)');
+
 	
 }

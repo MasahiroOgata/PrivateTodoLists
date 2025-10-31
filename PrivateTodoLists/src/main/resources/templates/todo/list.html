@@ -5,11 +5,9 @@
 <head>
 	<title>作業一覧</title>
 	<!-- 個別JS読込 -->
-	<script th:src="@{https://cdn.datatables.net/2.3.1/js/dataTables.js}" defer></script>
 	<script th:src="@{/js/todo/list.js}" defer></script>
 	<!-- 個別CSS読込 -->
 	<link rel="stylesheet" th:href="@{/css/todo/list.css}">
-	<link rel="stylesheet" href="https://cdn.datatables.net/2.3.1/css/dataTables.dataTables.css" />
 	<!-- flashMsg,todoList,todayをJSに渡す -->
 	<script th:inline="javascript">
 		var flashMsg = /*[[${flashMsg}]]*/"flashMsg";
@@ -121,7 +119,7 @@
 									<p class="row mb-0 pt-2">
 										<span class="fw-bold col" th:text="|${#dates.format(item.expireDate,'MM/dd')}まで|"></span>
 										<th:block th:if="${item.finishedDate != null}">
-											<span class="fw-light col" th:text="|${#dates.format(item.finishedDate,'MM/dd')}まで|"></span>
+											<span class="fw-light col" th:text="|${#dates.format(item.finishedDate,'MM/dd')}完了|"></span>
 										</th:block>
 										<th:block th:if="${item.finishedDate == null && item.expireDate lt today}">
 											<span class="fw-light col text-danger">期限切れ</span>
@@ -150,15 +148,27 @@
 					</tbody>
 				</table>
 				<th:block th:if="${i == 0}">
+					
+					<!-- ページネーション -->
 					<div class="row justify-content-between">
-						<p class="col"th:text="'全' + ${todoListWithPage.totalElements} + '件'"></p>
+						<p class="col"th:text="'全' + ${todoListWithPage.totalElements} + '件中'	
+						+ ' ' + (${todoListWithPage.number} * ${todoListWithPage.size} + 1)
+						+ ' - ' + (${todoListWithPage.number} * ${todoListWithPage.size} + ${todoListWithPage.numberOfElements})"></p>
 						<nav class="col">
 							<ul class="pagination justify-content-end">
+								<!-- 前へボタン -->
 								<li th:if="${todoListWithPage.hasPrevious()}" class="page-item">
-									<a class="page-link" th:href="@{/todo/list(page=${todoListWithPage.number})}">前へ</a>
+									<a class="page-link" 
+									th:href="${#strings.isEmpty(search)} ?
+											@{/todo/list(page=${todoListWithPage.number})} :
+											@{/todo/list(search=${search}, page=${todoListWithPage.number})}">前へ</a>
 								</li>
+								<!-- 次へボタン -->
 								<li th:if="${todoListWithPage.hasNext()}" class="page-item">
-									<a class="page-link" th:href="@{/todo/list(page=${todoListWithPage.number + 2})}">次へ</a>
+									<a class="page-link" 
+									th:href="${#strings.isEmpty(search)} ?
+											@{/todo/list(page=${todoListWithPage.number + 2})} :
+											@{/todo/list(search=${search}, page=${todoListWithPage.number + 2})}">次へ</a>
 								</li>
 							</ul>
 						</nav>
