@@ -1,5 +1,8 @@
 package com.example.controller;
 
+import java.io.File;
+import java.util.Random;
+
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 import org.springframework.stereotype.Controller;
@@ -28,6 +31,14 @@ public class SignupController {
 	
 	@GetMapping("")
 	public String getSignup(Model model, @ModelAttribute SignupForm form) {
+
+		File dir = new File("src/main/resources/static/img");
+		String[] imgList = dir.list();
+		Random random = new Random();
+		int imgNum = random.nextInt(imgList.length);
+		
+		model.addAttribute("imgURL", imgList[imgNum]);
+		
 		return "signup/signup";
 	}
 	

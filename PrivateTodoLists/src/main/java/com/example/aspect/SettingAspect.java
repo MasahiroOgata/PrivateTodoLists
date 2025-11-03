@@ -7,8 +7,9 @@ import java.util.Random;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
-import org.springframework.ui.Model;
 
 import com.example.domain.setting.service.SettingService;
 import com.example.domain.todo.service.TodoService;
@@ -37,7 +38,12 @@ public class SettingAspect {
 	
 	@Before("bean(*Controller) && !bean(loginController) && !bean(signupController)")			
 	public void applySetting (JoinPoint joinPoint) {
-
+		
+	    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    if (auth == null || !auth.isAuthenticated() || auth.getPrincipal() instanceof String) {
+	        return;
+	    }
+		
 		Map<String, String> settingMap = settingService.getSettingMap();	
 		
 		if ("random".equals(settingMap.get("backgroundImg"))) {
@@ -55,17 +61,17 @@ public class SettingAspect {
 		
 	}
 	
-	@Before("bean(loginController) || bean(signupController)")
-	public void getBackgroundImage(JoinPoint joinPoint) {
-		
-		Object[] args = joinPoint.getArgs();
-		for (Object arg : args) {
-			if (arg instanceof Model) {				
-				Model model = (Model) arg;
-				model.addAttribute("imgURL", getRandomImgURL());			
-			}
-		}
-		
-	}
+//	@Before("bean(loginController) ||bean(signupController)")
+//	public void getBackgroundImage(JoinPoint joinPoint) {
+//		
+//		Object[] args = joinPoint.getArgs();
+//		for (Object arg : args) {
+//			if (arg instanceof Model) {				
+//				Model model = (Model) arg;
+//				model.addAttribute("imgURL", getRandomImgURL());			
+//			}
+//		}
+//		
+//	}
 
 }

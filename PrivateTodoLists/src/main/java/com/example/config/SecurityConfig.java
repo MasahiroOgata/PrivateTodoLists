@@ -49,7 +49,13 @@ public class SecurityConfig {
 				.permitAll()
 		).logout(logout -> logout
 				.logoutUrl("/logout")
-                .logoutSuccessUrl("/login?logout")
+                //.logoutSuccessUrl("/login?logout")
+	            .logoutSuccessHandler((request, response, authentication) -> {
+	                if (request.getSession(false) != null) {
+	                    request.getSession(false).invalidate();
+	                }
+	                response.sendRedirect("/login?logout");
+	            })
                 .permitAll()
         );
 
@@ -58,11 +64,13 @@ public class SecurityConfig {
 		);
 		
 		
-	    // CSRF 対策を無効に設定 (一時的)
-        http.csrf(csrf -> csrf
-        		.disable()
-        ); 
-		
+//	     CSRF 対策を無効に設定 (一時的)
+//        http.csrf(csrf -> csrf
+//        		//.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+//        		//.csrfTokenRepository(new HttpSessionCsrfTokenRepository())
+//        		.disable()
+//        ); 
+//		
 		return http.build();
 		
 	}
