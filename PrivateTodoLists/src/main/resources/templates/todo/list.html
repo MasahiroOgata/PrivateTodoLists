@@ -14,6 +14,9 @@
 		var todoList = /*[[${todoList}]]*/"todoList";
 		var today = /*[[${today}]]*/"today";
 	</script>
+	<!-- メタタグにトークンを埋め込む  -->
+	<meta th:name="_csrf" th:content="${_csrf.token}">
+	<meta th:name="_csrf_header" th:content="${_csrf.headerName}">
 </head>
 <body>
 	<div layout:fragment="content">

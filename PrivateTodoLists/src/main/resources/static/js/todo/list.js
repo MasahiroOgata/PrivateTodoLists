@@ -38,6 +38,15 @@ function toggleShowFinishedTodo() {
 	
 	selectShowingTable(state);
 	
+    // メタタグに埋め込んだ情報を取得する
+    let token = $("meta[name='_csrf']").attr("content"); 
+    let header = $("meta[name='_csrf_header']").attr("content"); 
+    
+    // Ajax通信時に、リクエストヘッダにトークンを埋め込むよう記述
+    $(document).ajaxSend(function(e, xhr, options){
+        xhr.setRequestHeader(header, token);
+    });
+	
 	$.ajax({
             url: "/todo/tabletoggle", // 取得するHTMLのURL
             method: "PUT",

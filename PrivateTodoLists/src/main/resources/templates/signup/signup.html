@@ -19,7 +19,7 @@
 <body>
 	<div class="main d-flex align-items-center justify-content-center">
 		<div class="form-container">
-			<form class="form-signup" method="post" action="/signup" th:object="${signupForm}">
+			<form class="form-signup" method="post" th:action="@{/signup}" th:object="${signupForm}">
 				<h1 class="text-content text-center" th:text="新規登録"></h1>
 				<div class="mb-3">
 					<label class="form-label" th:text="#{userId}"></label>

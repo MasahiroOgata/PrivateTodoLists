@@ -10,17 +10,28 @@
 	<script th:src="@{/webjars/jquery/jquery.min.js}" defer></script>
 	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" defer></script>
 	<script th:src="@{/js/login/login.js}" defer></script>
-	<!-- imgURLをJSに渡す --> 
+	<!-- imgURLをJSに渡す 
 	<script th:inline="javascript">
-		var imgURL = /*[[${imgURL}]]*/"imgURL"
+		var imgURL = /*[[${imgURL}]]*/"imgURL";
+	</script>
+	
 	/*<![CDATA[*/
 	//let imgURL = /*[['${imgURL}']]*/ "img01.jpg";
-	/*]]>*/
-	</script>
+	/*]]>*
+	</script> 
+	<style>
+		.main {background-image : url('/img/img01.jpg')}
+	</style> 
+	<style th:inline="css">
+	  .main {
+	    background-image: url([[ '/img/' + ${imgURL} ]]);
+	  }
+	</style> -->
 	<title>ログイン</title>
 </head>
 <body>
-	<div class="main d-flex align-items-center justify-content-center">
+	<div class="main d-flex align-items-center justify-content-center"
+	th:style="'background-image: url(/img/' + @{${imgURL}} + ');'">
 		<div class="form-container">
 			<form class="form-login" method="post" th:action="@{/login}">
 				<h1 class="text-content text-center" th:text="ログイン"></h1>
@@ -37,6 +48,6 @@
 			</form>
 			<a class="text-center" th:href="@{/signup}">新規登録はこちら</a>
 		</div>
-	</div>
+	</div>	
 </body>
 </html>

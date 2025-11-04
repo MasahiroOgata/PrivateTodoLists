@@ -16,10 +16,12 @@ import com.example.domain.todo.service.TodoService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Aspect
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class SettingAspect {
 	
 	private final SettingService settingService;
@@ -38,6 +40,8 @@ public class SettingAspect {
 	
 	@Before("bean(*Controller) && !bean(loginController) && !bean(signupController)")			
 	public void applySetting (JoinPoint joinPoint) {
+		
+		log.info("AOP実行");
 		
 	    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	    if (auth == null || !auth.isAuthenticated() || auth.getPrincipal() instanceof String) {
