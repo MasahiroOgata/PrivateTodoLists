@@ -42,7 +42,7 @@ function toggleShowFinishedTodo() {
     let token = $("meta[name='_csrf']").attr("content"); 
     let header = $("meta[name='_csrf_header']").attr("content"); 
     
-    // Ajax通信時に、リクエストヘッダにトークンを埋め込むよう記述
+    // Ajax通信時に、リクエストヘッダにCSRFトークンを埋め込むよう記述
     $(document).ajaxSend(function(e, xhr, options){
         xhr.setRequestHeader(header, token);
     });
@@ -82,12 +82,13 @@ function showLoginMsg() {
 		$(".modal-body p").text("未完了のタスクが"+ unfinishedTodoCount + "件あります");
 	} else {
 		$(".modal-body p").text("ようこそ");
-	}	
+	}
 	var todaysTodo = todoList.filter(todo => 		
-		todo.expireDate == today.substr(0, 10) && todo.finishedDate == null
+		todo.expireDate.substr(0, 10) == today.substr(0, 10) && todo.finishedDate == null
 	)
 	if (todaysTodo.length != 0) {
 		$(".modal-body p").text("本日期限のタスクが"+ todaysTodo.length + "件あります");
-	}
+	}	
+
 }
 	
