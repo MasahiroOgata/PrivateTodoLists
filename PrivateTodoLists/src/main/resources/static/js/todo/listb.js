@@ -158,6 +158,12 @@ function getTodoList() {
 	});
 }
 
+//$.ajaxSetup({
+//    headers: {
+//        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//    }
+//});
+
 function toggleShowFinishedTodo() {
 	var state = $("#finishedCheck").prop("checked");
 	
@@ -180,12 +186,32 @@ function finishTodo(btn) {
     var rowData = row.data();
     var todoId = rowData.id;
     
-    console.log(rowData);
+    console.log(rowData.id);
+    
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+    
+    console.log(token);
+    console.log(header);
+    
+//    var token = $('meta[name="csrf-token"]').attr('content');
+    
+//	 $.ajaxSetup({
+//	    headers: {
+//	        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+//	    }
+//	});
 	
 	$.ajax({
             url: "/todo/finishtoggle", 
             method: "PUT",
             data: { todoId: todoId},
+//            headers: {
+//            	"X-CSRF-TOKEN": token   // ← CSRF トークン付与
+//        	},
+	        beforeSend: function(xhr) {
+	            xhr.setRequestHeader(header, token);  // ← Spring の正しいヘッダー名で送信
+	        },
             success: function (updatedTodo) {
                 row.data(updatedTodo).invalidate();
                 //console.log("更新後 finishedDate:", updatedTodo.finishedDate);
@@ -197,7 +223,6 @@ function finishTodo(btn) {
                 alert("データの更新に失敗しました");
             }
         });
-
 }
 
 function selectShowingTable(state) {

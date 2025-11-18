@@ -29,7 +29,7 @@ public class TodoListController {
 	
 	private final HttpSession session;
 	
-	@GetMapping("")
+	@GetMapping("2")
 	public String showTodoList(Model model, @RequestParam(required = false) String search,
 			@PageableDefault(size = 10) Pageable pageable) {
 		
@@ -55,7 +55,7 @@ public class TodoListController {
 		return "todo/list";
 	}
 	
-	@GetMapping("2")
+	@GetMapping("")
 	public String showTodoList2(Model model, @RequestParam(required = false) String search,
 			@PageableDefault(size = 10) Pageable pageable) {
 		
