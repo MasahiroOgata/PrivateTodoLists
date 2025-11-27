@@ -21,6 +21,11 @@ window.onload = function() {
 	
 	
 	getTodoList();
+	
+	/** 検索ボタンを押した時の処理. */
+	$('#btn-search').click(function (event) {
+		getTodoList();
+	});
 }
 
 var todoData = null;
@@ -42,6 +47,7 @@ function createDataTables() {
 //        scrollCollapse: true,
 //    	fixedHeader: true,
     	data: todoData,
+    	order: [],
 
     	columns:[
 			{ 
@@ -85,7 +91,19 @@ function createDataTables() {
 				data: 'finishedDate',
 				render: function(data, type, row) {
 					if (!data) {
-						return "未完了";
+						let color = 'green';
+						var daysRemain = Math.floor((Date.parse(row['expireDate']) - Date.now()) / (1000 * 60 * 60 * 24)) + 1
+						var remainingDays = "";
+						if (daysRemain < 0) {
+							remainingDays = "期限切れ";
+							color = "red";
+						} else if (daysRemain == 0) {
+							remainingDays = "本日まで";
+							color = "orange";
+						} else {
+							remainingDays = "残り" + daysRemain + "日";
+						}
+						return `<span style="color:${color}">${remainingDays}</span>`;
 					} else {
 						var date = new Date(data);
 						var year = date.getFullYear();
@@ -139,9 +157,15 @@ $("#close-modal, .btn-close").click(function () {
 });
 
 function getTodoList() {
+	var state = $("#finishedCheck").prop("checked");
+	
+	var search = document.forms[1].search.value;
+	console.log(search);
+	
 	$.ajax({
 			type: "GET", 
 			url: "/todo/get/list",
+			data: { state: state, search: search },
 			dataType: "json",
 			contentType: "application/json; charset=UTF-8",
 			cache: false,
@@ -149,36 +173,30 @@ function getTodoList() {
 	}).done(function(data){
 			console.log(data);
 			todoData = data;
-			createDataTables();
-					
+			createDataTables();					
 	}).fail(function(){
-		
-	}).always(function(){
-	
+		alert("データの取得に失敗しました");
 	});
 }
-
-//$.ajaxSetup({
-//    headers: {
-//        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-//    }
-//});
 
 function toggleShowFinishedTodo() {
 	var state = $("#finishedCheck").prop("checked");
 	
-	selectShowingTable(state);
-	
+	var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+
 	$.ajax({
-            url: "/todo/tabletoggle",
-            method: "PUT",
-            data: { state: state },
-            success: function () {
-            },
-            error: function () {
-                alert("データの更新に失敗しました");
-            }
-        });
+		url: "/todo/tabletoggle",
+		method: "PUT",
+		data: { state: state },
+		beforeSend: function(xhr) {
+		    xhr.setRequestHeader(header, token);
+		}
+	}).done(function(){
+		getTodoList();
+	}).fail(function(){
+		alert("データの更新に失敗しました");
+	});
 }
 
 function finishTodo(btn) {
@@ -194,13 +212,6 @@ function finishTodo(btn) {
     console.log(token);
     console.log(header);
     
-//    var token = $('meta[name="csrf-token"]').attr('content');
-    
-//	 $.ajaxSetup({
-//	    headers: {
-//	        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-//	    }
-//	});
 	
 	$.ajax({
             url: "/todo/finishtoggle", 

@@ -95,10 +95,15 @@ window.onload = function() {
 				return todo.id == e.event.id;
 			});			
             var finishedDateTxt;
+            var finishToggleBtn;
             if (clickedEvent.finishedDate != null) {
 				finishedDateTxt = clickedEvent.finishedDate.substr(0, 10) + "完了";
+				finishToggleBtn = '<button class="btn btn-outline-danger btn-sm rounded-pill col mx-1" '
+				+ 'onclick="finishTodo(' + clickedEvent.id + ')">未完了にする</button>';
 			} else {
-				finishedDateTxt = "未完了"
+				finishedDateTxt = "未完了";
+				finishToggleBtn = '<button class="btn btn-outline-primary btn-sm rounded-pill col mx-1" '
+				+ 'onclick="finishTodo(' + clickedEvent.id + ')">完了する</button>';
 			}
 			
 			$("#event-date").text(e.event.title);
@@ -115,6 +120,8 @@ window.onload = function() {
                          + e.event.startStr + "まで"
                          + '</td><td>'
                          + finishedDateTxt
+                         + '</td><td>'
+                         + finishToggleBtn
                          + '</td></tr>'
                          ); 
             
@@ -245,7 +252,36 @@ window.onload = function() {
 			};
 		});
 		
-	}	
-
-	
+	}
 }
+
+function finishTodo(todoId) {
+	console.log("finish!:" + todoId);
+		
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+    
+    console.log(token);
+    console.log(header);
+    
+	
+	$.ajax({
+            url: "/todo/finishtoggle", 
+            method: "PUT",
+            data: { todoId: todoId},
+	        beforeSend: function(xhr) {
+	            xhr.setRequestHeader(header, token);
+	        },
+            success: function (updatedTodo) {
+                console.log(updatedTodo);
+            },
+            error: function () {
+                alert("データの更新に失敗しました");
+            }
+        });
+		
+		
+}
+
+
+

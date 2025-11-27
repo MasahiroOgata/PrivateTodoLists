@@ -2,6 +2,7 @@ package com.example.rest;
 
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -52,10 +53,17 @@ public class TodoRestController {
 	}
 	
 	@GetMapping("get/list")
-	public List<MTodo> getTodoList() {
-		List<MTodo> todoList = todoService.getTodoItems(null);
+	public List<MTodo> getTodoList(boolean state, String search) {
+		List<MTodo> todoList = todoService.getTodoItems(search);
 		
-		return todoList;
+		if (state) {
+			List<MTodo> finishedTodoList = todoList.stream()
+					.filter(todo -> todo.getFinishedDate() == null)
+					.collect(Collectors.toList());
+			return finishedTodoList;			
+		} else {
+			return todoList;
+		}
 	}
 	
 }
