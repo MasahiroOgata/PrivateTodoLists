@@ -1,4 +1,4 @@
-window.onload = function() {
+window.onload = function() {}
 	
 	var todoEvents = [];
 
@@ -22,7 +22,9 @@ window.onload = function() {
 		} else {
 			event.color = TODO_UNFINISHED_COLOR;
 		}
-		event.custom_param = '○'
+//		event.custom_param = '○'
+		event.finishedDate = todo.finishedDate;
+		event.expireDate = todo.expireDate;
 		todoEvents.push(event);	
 			
 	});
@@ -31,6 +33,8 @@ window.onload = function() {
 	var firstDayNum = settingMap.firstDayOfWeek == "1" ? 1 : 0;
 	
 	var calendarEl = document.getElementById('calendar');
+	
+function setCalendar() { 
 	
 	var calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
@@ -91,7 +95,7 @@ window.onload = function() {
             
             $(".modal").css({'height': '250px','width': '50%', 'max-width': '750px', 'min-width': '400px'});
             
-            var clickedEvent = todoList.find((todo) =>{
+            var clickedEvent = todoEvents.find((todo) =>{
 				return todo.id == e.event.id;
 			});			
             var finishedDateTxt;
@@ -99,10 +103,12 @@ window.onload = function() {
             if (clickedEvent.finishedDate != null) {
 				finishedDateTxt = clickedEvent.finishedDate.substr(0, 10) + "完了";
 				finishToggleBtn = '<button class="btn btn-outline-danger btn-sm rounded-pill col mx-1" '
+				+ 'id="finish-toggle-btn-' + clickedEvent.id + '" '
 				+ 'onclick="finishTodo(' + clickedEvent.id + ')">未完了にする</button>';
 			} else {
 				finishedDateTxt = "未完了";
 				finishToggleBtn = '<button class="btn btn-outline-primary btn-sm rounded-pill col mx-1" '
+				+ 'id="finish-toggle-btn-' + clickedEvent.id + '" '
 				+ 'onclick="finishTodo(' + clickedEvent.id + ')">完了する</button>';
 			}
 			
@@ -118,9 +124,9 @@ window.onload = function() {
 			$("#event-content").css("font-size", settingMap.fontSize + "rem"); 
             $("#event-content").append('<tr><td>'
                          + e.event.startStr + "まで"
-                         + '</td><td>'
+                         + '</td><td id="finished-date-cell-' + clickedEvent.id + '">'
                          + finishedDateTxt
-                         + '</td><td>'
+                         + '</td><td class="text-end">'
                          + finishToggleBtn
                          + '</td></tr>'
                          ); 
@@ -171,9 +177,13 @@ window.onload = function() {
 		 }
      });
      
-     calendar.render();
-     showEventIcon();
-     showHolidays();
+     return calendar;
+}
+
+var myCalendar = setCalendar()
+myCalendar.render();
+showEventIcon();
+showHolidays();
 	 
 	 const observer = new MutationObserver(function(mutationsList) {
 		mutationsList.forEach(function(mutation) {
@@ -253,18 +263,17 @@ window.onload = function() {
 		});
 		
 	}
-}
+//}
 
 function finishTodo(todoId) {
-	console.log("finish!:" + todoId);
+		var clickedvent = todoEvents.find((todo) =>{
+		return todo.id == todoId;
+	});
+	console.log(clickedvent);
 		
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
     
-    console.log(token);
-    console.log(header);
-    
-	
 	$.ajax({
             url: "/todo/finishtoggle", 
             method: "PUT",
@@ -273,7 +282,55 @@ function finishTodo(todoId) {
 	            xhr.setRequestHeader(header, token);
 	        },
             success: function (updatedTodo) {
-                console.log(updatedTodo);
+                console.log(updatedTodo.finishedDate);
+                
+ 				var clickedEvent = todoEvents.find((todo) =>{
+					return todo.id == updatedTodo.id;
+				});
+				console.log(clickedEvent.color, clickedEvent.finishedDate);
+				//clickedEvent.color = "black";
+				clickedEvent.finishedDate = updatedTodo.finishedDate;
+				
+				if (clickedEvent.finishedDate) {
+					clickedEvent.color = TODO_FINISHED_COLOR;			
+				} else if (!clickedEvent.finishedDate 
+							&& (new Date(clickedEvent.expireDate).getTime() < new Date().getTime() - 86400000)) {
+					clickedEvent.color = TODO_EXPIRED_COLOR;
+				} else {
+					clickedEvent.color = TODO_UNFINISHED_COLOR;
+				}				
+						
+				
+				console.log(clickedEvent.color, clickedEvent.finishedDate);
+				
+				if(updatedTodo.finishedDate) {
+					$('#finished-date-cell-' +  updatedTodo.id).text(updatedTodo.finishedDate.substr(0, 10) + "完了")
+					$('#finish-toggle-btn-' + updatedTodo.id)
+					.removeClass("btn-outline-primary").addClass("btn-outline-danger").text("未完了にする");
+				} else {
+					$('#finished-date-cell-' +  updatedTodo.id).text("未完了");
+					$('#finish-toggle-btn-' + updatedTodo.id)
+					.removeClass("btn-outline-danger").addClass("btn-outline-primary").text("完了する");				
+				}
+				
+//				$(".fc-event").each(function() {
+//				   if($(this).data("event-id") == updatedTodo.id) {
+//					   $(this).css({"border-color": "black", "background-color": "black"});
+//					}	
+//				});	
+
+			   
+			 	const currentSavedDate = 	new Date(myCalendar.getDate());			
+				
+				myCalendar = setCalendar();
+				myCalendar.render();			    
+				myCalendar.gotoDate(currentSavedDate);
+				showEventIcon();
+				showHolidays();				
+				
+				
+		               
+                
             },
             error: function () {
                 alert("データの更新に失敗しました");
@@ -282,6 +339,8 @@ function finishTodo(todoId) {
 		
 		
 }
+
+
 
 
 
