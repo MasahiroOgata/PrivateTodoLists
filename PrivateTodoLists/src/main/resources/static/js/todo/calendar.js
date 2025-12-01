@@ -28,6 +28,12 @@ window.onload = function() {}
 		todoEvents.push(event);	
 			
 	});
+//	todoEvents.sort((a, b) => {
+//		if (a.finishedDate === null && b.finishedDate === null) return 0;
+//		if (a.finishedDate === null) return -1; // aを先頭にする
+//		if (b.finishedDate === null) return 1; 
+//		a.finishedDate > b.finishedDate ? 1 : -1;
+//	});
 	console.log(todoEvents);
 	
 	var firstDayNum = settingMap.firstDayOfWeek == "1" ? 1 : 0;
@@ -79,6 +85,7 @@ function setCalendar() {
 		},
 	
         events: todoEvents,
+        eventOrder: '-finishedDate',
         
         eventDidMount: function(info) {
 		    // イベント要素にIDをdata属性として追加
@@ -119,10 +126,10 @@ function setCalendar() {
 				         + '"></i></span><span class="h4 fw-normal"></span>');
 				$("#event-date span i").css("color", clickedEvent.tag.tagColor);
 				$("#event-date span:last-child").text(clickedEvent.tag.tagName);
-			}			
+			}
 			
 			$("#event-content").css("font-size", settingMap.fontSize + "rem"); 
-            $("#event-content").append('<tr><td>'
+			$("#event-content").append('<tr><td>'
                          + e.event.startStr + "まで"
                          + '</td><td id="finished-date-cell-' + clickedEvent.id + '">'
                          + finishedDateTxt
@@ -154,23 +161,48 @@ function setCalendar() {
             var todaysEvents = todoEvents.filter((event) =>{
 				return event.start == info.dateStr
 			});
+			
+			todaysEvents.sort((a, b) => {
+				if (a.finishedDate === null && b.finishedDate === null) return 0;
+				if (a.finishedDate === null) return -1; // aを先頭にする
+				if (b.finishedDate === null) return 1; 
+				a.finishedDate > b.finishedDate ? 1 : -1;
+			});
 			console.log(todaysEvents);
+			var modalHeight = (todaysEvents.length * 50 + 200) + "px";
 			if (todaysEvents.length == 0) {
 				$(".modal").css({'height': '250px','width': '400px'});
 				$("#no-todo-msg").text("期限が設定された作業はありません");
 			} else {
-				$(".modal").css({'height': '400px', 'width':'50%', 'max-width': '750px', 'min-width': '400px'});
+				$(".modal").css({'height': modalHeight , 'width':'50%', 'max-width': '750px', 'min-width': '400px'});
 			}
 			
 			todaysEvents.forEach((event) => {
+				
+	            var finishedDateTxt;
+	            var finishToggleBtn;
+	            if (event.finishedDate != null) {
+					finishedDateTxt = event.finishedDate.substr(0, 10) + "完了";
+					finishToggleBtn = '<button class="btn btn-outline-danger btn-sm rounded-pill col mx-1" '
+					+ 'id="finish-toggle-btn-' + event.id + '" '
+					+ 'onclick="finishTodo(' + event.id + ')">未完了にする</button>';
+				} else {
+					finishedDateTxt = "未完了";
+					finishToggleBtn = '<button class="btn btn-outline-primary btn-sm rounded-pill col mx-1" '
+					+ 'id="finish-toggle-btn-' + event.id + '" '
+					+ 'onclick="finishTodo(' + event.id + ')">完了する</button>';
+				}
+				
+				
 				$("#event-content").css("font-size", settingMap.fontSize + "rem");
 				$("#event-content").append('<tr><td class="title">' 
-             	         + '</td><td class="text-center" style="width: 25%">'
-             	         + '<a class="btn btn-outline-success btn-sm rounded-pill col-6">詳細</a></td></tr>'
+             	         + '</td><td class="text-end">' + finishToggleBtn //+ '</td>'
+             	        // + '<td class="text-center" style="width: 25%">'
+             	         + '<a class="btn btn-outline-success btn-sm rounded-pill col mx-1">詳細</a></td></tr>'
                          );
 				$("#event-content tr:last-child td:first-child").text(event.title);
 				$("#event-content tr:last-child td:last-child a").attr('href', '/todo/detail/' + event.id)
-					.css("font-size", settingMap.fontSize + "rem");
+						//.css("font-size", settingMap.fontSize + "rem");
 			});
 			$("#todo-transition-btn").text("作業登録").removeClass("btn-outline-success").addClass("btn-outline-primary");
 			$("#todo-transition-btn").attr("href","/todo/create?expireDate=" + info.dateStr);		
@@ -266,7 +298,7 @@ showHolidays();
 //}
 
 function finishTodo(todoId) {
-		var clickedvent = todoEvents.find((todo) =>{
+	var clickedvent = todoEvents.find((todo) =>{
 		return todo.id == todoId;
 	});
 	console.log(clickedvent);
