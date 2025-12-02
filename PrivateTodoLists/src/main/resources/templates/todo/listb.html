@@ -10,11 +10,12 @@
 	<!-- 個別CSS読込 -->
 	<link rel="stylesheet" href="https://cdn.datatables.net/2.3.1/css/dataTables.dataTables.css" />
 	<link rel="stylesheet" th:href="@{/css/todo/listb.css}">
-	<!-- flashMsg,todoList,todayをJSに渡す -->
-	<script th:inline="javascript">
-		var flashMsg = /*[[${flashMsg}]]*/"flashMsg";
-		// var todoList = /*[[${todoList}]]*/"todoList";
+	<!-- flashMsg, today, unfinishedTodoCountをJSに渡す -->
+	<script th:inline="javascript" >
+		var flashMsg = /*[[${flashMsg}]]*/"flashMsg";		
 		var today = /*[[${today}]]*/"today";
+		var unfinishedTodoCount = /*[[${unfinishedTodoCount}]]*/ 0;
+		var todayExpiringCount = /*[[${todayExpiringCount}]]*/ 0;
 	</script>
 	<!-- CSRFトークン -->
 	<meta name="_csrf" th:content="${_csrf.token}">
@@ -41,7 +42,7 @@
 			<div class="d-inline-flex col-md-8">
 				<h1 class="h3 mx-2 text-white">作業一覧
 				</h1>
-				<div th:if="not ${#lists.isEmpty(todoList)}">
+				<div><!-- th:if="not ${#lists.isEmpty(todoList)}"-->
 					<div class="form-check form-switch mx-3 mt-3">
 						<label class="form-check-label text-white">完了タスクを非表示</label>
 						<input class="form-check-input" type="checkbox" role="switch" 

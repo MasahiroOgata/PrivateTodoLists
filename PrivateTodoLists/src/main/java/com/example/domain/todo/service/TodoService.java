@@ -35,5 +35,8 @@ public interface TodoService {
 	
 	/** 未完了Todo件数取得 */
 	public int getUnfinishedTodoCount();
+	
+	/** 本日期限の未完了Todo件数取得 **/
+	public int getTodayExpiringTodoCount();
 
 }

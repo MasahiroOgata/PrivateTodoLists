@@ -37,5 +37,8 @@ public interface TodoMapper {
 	
 	/** 未完了Todo件数取得 */
 	public int countUnfinishedTodo(int userId);
+	
+	/** 本日期限の未完了Todo件数取得  **/
+	public int countTodayExpiringTodo(int userId);
 
 }

@@ -1,14 +1,20 @@
 window.onload = function() {
+	
+
+	//const intervalId = setInterval(getTodoList, 1000);
+	getTodoList();
+	createDataTables();
+	
 	if (flashMsg) {
 		  $("#msg-modal").fadeIn(200);
 		  $(".modal").fadeIn(200);
 	}
 	if (flashMsg == "login") {
-		$(".modal-body p").text("ようこそ");
-		//showLoginMsg()
+		//$(".modal-body p").text("ようこそ");
+		showLoginMsg()
 	}
 	
-	var isHidingFinishedTodo = "isHidingFinishedTodo" in settingMap ? settingMap.isHidingFinishedTodo : '0';
+//	var isHidingFinishedTodo = "isHidingFinishedTodo" in settingMap ? settingMap.isHidingFinishedTodo : '0';
 	
 //	if (todoList.length == 0) {
 //		$("#todo-table-all, #todo-table-unfinished").hide();
@@ -20,7 +26,7 @@ window.onload = function() {
 //	}
 	
 	
-	getTodoList();
+	
 	
 	/** 検索ボタンを押した時の処理. */
 	$('#btn-search').click(function (event) {
@@ -31,7 +37,8 @@ window.onload = function() {
 var todoData = null;
 var table = null;
 
-function createDataTables() {
+function createDataTables() {	
+		
 	if (table != null) {
 		table.destroy();
 	}
@@ -157,6 +164,7 @@ $("#close-modal, .btn-close").click(function () {
 });
 
 function getTodoList() {
+	
 	var state = $("#finishedCheck").prop("checked");
 	
 	var search = document.forms[1].search.value;
@@ -204,15 +212,9 @@ function finishTodo(btn) {
     var rowData = row.data();
     var todoId = rowData.id;
     
-    console.log(rowData.id);
-    
     var token = $("meta[name='_csrf']").attr("content");
     var header = $("meta[name='_csrf_header']").attr("content");
     
-    console.log(token);
-    console.log(header);
-    
-	
 	$.ajax({
             url: "/todo/finishtoggle", 
             method: "PUT",
@@ -221,14 +223,13 @@ function finishTodo(btn) {
 //            	"X-CSRF-TOKEN": token   // ← CSRF トークン付与
 //        	},
 	        beforeSend: function(xhr) {
-	            xhr.setRequestHeader(header, token);  // ← Spring の正しいヘッダー名で送信
+	            xhr.setRequestHeader(header, token);
 	        },
             success: function (updatedTodo) {
                 row.data(updatedTodo).invalidate();
                 //console.log("更新後 finishedDate:", updatedTodo.finishedDate);
                 console.log(updatedTodo);
                 setIconsData()
-
             },
             error: function () {
                 alert("データの更新に失敗しました");
@@ -236,34 +237,35 @@ function finishTodo(btn) {
         });
 }
 
-function selectShowingTable(state) {
-	$("#no-task-msg, #todo-table-all, #todo-table-unfinished" ).hide();
-	if(state) {	
-		if ($("#todo-table-unfinished tbody td").length == 0) {
-			$("#no-task-msg").text("未完了のタスクはありません")
-			$("#no-task-msg").show();
-		} else {
-			$("#todo-table-unfinished").show();
-		} 
-	} else {
-		$("#todo-table-all").show();
-	}
-}
+//function selectShowingTable(state) {
+//	$("#no-task-msg, #todo-table-all, #todo-table-unfinished" ).hide();
+//	if(state) {	
+//		if ($("#todo-table-unfinished tbody td").length == 0) {
+//			$("#no-task-msg").text("未完了のタスクはありません")
+//			$("#no-task-msg").show();
+//		} else {
+//			$("#todo-table-unfinished").show();
+//		} 
+//	} else {
+//		$("#todo-table-all").show();
+//	}
+//}
  
 
 
 function showLoginMsg() {
-	var unfinishedTodoCount = $("#todo-table-unfinished tbody tr").length;
+	// var unfinishedTodoCount = $("#todo-table-unfinished tbody tr").length;
 	if (unfinishedTodoCount != 0) {
 		$(".modal-body p").text("未完了のタスクが"+ unfinishedTodoCount + "件あります");
 	} else {
 		$(".modal-body p").text("ようこそ");
-	}	
-	var todaysTodo = todoList.filter(todo => 		
-		todo.expireDate == today.substr(0, 10) && todo.finishedDate == null
-	)
-	if (todaysTodo.length != 0) {
-		$(".modal-body p").text("本日期限のタスクが"+ todaysTodo.length + "件あります");
+	}
+//	console.log(todoData);	
+//	var todaysTodo = todoData.filter(todo => 		
+//		todo.expireDate == today.substr(0, 10) && todo.finishedDate == null
+//	)
+	if (todayExpiringCount != 0) {
+		$(".modal-body p").text("本日期限のタスクが"+ todayExpiringCount + "件あります");
 	}
 }
 	

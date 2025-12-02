@@ -88,6 +88,12 @@ public class TodoServiceImpl implements TodoService {
 	public int getUnfinishedTodoCount() {
 		return todoMapper.countUnfinishedTodo(AuthUtil.getLoginUserId());
 	}
+	
+	/** 本日期限の未完了Todo件数取得 **/
+	@Override
+	public int getTodayExpiringTodoCount() {
+		return todoMapper.countTodayExpiringTodo(AuthUtil.getLoginUserId());
+	}
 
 
 

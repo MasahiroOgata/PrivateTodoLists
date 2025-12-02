@@ -1,1 +1,1 @@
-//$(".main").css('background-image', 'url("/img/' + imgURL +'")');
+$(".main").css('background-image', 'url("/img/' + imgURL +'")');

@@ -72,9 +72,11 @@ public class TodoListController {
 		}		
 		model.addAttribute("today", today);
 		
-		List<MTodo> todoList = todoService.getTodoItems(search);
+		int todayExpiringCount = todoService.getTodayExpiringTodoCount();
+		//List<MTodo> todoList = todoService.getTodoItems(search);
 		model.addAttribute("search", search);
-		model.addAttribute("todoList", todoList);
+		//model.addAttribute("todoList", todoList);
+		model.addAttribute("todayExpiringCount", todayExpiringCount);
 		
 		return "todo/listb";
 	}

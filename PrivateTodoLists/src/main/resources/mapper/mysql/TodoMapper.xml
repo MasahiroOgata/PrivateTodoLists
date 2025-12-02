@@ -172,4 +172,17 @@
 			and finished_date is null
 	</select>
 	
+	<!-- 本日期限の未完了Todo件数取得 -->
+	<select id="countTodayExpiringTodo" resultType="int">
+		select
+			count(*)
+		from
+			todo_items
+		where
+			user_id = #{userId}
+			and is_deleted = 0
+			and finished_date is null
+			and expire_date = CURRENT_DATE	
+	</select>
+	
 </mapper>

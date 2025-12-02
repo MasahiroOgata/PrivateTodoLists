@@ -182,7 +182,7 @@ function setCalendar() {
 	            var finishedDateTxt;
 	            var finishToggleBtn;
 	            if (event.finishedDate != null) {
-					finishedDateTxt = event.finishedDate.substr(0, 10) + "完了";
+					finishedDateTxt = ""; //event.finishedDate.substr(0, 10) + "完了";
 					finishToggleBtn = '<button class="btn btn-outline-danger btn-sm rounded-pill col mx-1" '
 					+ 'id="finish-toggle-btn-' + event.id + '" '
 					+ 'onclick="finishTodo(' + event.id + ')">未完了にする</button>';
@@ -195,12 +195,13 @@ function setCalendar() {
 				
 				
 				$("#event-content").css("font-size", settingMap.fontSize + "rem");
-				$("#event-content").append('<tr><td class="title">' 
-             	         + '</td><td class="text-end">' + finishToggleBtn //+ '</td>'
-             	        // + '<td class="text-center" style="width: 25%">'
+				$("#event-content").append('<tr><td class="title" id="finished-todo-title-' + event.id + '">' 
+             	         + '</td><td class="text-end">' + finishToggleBtn
              	         + '<a class="btn btn-outline-success btn-sm rounded-pill col mx-1">詳細</a></td></tr>'
                          );
-				$("#event-content tr:last-child td:first-child").text(event.title);
+				$("#event-content tr:last-child td:first-child").text(event.title)
+						.prepend('<span class="fst-italic">' +finishedDateTxt + ' </span>');	;
+				$('#finished-todo-title-' + event.id + ' span').css("color", event.color);				
 				$("#event-content tr:last-child td:last-child a").attr('href', '/todo/detail/' + event.id)
 						//.css("font-size", settingMap.fontSize + "rem");
 			});
@@ -336,11 +337,13 @@ function finishTodo(todoId) {
 				console.log(clickedEvent.color, clickedEvent.finishedDate);
 				
 				if(updatedTodo.finishedDate) {
-					$('#finished-date-cell-' +  updatedTodo.id).text(updatedTodo.finishedDate.substr(0, 10) + "完了")
+					$('#finished-date-cell-' +  updatedTodo.id).text(updatedTodo.finishedDate.substr(0, 10) + "完了");
+					$('#finished-todo-title-' + updatedTodo.id + ' span').text("");
 					$('#finish-toggle-btn-' + updatedTodo.id)
 					.removeClass("btn-outline-primary").addClass("btn-outline-danger").text("未完了にする");
 				} else {
 					$('#finished-date-cell-' +  updatedTodo.id).text("未完了");
+					$('#finished-todo-title-' + updatedTodo.id + ' span').text("未完了 ").css("color", clickedEvent.color);
 					$('#finish-toggle-btn-' + updatedTodo.id)
 					.removeClass("btn-outline-danger").addClass("btn-outline-primary").text("完了する");				
 				}
