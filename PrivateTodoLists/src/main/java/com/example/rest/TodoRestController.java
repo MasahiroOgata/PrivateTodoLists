@@ -66,4 +66,9 @@ public class TodoRestController {
 		}
 	}
 	
+	@GetMapping("fetchnewestdate")
+	public Date fetchNewestDate() {
+		return todoService.getNewestDateTime();
+	}
+	
 }

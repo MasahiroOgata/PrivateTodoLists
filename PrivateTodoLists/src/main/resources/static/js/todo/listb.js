@@ -3,7 +3,7 @@ window.onload = function() {
 
 	//const intervalId = setInterval(getTodoList, 1000);
 	getTodoList();
-	createDataTables();
+	//createDataTables();
 	
 	if (flashMsg) {
 		  $("#msg-modal").fadeIn(200);
@@ -25,7 +25,8 @@ window.onload = function() {
 //
 //	}
 	
-	
+	const intervalId = setInterval(getNewestDateTime, 1000);
+	getNewestDateTime();
 	
 	
 	/** 検索ボタンを押した時の処理. */
@@ -34,6 +35,7 @@ window.onload = function() {
 	});
 }
 
+var newestUpdateTime = new Date(newestDateTime);
 var todoData = null;
 var table = null;
 
@@ -181,11 +183,33 @@ function getTodoList() {
 	}).done(function(data){
 			console.log(data);
 			todoData = data;
-			createDataTables();					
+			createDataTables();	
 	}).fail(function(){
 		alert("データの取得に失敗しました");
 	});
 }
+
+function getNewestDateTime() {
+	
+	$.ajax({
+		type: "GET", 
+		url: "/todo/fetchnewestdate",
+		cache: false,
+		timeout: 5000,
+	}).done(function(data){
+		const fetchedDateTime = new Date(data);
+		var fetchedDateTimeForComparison = Math.floor(fetchedDateTime.getTime() / 1000);
+		var newestUpdateTimeForCompariosn = Math.floor(newestUpdateTime.getTime() / 1000);
+		if (fetchedDateTimeForComparison != newestUpdateTimeForCompariosn) {
+			getTodoList();
+			newestUpdateTime = fetchedDateTime;
+		}
+	}).fail(function(){
+		alert("データの取得に失敗しました");
+	});
+}
+
+
 
 function toggleShowFinishedTodo() {
 	var state = $("#finishedCheck").prop("checked");
@@ -226,6 +250,7 @@ function finishTodo(btn) {
 	            xhr.setRequestHeader(header, token);
 	        },
             success: function (updatedTodo) {
+				newestUpdateTime = new Date();
                 row.data(updatedTodo).invalidate();
                 //console.log("更新後 finishedDate:", updatedTodo.finishedDate);
                 console.log(updatedTodo);
@@ -237,22 +262,6 @@ function finishTodo(btn) {
         });
 }
 
-//function selectShowingTable(state) {
-//	$("#no-task-msg, #todo-table-all, #todo-table-unfinished" ).hide();
-//	if(state) {	
-//		if ($("#todo-table-unfinished tbody td").length == 0) {
-//			$("#no-task-msg").text("未完了のタスクはありません")
-//			$("#no-task-msg").show();
-//		} else {
-//			$("#todo-table-unfinished").show();
-//		} 
-//	} else {
-//		$("#todo-table-all").show();
-//	}
-//}
- 
-
-
 function showLoginMsg() {
 	// var unfinishedTodoCount = $("#todo-table-unfinished tbody tr").length;
 	if (unfinishedTodoCount != 0) {
@@ -260,10 +269,6 @@ function showLoginMsg() {
 	} else {
 		$(".modal-body p").text("ようこそ");
 	}
-//	console.log(todoData);	
-//	var todaysTodo = todoData.filter(todo => 		
-//		todo.expireDate == today.substr(0, 10) && todo.finishedDate == null
-//	)
 	if (todayExpiringCount != 0) {
 		$(".modal-body p").text("本日期限のタスクが"+ todayExpiringCount + "件あります");
 	}

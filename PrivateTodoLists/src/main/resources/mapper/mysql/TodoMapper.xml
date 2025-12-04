@@ -185,4 +185,17 @@
 			and expire_date = CURRENT_DATE	
 	</select>
 	
+	<!-- 最新の更新日時を取得 -->
+	<select id="findNewestDateTime" resultType="date">
+		select
+			update_date_time
+		from
+			todo_items
+		where
+			user_id = #{userId}
+		order
+			by update_date_time desc
+		limit 1
+	</select>
+	
 </mapper>

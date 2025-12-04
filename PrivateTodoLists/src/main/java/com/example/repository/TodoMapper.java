@@ -1,5 +1,6 @@
 package com.example.repository;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -40,5 +41,8 @@ public interface TodoMapper {
 	
 	/** 本日期限の未完了Todo件数取得  **/
 	public int countTodayExpiringTodo(int userId);
+	
+	/** 最新の更新日時を取得 **/
+	public Date findNewestDateTime(int userId);
 
 }

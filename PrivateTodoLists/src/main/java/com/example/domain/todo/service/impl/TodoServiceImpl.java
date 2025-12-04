@@ -1,5 +1,6 @@
 package com.example.domain.todo.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
@@ -93,6 +94,12 @@ public class TodoServiceImpl implements TodoService {
 	@Override
 	public int getTodayExpiringTodoCount() {
 		return todoMapper.countTodayExpiringTodo(AuthUtil.getLoginUserId());
+	}
+	
+	/** 最新の更新日時を取得 **/
+	@Override
+	public Date getNewestDateTime() {
+		return todoMapper.findNewestDateTime(AuthUtil.getLoginUserId());
 	}
 
 

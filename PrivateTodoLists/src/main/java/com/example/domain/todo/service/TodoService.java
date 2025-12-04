@@ -1,5 +1,6 @@
 package com.example.domain.todo.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -38,5 +39,8 @@ public interface TodoService {
 	
 	/** 本日期限の未完了Todo件数取得 **/
 	public int getTodayExpiringTodoCount();
+	
+	/** 最新の更新日時を取得 **/
+	public Date getNewestDateTime();
 
 }
