@@ -197,12 +197,16 @@ function getNewestDateTime() {
 		cache: false,
 		timeout: 5000,
 	}).done(function(data){
-		const fetchedDateTime = new Date(data);
+		console.log(data);
+		const fetchedDateTime = new Date(data[0]);
 		var fetchedDateTimeForComparison = Math.floor(fetchedDateTime.getTime() / 1000);
 		var newestUpdateTimeForCompariosn = Math.floor(newestUpdateTime.getTime() / 1000);
 		if (fetchedDateTimeForComparison != newestUpdateTimeForCompariosn) {
 			getTodoList();
 			newestUpdateTime = fetchedDateTime;
+			unfinishedTodoCount = data[1];
+			$(".badge").text(unfinishedTodoCount);
+			showBadge();
 		}
 	}).fail(function(){
 		alert("データの取得に失敗しました");
@@ -249,11 +253,19 @@ function finishTodo(btn) {
 	        beforeSend: function(xhr) {
 	            xhr.setRequestHeader(header, token);
 	        },
-            success: function (updatedTodo) {
+            success: function (updatedTodo){
+				console.log(updatedTodo.finishedDate);				
+				if (updatedTodo.finishedDate) {
+					unfinishedTodoCount--;
+				} else {
+					unfinishedTodoCount++;
+				};
 				newestUpdateTime = new Date();
                 row.data(updatedTodo).invalidate();
+                $(".badge").text(unfinishedTodoCount);
+                showBadge();
                 //console.log("更新後 finishedDate:", updatedTodo.finishedDate);
-                console.log(updatedTodo);
+                
                 setIconsData()
             },
             error: function () {

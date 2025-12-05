@@ -14,12 +14,18 @@
     background-color: rgba(255,255,255,0.95);
 }
 
-.fc-day-sat:not(.fc-day-today, .fc-day-holiday) {
+.fc-more-popover {
+	opacity: 0.95 !important;
+}
+
+.fc-day-sat:not(.fc-day-today, .fc-day-holiday, .fc-more-popover) {
     background-color: rgba(234, 244, 255, 0.5) !important;
 }
-.fc-day-sun:not(.fc-day-today), .fc-day-holiday {
+.fc-day-sun:not(.fc-day-today, .fc-more-popover), .fc-day-holiday:not(.fc-day-today, .fc-more-popover) {
     background-color: rgba(255, 234, 234, 0.5) !important;
 }
+
+
 
 .fc tbody tr {
     height: 100px;

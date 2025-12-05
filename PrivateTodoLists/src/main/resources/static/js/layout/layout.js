@@ -1,11 +1,17 @@
 
 applySettings();
+showBadge();
 console.log(settingMap);
-if($(".badge").text() > 0) {
-	$(".badge").show();
-}
-if ($(".badge").text() >= 100) {
-	$(".badge").text("99+");
+
+function showBadge() {
+	if(unfinishedTodoCount > 0) {
+		$(".badge").show();
+	} else {
+		$(".badge").hide();
+	}
+	if (unfinishedTodoCount >= 100) {
+		$(".badge").text("99+");
+	}
 }
 
 

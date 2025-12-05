@@ -13,9 +13,10 @@
 	<script th:src="@{/webjars/jquery/jquery.min.js}" defer></script>
 	<script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}" defer></script>
 	<script th:src="@{/js/layout/layout.js}" defer></script>
-	<!-- settingMapをJSに渡す -->
+	<!-- settingMap,unfinishedTodoCountをJSに渡す -->
 	<script th:inline="javascript">
-		var settingMap = /*[[${settingMap}]]*/"settingMap";				
+		var settingMap = /*[[${settingMap}]]*/"settingMap";	
+		var unfinishedTodoCount = /*[[${unfinishedTodoCount}]]*/"unfinishedTodoCount";			
 	</script>
 	<title></title>
 </head>

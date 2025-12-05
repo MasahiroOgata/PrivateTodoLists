@@ -1,5 +1,6 @@
 package com.example.rest;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -67,8 +68,11 @@ public class TodoRestController {
 	}
 	
 	@GetMapping("fetchnewestdate")
-	public Date fetchNewestDate() {
-		return todoService.getNewestDateTime();
+	public List<Object> fetchNewestDate() {
+		ArrayList<Object> list = new ArrayList<>();
+		list.add(todoService.getNewestDateTime());
+		list.add(todoService.getUnfinishedTodoCount());
+		return list;
 	}
 	
 }

@@ -341,12 +341,16 @@ function finishTodo(todoId) {
 					$('#finished-todo-title-' + updatedTodo.id + ' span').text("");
 					$('#finish-toggle-btn-' + updatedTodo.id)
 					.removeClass("btn-outline-primary").addClass("btn-outline-danger").text("未完了にする");
+					unfinishedTodoCount--;
 				} else {
 					$('#finished-date-cell-' +  updatedTodo.id).text("未完了");
 					$('#finished-todo-title-' + updatedTodo.id + ' span').text("未完了 ").css("color", clickedEvent.color);
 					$('#finish-toggle-btn-' + updatedTodo.id)
-					.removeClass("btn-outline-danger").addClass("btn-outline-primary").text("完了する");				
+					.removeClass("btn-outline-danger").addClass("btn-outline-primary").text("完了する");
+					unfinishedTodoCount++;				
 				}
+				$(".badge").text(unfinishedTodoCount);
+                showBadge();
 				
 //				$(".fc-event").each(function() {
 //				   if($(this).data("event-id") == updatedTodo.id) {
