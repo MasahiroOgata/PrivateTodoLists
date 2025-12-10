@@ -59,7 +59,7 @@
 						<input type="text" class="form-control" name="search" th:value="${search}">
 					</div>
 					<div class="col">
-						<button id="btn-search" class="btn btn-primary rounded-pill mx-3">検索</button>
+						<button id="btn-search" class="btn btn-primary rounded-pill mx-3" type="button">検索</button>
 					</div>
 				</form>
 			</div>
@@ -79,6 +79,19 @@
 				</thead>
 			</table>
 		</div>
+		
+	    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+	
+	        <div id="todoReleadToast" class="toast align-items-center" data-bs-animation="true" data-bs-delay='5000' 
+	            role="alert" aria-live="assertive" aria-atomic="true">
+	            <div class="d-flex">
+	                <div class="toast-body">
+	                    タスクのデータが更新されました
+	                </div>
+	                <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+	            </div>
+	        </div>
+	    </div>
 	</div>	
 </body>
 </html>

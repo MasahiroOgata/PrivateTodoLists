@@ -39,6 +39,10 @@ var newestUpdateTime = new Date(newestDateTime);
 var todoData = null;
 var table = null;
 
+const toastElm = document.getElementById('todoReleadToast');
+const todoToastBootstrap = bootstrap.Toast.getOrCreateInstance(toastElm);
+
+
 function createDataTables() {	
 		
 	if (table != null) {
@@ -196,17 +200,21 @@ function getNewestDateTime() {
 		url: "/todo/fetchnewestdate",
 		cache: false,
 		timeout: 5000,
-	}).done(function(data){
-		console.log(data);
+	}).done(function(data){		
+		//console.log(data);
 		const fetchedDateTime = new Date(data[0]);
 		var fetchedDateTimeForComparison = Math.floor(fetchedDateTime.getTime() / 1000);
-		var newestUpdateTimeForCompariosn = Math.floor(newestUpdateTime.getTime() / 1000);
-		if (fetchedDateTimeForComparison != newestUpdateTimeForCompariosn) {
+		var newestUpdateTimeForComparison = Math.floor(newestUpdateTime.getTime() / 1000);
+		console.log(fetchedDateTimeForComparison);
+		console.log(newestUpdateTimeForComparison);
+		console.log(fetchedDateTimeForComparison == newestUpdateTimeForComparison);
+		if (fetchedDateTimeForComparison != newestUpdateTimeForComparison) {
 			getTodoList();
 			newestUpdateTime = fetchedDateTime;
 			unfinishedTodoCount = data[1];
 			$(".badge").text(unfinishedTodoCount);
 			showBadge();
+			todoToastBootstrap.show();
 		}
 	}).fail(function(){
 		alert("データの取得に失敗しました");
