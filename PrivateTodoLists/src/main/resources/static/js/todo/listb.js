@@ -1,9 +1,6 @@
 window.onload = function() {
 	
-
-	//const intervalId = setInterval(getTodoList, 1000);
 	getTodoList();
-	//createDataTables();
 	
 	if (flashMsg) {
 		  $("#msg-modal").fadeIn(200);
@@ -14,20 +11,8 @@ window.onload = function() {
 		showLoginMsg()
 	}
 	
-//	var isHidingFinishedTodo = "isHidingFinishedTodo" in settingMap ? settingMap.isHidingFinishedTodo : '0';
-	
-//	if (todoList.length == 0) {
-//		$("#todo-table-all, #todo-table-unfinished").hide();
-//		$("#no-task-msg").text("“作業登録”からタスクを登録してください");
-//		$("#no-task-msg").show();
-//	} else {
-//		$("#finishedCheck").prop("checked", isHidingFinishedTodo == '1');
-//
-//	}
-	
 	const intervalId = setInterval(getNewestDateTime, 1000);
 	getNewestDateTime();
-	
 	
 	/** 検索ボタンを押した時の処理. */
 	$('#btn-search').click(function (event) {
@@ -48,6 +33,7 @@ function createDataTables() {
 	if (table != null) {
 		table.destroy();
 	}
+	
 	
 	DataTable.type('date', 'className', ' ');
 
@@ -154,6 +140,15 @@ function createDataTables() {
 	});
 	
 	$("th:nth-of-type(1)").prop('disabled', true);
+	
+	if (todoData.length == 0) {
+		$('#rest-table-wrapper').hide();
+		$("#no-task-msg").text("“作業登録”からタスクを登録してください");
+		$("#no-task-msg").show();
+	} else {
+		$('#rest-table-wrapper').show();
+		$("#no-task-msg").hide();
+	}
 	
 }
 
